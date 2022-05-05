@@ -37,7 +37,7 @@ class Menu extends Phaser.Scene {
             },
             fixedWidth: 200
         }
-        this.brick = this.add.tileSprite(0, 0, 560, 700, 'brick').setOrigin(0, 0);
+        this.brick = this.add.tileSprite(0, 0, 850, 700, 'brick').setOrigin(0, 0);
         //show menu text
         this.add.text(game.config.width/2, game.config.height/2 - borderUISize - 100, 
             'Tomb Jump!', titleConfig).setOrigin(0.5);
