@@ -5,7 +5,6 @@ class Menu extends Phaser.Scene {
 
     preload() {
         // load audio
-        //this.load.audio('sfx_rocket', './assets/Laser_Shoot.wav');
         this.load.audio('sfx_music', './assets/Music.wav');
         this.load.audio('sfx_jump', './assets/Jump8.wav');
         this.load.audio('sfx_death', './assets/Death.wav');
@@ -47,9 +46,6 @@ class Menu extends Phaser.Scene {
         this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 
             'Use S to decline (come down faster)', menuConfig).setOrigin(0.5);
         
-        //menuConfig.backgroundColor = '#00FF00';
-        //menuConfig.backgroundColor = 'c7c7c7';
-        //menuConfig.color = '#000';
         this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 100,
             'Press Space Bar to start the game!', menuConfig).setOrigin(0.5);
 
@@ -61,19 +57,9 @@ class Menu extends Phaser.Scene {
     }
 
     update(){
-        //this.game.scale.pageAlignHorizontally = true;
-        //this.game.scale.pageAlignVertically = true;
-        //this.game.scale.refresh();
         this.brick.tilePositionY -= 4;
         if (Phaser.Input.Keyboard.JustDown(spaceBar)) {
-            /*game.settings = {
-              sharkSpeed: 3,
-              gameTimer: 60000    
-            }*/
-            console.log("checking")
             this.scene.start('playScene');
-            //this.sound.play('sfx_select');
-            //this.scene.start('playScene');    
         }
     }
 }
