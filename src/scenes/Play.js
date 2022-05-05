@@ -21,7 +21,7 @@ class Play extends Phaser.Scene {
     }
 
     create() {
-        this.tile = this.add.tileSprite(0, 0, 560, 700, 'tile').setOrigin(0, 0);
+        this.tile = this.add.tileSprite(0, 0, 850, 700, 'tile').setOrigin(0, 0);
 
         this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);
         this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 
