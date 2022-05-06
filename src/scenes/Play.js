@@ -2,12 +2,14 @@
 class Play extends Phaser.Scene {
     constructor(){
         super("playScene");
+        this.line;
     }
 
     preload() {
         this.load.image('tile', './assets/Tile.png');
         this.load.image('platform', './assets/StonePlatform.png');
         this.load.image('player', './assets/Player.png');
+        this.load.image('line', './assets/line.png');
         /*this.load.image('spike','./assets/Spikes.png');
         this.load.image('spike1','./assets/Spikes1.png');
         this.load.image('downspike','./assets/Spike_Down.png');
@@ -22,6 +24,12 @@ class Play extends Phaser.Scene {
 
     create() {
         this.tile = this.add.tileSprite(0, 0, 850, 700, 'tile').setOrigin(0, 0);
+
+        this.title = this.add.rectangle(0, borderUISize, game.config.width, (scoreUISize * 2)-5, 
+            0x808080).setOrigin(0, 0);
+
+        this.line = this.physics.add.staticGroup();
+        this.line.create(290,75,'line');
 
         this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);
         this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 

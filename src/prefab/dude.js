@@ -8,6 +8,8 @@ class dude extends Phaser.Physics.Arcade.Sprite{
         this.right;
         this.jump;
         this.leftrun;
+        this.slide;
+        this.airdash;
         this.down;
         this.setScale(0.5);
     
@@ -28,17 +30,18 @@ class dude extends Phaser.Physics.Arcade.Sprite{
     }
     //this.setVelocityX(0);
     if(!this.left.isDown && !this.right.isDown){
-        this.anims.play('vibing')
+        //this.anims.play('vibing')
     }
     if(this.left.isDown){
         this.setVelocityX(-200);
-        this.anims.play('leftrun',true);
+        //this.anims.play('leftrun',true);
 
         //add animation line here for when facing left
     }
+
     if(this.right.isDown){
         this.setVelocityX(200);
-        this.anims.play('rightrun',true);
+        //this.anims.play('rightrun',true);
 
         //add animation line here for when facing left
     }
@@ -47,12 +50,21 @@ class dude extends Phaser.Physics.Arcade.Sprite{
         this.setVelocityY(350);
     }
 
+    if(this.slide.isDown){
+        this.setVelocityX(450)
+    }
+
     if(Phaser.Input.Keyboard.JustDown(this.jump) && this.body.touching.down ){ // add checking to see if its on the floor befoe jumping or else it will keep jumping
         //270
         this.setVelocityY(-450);
         this.sfxDude.play();
 
         //add animation for jumping here
+    }
+
+    if(Phaser.Input.Keyboard.JustDown(this.airdash) && !this.body.touching.down){
+        this.setVelocityX(450);
+        //add airdash animation
     }
 
 
