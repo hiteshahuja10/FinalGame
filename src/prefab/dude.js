@@ -7,20 +7,21 @@ class dude extends Phaser.Physics.Arcade.Sprite{
         this.left;
         this.right;
         this.jump;
+        this.health = 100;
         this.leftrun;
         this.slide;
         this.airdash;
         this.down;
         this.setScale(0.5);
     
-        this.setCollideWorldBounds(true);
+        //this.setCollideWorldBounds(true);
         this.setBounce(0);
-        this.setVelocityX(0)
+        this.setVelocityX(0);
         this.alive = true;
         this.gameOver = false;
 
-        this.sfxDude = scene.sound.add('sfx_jump');
-        this.sfxDeath = scene.sound.add('sfx_death');
+        //this.sfxDude = scene.sound.add('sfx_jump');
+        //this.sfxDeath = scene.sound.add('sfx_death');
 
     }
 
@@ -51,13 +52,13 @@ class dude extends Phaser.Physics.Arcade.Sprite{
     }
 
     if(this.slide.isDown){
-        this.setVelocityX(450)
+        this.setVelocityX(450);
     }
 
     if(Phaser.Input.Keyboard.JustDown(this.jump) && this.body.touching.down ){ // add checking to see if its on the floor befoe jumping or else it will keep jumping
         //270
         this.setVelocityY(-450);
-        this.sfxDude.play();
+        //this.sfxDude.play();
 
         //add animation for jumping here
     }
@@ -71,9 +72,9 @@ class dude extends Phaser.Physics.Arcade.Sprite{
   }
 
   death(){
-      this.sfxDeath.play();
-      this.anims.play('death_animation', true);
-      this.on('animationcomplete', this.destroy); 
+      //this.sfxDeath.play();
+      //this.anims.play('death_animation', true);
+      //this.on('animationcomplete', this.destroy); 
       this.alive = false;
       this.body = null;
       //this.destroy();
