@@ -7,14 +7,14 @@ class dude extends Phaser.Physics.Arcade.Sprite{
         this.left;
         this.right;
         this.jump;
-        this.health;
+        this.health = 100;
         this.leftrun;
         this.slide;
         this.airdash;
         this.down;
         this.setScale(0.5);
     
-        this.setCollideWorldBounds(true);
+        //this.setCollideWorldBounds(true);
         this.setBounce(0);
         this.setVelocityX(0);
         this.alive = true;

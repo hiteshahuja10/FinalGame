@@ -31,6 +31,7 @@ class Play extends Phaser.Scene {
 
         this.line = this.physics.add.staticGroup();
         this.line.create(290,75,'line');
+        this.line.create(100,600, 'line');
 
         this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);
         this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 
@@ -58,11 +59,12 @@ class Play extends Phaser.Scene {
         this.player.airdash = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
 
         this.physics.add.collider(this.player, this.platforms); 
+        this.physics.add.collider(this.player,this.line);
 
         this.cameras.main.setBounds(0, 0, 850, 700);
-        this.cameras.main.setZoom(1.5);
+        this.cameras.main.setZoom(1);
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
-        this.cameras.main.setDeadzone(200, 200);
+        this.cameras.main.setDeadzone(0, 200);
         this.cameras.main.setName("center");
 
     }
