@@ -16,7 +16,7 @@ class dude extends Phaser.Physics.Arcade.Sprite{
     
         this.setCollideWorldBounds(true);
         this.setBounce(0);
-        this.setVelocityX(0)
+        this.setVelocityX(0);
         this.alive = true;
         this.gameOver = false;
 
