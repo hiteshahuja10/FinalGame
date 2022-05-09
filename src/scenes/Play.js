@@ -3,6 +3,7 @@ class Play extends Phaser.Scene {
     constructor(){
         super("playScene");
         this.line;
+        this.player;
     }
 
     preload() {
@@ -37,11 +38,25 @@ class Play extends Phaser.Scene {
         this.add.rectangle(0, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0, 0);
         this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height,
             0xFFFFFF).setOrigin(0, 0);
+        
+        this.player = new dude(this,300, 250, 'player');
+        this.player.body.gravity.y = 500;
+        let tile = this.physics.add.sprite(200,600,'platform').setScale(2);
+        this.player.left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        this.player.right = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        this.player.jump = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.player.down = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        this.Left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+        this.slide = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
+        this.airdash = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
 
     }
     
     update(){
         this.tile.tilePositionY -= 4;
+        if(this.player.gameOver != true){
+            this.player.update();
+        }
     }
     
 
