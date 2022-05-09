@@ -59,6 +59,12 @@ class Play extends Phaser.Scene {
 
         this.physics.add.collider(this.player, this.platforms); 
 
+        this.cameras.main.setBounds(0, 0, 850, 700);
+        this.cameras.main.setZoom(1.75);
+        this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
+        this.cameras.main.setDeadzone(200, 200);
+        this.cameras.main.setName("center");
+
     }
     
     update(){
