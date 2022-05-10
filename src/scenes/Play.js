@@ -55,16 +55,16 @@ class Play extends Phaser.Scene {
         
         this.player = new dude(this,300, 250, 'player');
         this.player.body.gravity.y = 200;
-        let tile = this.physics.add.sprite(200,600,'platform').setScale(2);
-        tile.body.setVelocityY(0);
-        tile.body.immovable = true;
-        tile.body.allowGravity = false;
-        this.platforms.add(tile);
+        //let tile = this.physics.add.sprite(200,600,'platform').setScale(2);
+        //tile.body.setVelocityY(0);
+        //tile.body.immovable = true;
+        //tile.body.allowGravity = false;
+        //this.platforms.add(tile);
         this.player.left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.player.right = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         this.player.jump = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.player.down = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
-        this.Left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+        //this.Left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         this.player.slide = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
         this.player.airdash = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
 
@@ -72,18 +72,18 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.player,this.line);
 
         this.cameras.main.setBounds(0, 0, 850, 700);
-        this.cameras.main.setZoom(1);
+        this.cameras.main.setZoom(1.5);
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.cameras.main.setDeadzone(0, 200);
         this.cameras.main.setName("center");
 
-        const map = this.make.tilemap({key: 'tilemap'})
-        const tileset = map.addTilesetImage('castle-ground','floor')
-        const ground = map.createLayer('ground',tileset);
-        ground.setPosition(0, 400);
-        ground.setOrigin(0,0);
-        ground.setCollisionByProperty({collides: true})
-        this.physics.add.collider(this.player, ground); 
+        this.map = this.make.tilemap({key: 'tilemap'})
+        const tileset = this.map.addTilesetImage('castle-ground','floor')
+        this.ground = this.map.createLayer('ground',tileset);
+        this.ground.setPosition(0, 400);
+        this.ground.setOrigin(0,0);
+        this.ground.setCollisionByProperty({collides: true})
+        this.physics.add.collider(this.player, this.ground); 
         
 
 
@@ -95,6 +95,7 @@ class Play extends Phaser.Scene {
             this.player.update();
         }
     }
+
     
 
 }
