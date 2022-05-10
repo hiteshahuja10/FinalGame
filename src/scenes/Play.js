@@ -29,8 +29,8 @@ class Play extends Phaser.Scene {
     }
 
     create() {
-        const map = this.make.tilemap({key: 'tilemap'})
-        const tileset = map.addTilesetImage('castle-ground','floor')
+        
+        
         this.tile = this.add.tileSprite(0, 0, 560, 700, 'tile').setOrigin(0, 0);
         this.tile = this.add.tileSprite(0, 0, 850, 700, 'tile').setOrigin(0, 0);
 
@@ -41,7 +41,7 @@ class Play extends Phaser.Scene {
         this.line.create(290,75,'line');
         this.line.create(100,600, 'line');
 
-        const ground = map.createLayer('ground',tileset);
+        
 
         this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);
         this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 
@@ -76,6 +76,16 @@ class Play extends Phaser.Scene {
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.cameras.main.setDeadzone(0, 200);
         this.cameras.main.setName("center");
+
+        const map = this.make.tilemap({key: 'tilemap'})
+        const tileset = map.addTilesetImage('castle-ground','floor')
+        const ground = map.createLayer('ground',tileset);
+        ground.setPosition(0, 400);
+        ground.setOrigin(0,0);
+        ground.setCollisionByProperty({collides: true})
+        this.physics.add.collider(this.player, ground); 
+        
+
 
     }
     
