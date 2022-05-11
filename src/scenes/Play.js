@@ -11,6 +11,7 @@ class Play extends Phaser.Scene {
         this.load.image('platform', './assets/StonePlatform.png');
         this.load.image('player', './assets/Player.png');
         this.load.image('floor','./assets/ground.png')
+        this.load.image('wall','./assets/walls.png')
         this.load.tilemapTiledJSON('tilemap','./assets/Test_Map.json')
         this.load.image('line', './assets/line.png');
         /*this.load.image('spike','./assets/Spikes.png');
@@ -50,8 +51,18 @@ class Play extends Phaser.Scene {
         this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height,
             0xFFFFFF).setOrigin(0, 0);
 
-        this.platforms = this.add.group();
 
+        const map = this.make.tilemap({key: 'tilemap'})
+        const tileset = map.addTilesetImage('castle-ground','floor')
+        const tileset2 = map.addTilesetImage('bg','wall')
+        const bg = map.createLayer('background',tileset2,0,400);
+        const ground = map.createLayer('ground',tileset);
+        
+        map.setCollisionBetween(1, 12);
+        ground.setPosition(0, 400);
+        bg.setPosition(0,400)
+        ground.setOrigin(0,0);
+        ground.setCollisionByProperty({collides: true})
         
         this.player = new dude(this,300, 250, 'player');
         this.player.body.gravity.y = 200;
@@ -77,12 +88,7 @@ class Play extends Phaser.Scene {
         this.cameras.main.setDeadzone(0, 200);
         this.cameras.main.setName("center");
 
-        const map = this.make.tilemap({key: 'tilemap'})
-        const tileset = map.addTilesetImage('castle-ground','floor')
-        const ground = map.createLayer('ground',tileset);
-        ground.setPosition(0, 400);
-        ground.setOrigin(0,0);
-        ground.setCollisionByProperty({collides: true})
+        
         this.physics.add.collider(this.player, ground); 
         
 
@@ -94,6 +100,7 @@ class Play extends Phaser.Scene {
         if(this.player.gameOver != true){
             this.player.update();
         }
+        
     }
     
 
