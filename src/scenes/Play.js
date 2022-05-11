@@ -18,6 +18,7 @@ class Play extends Phaser.Scene {
         this.load.image('wall','./assets/walls.png')
         this.load.tilemapTiledJSON('tilemap','./assets/Test_Map.json')
         this.load.image('line', './assets/line.png');
+        this.load.image('line2', './assets/outline.png');
         //this.load.tilemapTiledJSON('tilemap','./assets/back.json');
         /*this.load.image('spike','./assets/Spikes.png');
         this.load.image('spike1','./assets/Spikes1.png');
@@ -38,8 +39,9 @@ class Play extends Phaser.Scene {
         
         
         //this.tile = this.add.tileSprite(0, 0, 560, 700, 'tile').setOrigin(0, 0);
-        this.tile = this.add.tileSprite(0, 0, 850, 700, 'sep').setOrigin(0, 0);
-        this.ground = this.physics.add.sprite(300,700,'ground').setScale(1);
+        this.tile = this.add.tileSprite(0, 0, 1400, 700, 'sep').setOrigin(0, 0);
+        this.ground = this.physics.add.sprite(700,700,'ground').setScale(1);
+        this.ground2 = this.physics.add.sprite(0,700,'ground').setScale(1);
         //this.ground = this.physics.add.sprite(500,650,'ground').setScale(1);
         this.ground.body.immovable = true;
         this.ground.body.allowGravity = false;
@@ -53,6 +55,8 @@ class Play extends Phaser.Scene {
 
         this.line = this.physics.add.staticGroup();
         this.line.create(100,65,'line');
+        this.line.create(0,250,'line2');
+        this.line.create(1398, 250, 'line2');
         //this.line.create(600,65,'line');
         //this.line.create(600,620, 'line');
         //this.line.create(150,620, 'line');
@@ -95,10 +99,10 @@ class Play extends Phaser.Scene {
         this.player.airdash = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
 
         this.physics.add.collider(this.player, this.platforms); 
-        //this.physics.add.collider(this.player,this.line);
+        this.physics.add.collider(this.player,this.line);
         this.physics.add.collider(this.player, this.ground);
 
-        this.cameras.main.setBounds(0, 0, 850, 700);
+        this.cameras.main.setBounds(0, 0, 1500, 700);
         this.cameras.main.setZoom(1.5);
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.cameras.main.setDeadzone(0, 200);
