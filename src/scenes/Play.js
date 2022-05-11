@@ -7,13 +7,18 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('tile', './assets/Tile.png');
+        this.load.image('tile', './assets/back2.png');
+        this.load.image('sep', './assets/sep1.png');
+        this.load.image('sep2', './assets/sep2.png');
+        this.load.image('ground', './assets/ground2.png');
+        this.load.image('new', './assets/new1.png');
         this.load.image('platform', './assets/StonePlatform.png');
-        this.load.image('player', './assets/Player.png');
+        this.load.image('player', './assets/knight.png');
         this.load.image('floor','./assets/ground.png')
         this.load.image('wall','./assets/walls.png')
         this.load.tilemapTiledJSON('tilemap','./assets/Test_Map.json')
         this.load.image('line', './assets/line.png');
+        //this.load.tilemapTiledJSON('tilemap','./assets/back.json');
         /*this.load.image('spike','./assets/Spikes.png');
         this.load.image('spike1','./assets/Spikes1.png');
         this.load.image('downspike','./assets/Spike_Down.png');
@@ -32,27 +37,37 @@ class Play extends Phaser.Scene {
     create() {
         
         
-        this.tile = this.add.tileSprite(0, 0, 560, 700, 'tile').setOrigin(0, 0);
-        this.tile = this.add.tileSprite(0, 0, 850, 700, 'tile').setOrigin(0, 0);
+        //this.tile = this.add.tileSprite(0, 0, 560, 700, 'tile').setOrigin(0, 0);
+        this.tile = this.add.tileSprite(0, 0, 850, 700, 'sep').setOrigin(0, 0);
+        this.ground = this.physics.add.sprite(300,700,'ground').setScale(1);
+        //this.ground = this.physics.add.sprite(500,650,'ground').setScale(1);
+        this.ground.body.immovable = true;
+        this.ground.body.allowGravity = false;
+        //this.tile2 = this.add.tileSprite(0, 300, 850, 600, 'sep2').setOrigin(0, 0);
 
-        this.title = this.add.rectangle(0, borderUISize, game.config.width, (scoreUISize * 2)-5, 
-            0x808080).setOrigin(0, 0);
+        this.title = this.add.rectangle(0, borderUISize-12, game.config.width, (scoreUISize * 2)-5, 
+        0x00699a).setOrigin(0, 0);
+        //this.title2 = this.add.rectangle(0, 620, game.config.width, (scoreUISize * 2)+10, 
+        //0x35464d).setOrigin(0, 0);
+
 
         this.line = this.physics.add.staticGroup();
-        this.line.create(290,75,'line');
-        this.line.create(100,600, 'line');
+        this.line.create(100,65,'line');
+        //this.line.create(600,65,'line');
+        //this.line.create(600,620, 'line');
+        //this.line.create(150,620, 'line');
 
         
 
-        this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);
+        /*this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);
         this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 
             0xFFFFFF).setOrigin(0, 0);
         this.add.rectangle(0, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0, 0);
         this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height,
-            0xFFFFFF).setOrigin(0, 0);
+            0xFFFFFF).setOrigin(0, 0);*/
 
 
-        const map = this.make.tilemap({key: 'tilemap'})
+        /*const map = this.make.tilemap({key: 'tilemap'})
         const tileset = map.addTilesetImage('castle-ground','floor')
         const tileset2 = map.addTilesetImage('bg','wall')
         const bg = map.createLayer('background',tileset2,0,400);
@@ -62,7 +77,7 @@ class Play extends Phaser.Scene {
         ground.setPosition(0, 400);
         bg.setPosition(0,400)
         ground.setOrigin(0,0);
-        ground.setCollisionByProperty({collides: true})
+        ground.setCollisionByProperty({collides: true})*/
         
         this.player = new dude(this,300, 250, 'player');
         this.player.body.gravity.y = 200;
@@ -80,7 +95,8 @@ class Play extends Phaser.Scene {
         this.player.airdash = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
 
         this.physics.add.collider(this.player, this.platforms); 
-        this.physics.add.collider(this.player,this.line);
+        //this.physics.add.collider(this.player,this.line);
+        this.physics.add.collider(this.player, this.ground);
 
         this.cameras.main.setBounds(0, 0, 850, 700);
         this.cameras.main.setZoom(1.5);
@@ -89,14 +105,14 @@ class Play extends Phaser.Scene {
         this.cameras.main.setName("center");
 
         
-        this.physics.add.collider(this.player, ground); 
+        //this.physics.add.collider(this.player, ground); 
         
 
 
     }
     
     update(){
-        this.tile.tilePositionY -= 4;
+        //this.tile.tilePositionY -= 4;
         if(this.player.gameOver != true){
             this.player.update();
         }
