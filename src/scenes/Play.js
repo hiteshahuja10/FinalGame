@@ -4,6 +4,7 @@ class Play extends Phaser.Scene {
         super("playScene");
         this.line;
         this.player;
+        this.holy = 0;
     }
 
     preload() {
@@ -64,6 +65,7 @@ class Play extends Phaser.Scene {
         //this.title2 = this.add.rectangle(0, 620, game.config.width, (scoreUISize * 2)+10, 
         //0x35464d).setOrigin(0, 0);
 
+        
 
         this.line = this.physics.add.staticGroup();
         this.line.create(100,65,'line');
@@ -122,8 +124,8 @@ class Play extends Phaser.Scene {
 
         
         //this.physics.add.collider(this.player, ground); 
-        
-
+        dd
+        this.physics.add.overlap(this.player, this.sword1, this.holySword, null, this);
 
     }
     
@@ -133,6 +135,12 @@ class Play extends Phaser.Scene {
             this.player.update();
         }
         
+    }
+
+    holySword(player,piece){
+        piece.disableBody(true,true)
+        this.holy += 1;
+
     }
 
     
