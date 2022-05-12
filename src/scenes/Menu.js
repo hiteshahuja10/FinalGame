@@ -9,7 +9,7 @@ class Menu extends Phaser.Scene {
         this.load.audio('sfx_jump', './assets/Jump8.wav');
         this.load.audio('sfx_death', './assets/Death.wav');
         this.load.audio('sfx_coinpick', './assets/Pickup_Coin.wav');
-        this.load.image('brick', './assets/StonePlatform.png');
+        this.load.image('background', './assets/sep1.png');
     }
 
     create() {
@@ -37,7 +37,7 @@ class Menu extends Phaser.Scene {
             },
             fixedWidth: 250
         }
-        this.brick = this.add.tileSprite(0, 0, 850, 700, 'brick').setOrigin(0, 0);
+        this.background = this.add.tileSprite(0, 0, 850, 700, 'background').setOrigin(0, 0);
         //show menu text
         this.add.text(game.config.width/2, game.config.height/2 - borderUISize - 100, 
             'Knight Runner!', titleConfig).setOrigin(0.5);
@@ -57,7 +57,7 @@ class Menu extends Phaser.Scene {
     }
 
     update(){
-        this.brick.tilePositionY -= 4;
+        this.background.tilePositionX += 4;
         if (Phaser.Input.Keyboard.JustDown(spaceBar)) {
             this.scene.start('playScene');
         }

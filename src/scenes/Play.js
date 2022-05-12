@@ -19,6 +19,8 @@ class Play extends Phaser.Scene {
         this.load.tilemapTiledJSON('tilemap','./assets/Test_Map.json')
         this.load.image('line', './assets/line.png');
         this.load.image('line2', './assets/outline.png');
+        this.load.image('sword1', './assets/SwordPiece_1.png');
+        this.load.image('torch', './assets/torch2.png');
         //this.load.tilemapTiledJSON('tilemap','./assets/back.json');
         /*this.load.image('spike','./assets/Spikes.png');
         this.load.image('spike1','./assets/Spikes1.png');
@@ -40,6 +42,11 @@ class Play extends Phaser.Scene {
         
         //this.tile = this.add.tileSprite(0, 0, 560, 700, 'tile').setOrigin(0, 0);
         this.tile = this.add.tileSprite(0, 0, 1400, 700, 'sep').setOrigin(0, 0);
+        this.sword1 = this.physics.add.sprite(1300, 570, 'sword1').setScale(1);
+        this.torch = this.physics.add.sprite(100, 300, 'torch').setScale(1.5);
+        //this.torch = this.physics.add.sprite(200, 300, 'torch').setScale(1.5);
+        //this.torch = this.physics.add.sprite(350, 300, 'torch').setScale(1.5);
+        this.torch = this.physics.add.sprite(500, 300, 'torch').setScale(1.5);
         this.ground = this.physics.add.sprite(700,700,'ground').setScale(1);
         this.ground2 = this.physics.add.sprite(0,700,'ground').setScale(1);
         //this.ground = this.physics.add.sprite(500,650,'ground').setScale(1);
