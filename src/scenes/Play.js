@@ -47,6 +47,7 @@ class Play extends Phaser.Scene {
         //this.torch = this.physics.add.sprite(200, 300, 'torch').setScale(1.5);
         //this.torch = this.physics.add.sprite(350, 300, 'torch').setScale(1.5);
         this.torch = this.physics.add.sprite(500, 300, 'torch').setScale(1.5);
+        this.torch = this.physics.add.sprite(900, 300, 'torch').setScale(1.5);
         this.ground = this.physics.add.sprite(700,700,'ground').setScale(1);
         this.ground2 = this.physics.add.sprite(0,700,'ground').setScale(1);
         //this.ground = this.physics.add.sprite(500,650,'ground').setScale(1);
