@@ -21,6 +21,7 @@ class Play extends Phaser.Scene {
         this.load.image('line2', './assets/outline.png');
         this.load.image('sword1', './assets/SwordPiece_1.png');
         this.load.image('torch', './assets/torch2.png');
+        this.load.image('enemy', './assets/enemy.png');
         //this.load.tilemapTiledJSON('tilemap','./assets/back.json');
         /*this.load.image('spike','./assets/Spikes.png');
         this.load.image('spike1','./assets/Spikes1.png');
@@ -32,6 +33,7 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('leftrun', './assets/Player_LeftRun.png',{frameWidth:53, frameHeight:75, startFrame:0, endFrame:4});
         this.load.spritesheet('rightrun', './assets/Play_RightRun.png',{frameWidth:53, frameHeight:75, startFrame:0, endFrame:4});
         this.load.spritesheet('vibing', './assets/Player.png',{frameWidth:53, frameHeight:75, startFrame:0, endFrame:0} )*/
+        this.load.spritesheet('enemy1', './assets/enemy_attack.png',{frameWidth:32, frameHeight:32, startFrame:0, endFrame:5});
 
         
 
@@ -93,6 +95,9 @@ class Play extends Phaser.Scene {
         
         this.player = new dude(this,300, 250, 'player');
         this.player.body.gravity.y = 200;
+
+        this.enemy = new enemy(this,300, 250, 'enemy');
+        this.enemy.body.gravity.y = 200;
         //let tile = this.physics.add.sprite(200,600,'platform').setScale(2);
         //tile.body.setVelocityY(0);
         //tile.body.immovable = true;
@@ -109,12 +114,20 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.player, this.platforms); 
         this.physics.add.collider(this.player,this.line);
         this.physics.add.collider(this.player, this.ground);
+        this.physics.add.collider(this.enemy, this.ground);
+        this.physics.add.collider(this.enemy, this.platforms);
 
         this.cameras.main.setBounds(0, 0, 1500, 700);
         this.cameras.main.setZoom(1.5);
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.cameras.main.setDeadzone(0, 200);
         this.cameras.main.setName("center");
+
+        this.anims.create({
+            key: 'enemy1',
+            frames: this.anims.generateFrameNumbers('enemy1', { start: 0, end: 5, first: 0}),
+            frameRate: 15
+        });
 
         
         //this.physics.add.collider(this.player, ground); 
@@ -127,6 +140,7 @@ class Play extends Phaser.Scene {
         //this.tile.tilePositionY -= 4;
         if(this.player.gameOver != true){
             this.player.update();
+            this.enemy.update();
         }
         
     }

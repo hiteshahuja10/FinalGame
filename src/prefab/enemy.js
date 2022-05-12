@@ -4,7 +4,7 @@ class enemy extends Phaser.Physics.Arcade.Sprite{
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
-        this.setScale(0.5);
+        this.setScale(0.75);
     
         this.setCollideWorldBounds(true);
         this.setBounce(0);
@@ -18,7 +18,9 @@ class enemy extends Phaser.Physics.Arcade.Sprite{
 
   update(){
     if(this.alive == true){
-        this.setVelocityX(0);
+        this.setVelocityX(2);
+        this.anims.play('enemy1',true);
+        console.log("hi");
     }
 
 
