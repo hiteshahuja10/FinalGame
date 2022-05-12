@@ -5,6 +5,7 @@ class Play extends Phaser.Scene {
         this.line;
         this.player;
         this.holy = 0;
+        this.health = 3;
     }
 
     preload() {
@@ -149,6 +150,16 @@ class Play extends Phaser.Scene {
         }
         if (this.player.left.isDown || this.player.right.isDown){
             this.heart.x += 5;
+        }
+        if(this.health != 3){
+            if(this.health != 2){
+                if(this.health != 1){
+                    this.heart.destroy();
+                    this.player.gameOver = true;
+                }
+                this.heart1.destroy();
+            }
+            this.heart2.destroy();
         }
         
     }
