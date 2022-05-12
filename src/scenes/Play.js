@@ -137,7 +137,6 @@ class Play extends Phaser.Scene {
 
         
         //this.physics.add.collider(this.player, ground); 
-        dd
         this.physics.add.overlap(this.player, this.sword1, this.holySword, null, this);
 
     }
