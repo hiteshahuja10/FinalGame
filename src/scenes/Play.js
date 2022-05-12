@@ -68,7 +68,7 @@ class Play extends Phaser.Scene {
         //0x35464d).setOrigin(0, 0);
 
         
-
+        this.heart.fixedToCamera = true;
         this.line = this.physics.add.staticGroup();
         this.line.create(100,65,'line');
         this.line.create(0,250,'line2');
@@ -146,6 +146,9 @@ class Play extends Phaser.Scene {
         if(this.player.gameOver != true){
             this.player.update();
             this.enemy.update();
+        }
+        if (this.player.left.isDown || this.player.right.isDown){
+            this.heart.x += 5;
         }
         
     }
