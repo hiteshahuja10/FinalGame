@@ -21,6 +21,7 @@ class dude extends Phaser.Physics.Arcade.Sprite{
         this.alive = true;
         this.gameOver = false;
 
+        this.sfxDude = scene.sound.add('sfx_jump');
         //this.sfxDude = scene.sound.add('sfx_jump');
         //this.sfxDeath = scene.sound.add('sfx_death');
 
@@ -65,9 +66,8 @@ class dude extends Phaser.Physics.Arcade.Sprite{
     if(Phaser.Input.Keyboard.JustDown(this.jump) && this.body.touching.down ){ // add checking to see if its on the floor befoe jumping or else it will keep jumping
         //270
         this.setVelocityY(-350);
-        //this.sfxDude.play();
+        this.sfxDude.play();
 
-        //add animation for jumping here
     }
 
     //if(Phaser.Input.Keyboard.JustDown(this.airdash) && !this.body.touching.down){
