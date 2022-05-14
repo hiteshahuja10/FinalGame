@@ -152,7 +152,7 @@ class Play extends Phaser.Scene {
             this.player.update();
             this.enemy.update();
         }
-        if (this.player.right.isDown){
+        if (this.player.right.isDown && this.heart.x < 1320){
             this.heart.x += 3;
             this.heart1.x += 3;
             this.heart2.x += 3;
