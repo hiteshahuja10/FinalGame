@@ -28,11 +28,11 @@ class enemy extends Phaser.Physics.Arcade.Sprite{
   }
 
   death(){
-      this.sfxDeath.play();
+      //this.sfxDeath.play();
       //this.anims.play('death_animation', true);
       //this.on('animationcomplete', this.destroy); 
       this.alive = false;
       this.body = null;
-      //this.destroy();
+      this.destroy();
   }
 }
