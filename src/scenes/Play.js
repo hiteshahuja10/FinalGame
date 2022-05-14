@@ -43,7 +43,9 @@ class Play extends Phaser.Scene {
     }
 
     create() {
-        
+        this.music = this.sound.add('sfx_music');
+        this.music.loop = true;
+        this.music.play();
         
         //this.tile = this.add.tileSprite(0, 0, 560, 700, 'tile').setOrigin(0, 0);
         this.tile = this.add.tileSprite(0, 0, 1400, 700, 'sep').setOrigin(0, 0);
@@ -103,7 +105,7 @@ class Play extends Phaser.Scene {
         this.player = new dude(this,300, 250, 'player');
         this.player.body.gravity.y = 200;
 
-        this.enemy = new enemy(this,300, 250, 'enemy');
+        this.enemy = new enemy(this,400, 250, 'enemy');
         this.enemy.body.gravity.y = 200;
         //let tile = this.physics.add.sprite(200,600,'platform').setScale(2);
         //tile.body.setVelocityY(0);
@@ -123,6 +125,9 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.player, this.ground);
         this.physics.add.collider(this.enemy, this.ground);
         this.physics.add.collider(this.enemy, this.platforms);
+        this.physics.add.collider(this.heart, this.outline);
+        this.physics.add.collider(this.heart1, this.outline);
+        this.physics.add.collider(this.heart2, this.outline);
 
         this.cameras.main.setBounds(0, 0, 1500, 700);
         this.cameras.main.setZoom(1.5);
@@ -148,8 +153,11 @@ class Play extends Phaser.Scene {
             this.player.update();
             this.enemy.update();
         }
-        if (this.player.left.isDown || this.player.right.isDown){
-            this.heart.x += 5;
+        if (this.player.right.isDown){
+            this.heart.x += 3.4;
+        }
+        else if(this.player.left.isDown){
+            this.heart.x -= 3.4;
         }
         if(this.health != 3){
             if(this.health != 2){
