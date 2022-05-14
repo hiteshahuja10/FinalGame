@@ -155,7 +155,7 @@ class Play extends Phaser.Scene {
         this.anims.create({
             key: 'SlashAni',
             frames: this.anims.generateFrameNumbers('SlashAni', { start: 0, end: 10, first: 0}),
-            frameRate: 30
+            frameRate: 60
         });
 
         
