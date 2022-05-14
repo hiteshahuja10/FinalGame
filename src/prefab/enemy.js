@@ -18,7 +18,7 @@ class enemy extends Phaser.Physics.Arcade.Sprite{
 
   update(){
     if(this.alive == true){
-        this.setVelocityX(2);
+        //this.setVelocityX(2);
         this.anims.play('enemy1',true);
         console.log("hi");
     }
