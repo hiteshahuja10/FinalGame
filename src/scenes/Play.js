@@ -38,8 +38,11 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('vibing', './assets/Player.png',{frameWidth:53, frameHeight:75, startFrame:0, endFrame:0} )*/
         this.load.spritesheet('enemy1', './assets/enemy_attack.png',{frameWidth:32, frameHeight:32, startFrame:0, endFrame:5});
         this.load.spritesheet('run_right','./assets/Player_Run.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:10});
+        this.load.spritesheet('run_left','./assets/Player_Run_Left.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:10});
         this.load.spritesheet('jump_right','./assets/Jump_Right.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:0});
         this.load.spritesheet('jump_left','./assets/Jump_Left.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:0});
+        this.load.spritesheet('vibing','./assets/knight_left.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:0});
+        
 
 
     }
@@ -141,29 +144,29 @@ class Play extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('enemy1', { start: 0, end: 5, first: 0}),
             frameRate: 15
         });
-        /*this.anims.create({
-            key: 'leftrun',
-            frames: this.anims.generateFrameNumbers('leftrun', { start: 0, end: 3, first: 0}),
-            frameRate: 30
-        });*/
         this.anims.create({
             key: 'run_right',
-            frames: this.anims.generateFrameNumbers('rightrun', { start: 0, end: 10, first: 0}),
+            frames: this.anims.generateFrameNumbers('run_right', { start: 0, end: 10, first: 0}),
             frameRate: 30
         });
-        /*this.anims.create({
+        this.anims.create({
+            key: 'run_left',
+            frames: this.anims.generateFrameNumbers('run_left', { start: 0, end: 10, first: 0}),
+            frameRate: 30
+        });
+        this.anims.create({
             key: 'vibing',
             frames: this.anims.generateFrameNumbers('vibing', { start: 0, end: 0, first: 0}),
             frameRate: 30
-        });*/
+        });
         this.anims.create({
             key: 'jump_right',
-            frames: this.anims.generateFrameNumbers('jump_right', { start: 0, end: 10, first: 0}),
+            frames: this.anims.generateFrameNumbers('jump_right', { start: 0, end: 0, first: 0}),
             frameRate: 30
         });
         this.anims.create({
             key: 'jump_left',
-            frames: this.anims.generateFrameNumbers('jump_left', { start: 0, end: 10, first: 0}),
+            frames: this.anims.generateFrameNumbers('jump_left', { start: 0, end: 0, first: 0}),
             frameRate: 30
         });
 
