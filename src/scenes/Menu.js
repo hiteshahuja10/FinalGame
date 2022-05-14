@@ -16,7 +16,7 @@ class Menu extends Phaser.Scene {
         let menuConfig = {
             fontFamily: 'Courier',
             fontSize: '24px',
-            backgroundColor: '#000000',
+            backgroundColor: '#00a6c9',
             color: '#FFFFFF',
             align: 'right',
             padding: {
@@ -28,14 +28,14 @@ class Menu extends Phaser.Scene {
         let titleConfig = {
             fontFamily: 'Courier',
             fontSize: '30px',
-            backgroundColor: '#c7c7c7',
-            color: '#1823ff',
+            backgroundColor: '#0063c6',
+            color: '#ffffff',
             align: 'center',
             padding: {
             top: 5,
             bottom: 5,
             },
-            fixedWidth: 250
+            fixedWidth: 260
         }
         this.background = this.add.tileSprite(0, 0, 850, 700, 'background').setOrigin(0, 0);
         //show menu text
