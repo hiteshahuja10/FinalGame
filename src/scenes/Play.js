@@ -23,6 +23,7 @@ class Play extends Phaser.Scene {
         this.load.image('torch', './assets/torch2.png');
         this.load.image('heart', './assets/heart.png');
         this.load.image('enemy', './assets/enemy.png');
+        this.load.image('slash', './assets/slash.png')
         //this.load.tilemapTiledJSON('tilemap','./assets/back.json');
         /*this.load.image('spike','./assets/Spikes.png');
         this.load.image('spike1','./assets/Spikes1.png');
@@ -35,8 +36,14 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('rightrun', './assets/Play_RightRun.png',{frameWidth:53, frameHeight:75, startFrame:0, endFrame:4});
         this.load.spritesheet('vibing', './assets/Player.png',{frameWidth:53, frameHeight:75, startFrame:0, endFrame:0} )*/
         this.load.spritesheet('enemy1', './assets/enemy_attack.png',{frameWidth:32, frameHeight:32, startFrame:0, endFrame:5});
-
+        this.load.spritesheet('run_right','./assets/Player_Run.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:10});
+        this.load.spritesheet('run_left','./assets/Player_Run_Left.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:10});
+        this.load.spritesheet('jump_right','./assets/Jump_Right.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:0});
+        this.load.spritesheet('jump_left','./assets/Jump_Left.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:0});
+        this.load.spritesheet('vibing','./assets/knight_left.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:0});
+        this.load.spritesheet('SlashAni','./assets/Slash_Ani.png',{frameWidth:52, frameHeight:40, startFrame:0, endFrame:10});
         
+
 
     }
 
@@ -117,6 +124,11 @@ class Play extends Phaser.Scene {
         this.player.slide = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
         this.player.airdash = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
         this.player.health = 3;
+        this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+
+        this.slash = this.physics.add.sprite(100,200,'slash');
+        this.slash.visible = false;
+        //this.slash.animations.add('SlashAni', false);
         //this.player.attack = this.input.activePointer.leftButton;
 
         this.physics.add.collider(this.player, this.platforms); 
@@ -125,6 +137,7 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.enemy, this.ground);
         this.physics.add.collider(this.enemy, this.platforms);
         this.physics.add.collider(this.enemy, this.player, this.playerhitenemy);
+        this.physics.add.overlap(this.enemy, this.slash, this.playerslashenemy);
 
         this.cameras.main.setBounds(0, 0, 1500, 700);
         this.cameras.main.setZoom(1.5);
@@ -136,6 +149,36 @@ class Play extends Phaser.Scene {
             key: 'enemy1',
             frames: this.anims.generateFrameNumbers('enemy1', { start: 0, end: 5, first: 0}),
             frameRate: 15
+        });
+        this.anims.create({
+            key: 'run_right',
+            frames: this.anims.generateFrameNumbers('run_right', { start: 0, end: 10, first: 0}),
+            frameRate: 30
+        });
+        this.anims.create({
+            key: 'run_left',
+            frames: this.anims.generateFrameNumbers('run_left', { start: 0, end: 10, first: 0}),
+            frameRate: 30
+        });
+        this.anims.create({
+            key: 'vibing',
+            frames: this.anims.generateFrameNumbers('vibing', { start: 0, end: 0, first: 0}),
+            frameRate: 30
+        });
+        this.anims.create({
+            key: 'jump_right',
+            frames: this.anims.generateFrameNumbers('jump_right', { start: 0, end: 0, first: 0}),
+            frameRate: 30
+        });
+        this.anims.create({
+            key: 'jump_left',
+            frames: this.anims.generateFrameNumbers('jump_left', { start: 0, end: 0, first: 0}),
+            frameRate: 30
+        });
+        this.anims.create({
+            key: 'SlashAni',
+            frames: this.anims.generateFrameNumbers('SlashAni', { start: 0, end: 10, first: 0}),
+            frameRate: 30
         });
 
         
@@ -150,8 +193,15 @@ class Play extends Phaser.Scene {
             this.player.update();
             this.enemy.update();
         }
-        if (this.player.left.isDown || this.player.right.isDown){
-            this.heart.x += 5;
+        if (this.player.right.isDown && this.heart.x < 1320){
+            this.heart.x += 3;
+            this.heart1.x += 3;
+            this.heart2.x += 3;
+        }
+        else if(this.player.left.isDown && this.heart.x > 20){
+            this.heart.x -= 3;
+            this.heart1.x -= 3;
+            this.heart2.x -= 3;
         }
         if(this.player.health != 3){
             if(this.player.health != 2){
@@ -163,6 +213,19 @@ class Play extends Phaser.Scene {
             }
             this.heart2.destroy();
         }
+
+        if(this.player.attack.isDown){
+            this.slash.visible = true;
+            this.slash.body.x = this.player.body.x +10;
+            this.slash.body.y = this.player.body.y;
+            this.slash.anims.play('SlashAni', true)
+            this.slash.on('animationcomplete', ()=>{ 
+                console.log('animationcomplete')
+                this.slash.visible = false;
+            }); 
+            //this.slash.visible = false;
+        }
+        //this.slash.visible = false;
         
     }
 
@@ -172,8 +235,13 @@ class Play extends Phaser.Scene {
 
     }
 
-    playerhitenemy(player, enemy){
-        player.health-=1;
+    playerhitenemy(enemy, player){
+        //player.health-=1;
+        //console.log("hello")
+    }
+    playerslashenemy(enemy, slash){
+        console.log("yo");
+        enemy.death();
         //console.log("hello")
     }
 
