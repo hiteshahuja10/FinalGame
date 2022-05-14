@@ -47,8 +47,11 @@ class Menu extends Phaser.Scene {
             'P1: Use A&D to move & Space Bar to jump', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 
             'Use S to decline (come down faster)', menuConfig).setOrigin(0.5);
+
+            this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 34,
+            'Press Enter to attack the enemies!', menuConfig).setOrigin(0.5);
         
-        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 100,
+        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 150,
             'Press Space Bar to start the game!', menuConfig).setOrigin(0.5);
 
         // define keys
