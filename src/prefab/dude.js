@@ -36,6 +36,9 @@ class dude extends Phaser.Physics.Arcade.Sprite{
     }
     if(this.left.isDown){
         this.setVelocityX(-200);
+        if(Phaser.Input.Keyboard.JustDown(this.airdash)){
+            this.setVelocityX(-5000);
+        }
         //this.anims.play('leftrun',true);
 
         //add animation line here for when facing left
@@ -43,6 +46,9 @@ class dude extends Phaser.Physics.Arcade.Sprite{
 
     if(this.right.isDown){
         this.setVelocityX(200);
+        if(Phaser.Input.Keyboard.JustDown(this.airdash)){
+            this.setVelocityX(4000);
+        }
         //this.anims.play('rightrun',true);
 
         //add animation line here for when facing left
@@ -64,10 +70,10 @@ class dude extends Phaser.Physics.Arcade.Sprite{
         //add animation for jumping here
     }
 
-    if(Phaser.Input.Keyboard.JustDown(this.airdash) && !this.body.onFloor){
-        this.setVelocityX(450);
+    //if(Phaser.Input.Keyboard.JustDown(this.airdash) && !this.body.touching.down){
+        //this.setVelocityX(5000);
         //add airdash animation
-    }
+    //}
 
     //if(this.attack.isDown){
     //    console.log("yo");
