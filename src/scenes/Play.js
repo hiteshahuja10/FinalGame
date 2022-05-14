@@ -109,7 +109,7 @@ class Play extends Phaser.Scene {
         //this.player.attack = this.input.activePointer.leftButton;
 
         this.physics.add.collider(this.player, this.platforms); 
-        this.physics.add.collider(this.player,this.line);
+        this.physics.add.collider(this.player, this.line);
         this.physics.add.collider(this.player, this.ground);
         this.physics.add.collider(this.enemy, this.ground);
         this.physics.add.collider(this.enemy, this.platforms);
@@ -155,7 +155,7 @@ class Play extends Phaser.Scene {
         this.anims.create({
             key: 'SlashAni',
             frames: this.anims.generateFrameNumbers('SlashAni', { start: 0, end: 10, first: 0}),
-            frameRate: 60
+            frameRate: 30
         });
 
         
@@ -213,11 +213,11 @@ class Play extends Phaser.Scene {
     }
 
     playerhitenemy(enemy, player){
-        //player.health-=1;
+        player.health-=1;
         //console.log("hello")
     }
     playerslashenemy(enemy, slash){
-        //console.log("yo");
+        console.log("yo");
         enemy.death();
         //console.log("hello")
     }
