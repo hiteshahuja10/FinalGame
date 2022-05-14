@@ -49,7 +49,6 @@ class dude extends Phaser.Physics.Arcade.Sprite{
         if(Phaser.Input.Keyboard.JustDown(this.airdash)){
             this.setVelocityX(4000);
         }
-        //this.anims.play('rightrun',true);
 
         //add animation line here for when facing left
     }
