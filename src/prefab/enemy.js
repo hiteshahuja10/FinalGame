@@ -22,6 +22,7 @@ class enemy extends Phaser.Physics.Arcade.Sprite{
         this.anims.play('enemy1',true);
         console.log("hi");
     }
+    
 
 
   }

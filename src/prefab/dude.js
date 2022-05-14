@@ -12,6 +12,7 @@ class dude extends Phaser.Physics.Arcade.Sprite{
         this.slide;
         this.airdash;
         this.down;
+        this.attack;
         this.setScale(0.5);
     
         //this.setCollideWorldBounds(true);
@@ -67,6 +68,11 @@ class dude extends Phaser.Physics.Arcade.Sprite{
         this.setVelocityX(450);
         //add airdash animation
     }
+
+    //if(this.attack.isDown){
+    //    console.log("yo");
+        //this.anims.play('slash');
+    //}
 
 
   }

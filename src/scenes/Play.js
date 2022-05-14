@@ -109,6 +109,7 @@ class Play extends Phaser.Scene {
         //tile.body.immovable = true;
         //tile.body.allowGravity = false;
         //this.platforms.add(tile);
+        this.input.mouse.capture = true;
         this.player.left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.player.right = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         this.player.jump = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -116,12 +117,14 @@ class Play extends Phaser.Scene {
         //this.Left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         this.player.slide = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
         this.player.airdash = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+        //this.player.attack = this.input.activePointer.leftButton;
 
         this.physics.add.collider(this.player, this.platforms); 
         this.physics.add.collider(this.player,this.line);
         this.physics.add.collider(this.player, this.ground);
         this.physics.add.collider(this.enemy, this.ground);
         this.physics.add.collider(this.enemy, this.platforms);
+        this.physics.add.collider(this.enemy, this.player, this.playerhitenemy);
 
         this.cameras.main.setBounds(0, 0, 1500, 700);
         this.cameras.main.setZoom(1.5);
@@ -153,6 +156,10 @@ class Play extends Phaser.Scene {
     holySword(player,piece){
         piece.disableBody(true,true)
         this.holy += 1;
+
+    }
+
+    playerhitenemy(player, enemy){
 
     }
 
