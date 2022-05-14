@@ -32,14 +32,14 @@ class dude extends Phaser.Physics.Arcade.Sprite{
     }
     //this.setVelocityX(0);
     if(!this.left.isDown && !this.right.isDown){
-        //this.anims.play('vibing')
+        this.anims.play('vibing')
     }
     if(this.left.isDown){
         this.setVelocityX(-200);
         if(Phaser.Input.Keyboard.JustDown(this.airdash)){
             this.setVelocityX(-5000);
         }
-        //this.anims.play('leftrun',true);
+        this.anims.play('run_left',true);
 
         //add animation line here for when facing left
     }
@@ -49,6 +49,7 @@ class dude extends Phaser.Physics.Arcade.Sprite{
         if(Phaser.Input.Keyboard.JustDown(this.airdash)){
             this.setVelocityX(4000);
         }
+        this.anims.play('run_right',true);
 
         //add animation line here for when facing left
     }
