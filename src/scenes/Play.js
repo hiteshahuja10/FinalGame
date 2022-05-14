@@ -48,8 +48,9 @@ class Play extends Phaser.Scene {
     }
 
     create() {
-        
-        
+        this.music = this.sound.add('sfx_music');
+        this.music.loop = true;
+        this.music.play();
         this.tile = this.add.tileSprite(0, 0, 1400, 700, 'sep').setOrigin(0, 0);
         this.sword1 = this.physics.add.sprite(1300, 585, 'sword1').setScale(0.5);
         this.torch = this.physics.add.sprite(100, 350, 'torch').setScale(1.5);
