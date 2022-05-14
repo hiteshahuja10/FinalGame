@@ -91,7 +91,7 @@ class Play extends Phaser.Scene {
         this.player = new dude(this,300, 250, 'player');
         this.player.body.gravity.y = 200;
 
-        this.enemy = new enemy(this,400, 250, 'enemy').setScale(1.2);
+        this.enemy = new enemy(this,400, 582, 'enemy').setScale(1.2);
         this.enemy.body.gravity.y = 200;
         this.input.mouse.capture = true;
         this.player.left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
