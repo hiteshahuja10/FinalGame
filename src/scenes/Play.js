@@ -155,7 +155,7 @@ class Play extends Phaser.Scene {
         this.anims.create({
             key: 'SlashAni',
             frames: this.anims.generateFrameNumbers('SlashAni', { start: 0, end: 10, first: 0}),
-            frameRate: 30
+            frameRate: 60
         });
 
         
@@ -217,7 +217,7 @@ class Play extends Phaser.Scene {
         //console.log("hello")
     }
     playerslashenemy(enemy, slash){
-        console.log("yo");
+        //console.log("yo");
         enemy.death();
         //console.log("hello")
     }
