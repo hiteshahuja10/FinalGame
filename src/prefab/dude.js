@@ -13,6 +13,7 @@ class dude extends Phaser.Physics.Arcade.Sprite{
         this.airdash;
         this.down;
         this.attack;
+        this.health;
         this.setScale(0.5);
     
         //this.setCollideWorldBounds(true);
