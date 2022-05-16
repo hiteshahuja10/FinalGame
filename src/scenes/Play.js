@@ -4,6 +4,7 @@ class Play extends Phaser.Scene {
         super("playScene");
         this.line;
         this.holy = 0;
+        this.gameOver = false;
     }
 
     preload() {
@@ -183,6 +184,11 @@ class Play extends Phaser.Scene {
     }
     
     update(){
+
+        /*if (this.gameOver){
+            this.check = this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu',
+                menuConfig).setOrigin(0.5);
+        }*/
         if (Phaser.Input.Keyboard.JustDown(this.menu)){
             this.scene.start('menuScene');
             this.music.stop();
@@ -212,7 +218,7 @@ class Play extends Phaser.Scene {
             this.heart1.alpha = 0;
         }else if(this.player.health <= 0){
             this.heart.alpha = 0;
-            //this.player.gameOver = true;
+            //this.gameOver = true;
         }
 
         if(this.player.attack.isDown){
@@ -240,6 +246,7 @@ class Play extends Phaser.Scene {
 
     playerhitenemy(enemy, player){
         player.health= player.health -1;
+        player.x -= 25;
         //console.log("hello")
     }
     playerslashenemy(enemy, slash){
