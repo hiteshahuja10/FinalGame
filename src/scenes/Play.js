@@ -92,6 +92,7 @@ class Play extends Phaser.Scene {
         this.player.slide = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
         this.player.airdash = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
         this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+        this.restart = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.player.health = 3;
         this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 
@@ -181,13 +182,19 @@ class Play extends Phaser.Scene {
     
     update(){
 
-        /*if (this.gameOver){
-            this.check = this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu',
-                menuConfig).setOrigin(0.5);
-        }*/
+        if (this.player.gameOver){
+            if (Phaser.Input.Keyboard.JustDown(this.restart)){
+                this.music.stop();
+                this.scene.start('playScene');
+            }
+            if (Phaser.Input.Keyboard.JustDown(this.menu)){
+                this.music.stop();
+                this.scene.start('menuScene');
+            }
+        }
         if (Phaser.Input.Keyboard.JustDown(this.menu)){
-            this.scene.start('menuScene');
             this.music.stop();
+            this.scene.start('menuScene');
         }
         //this.tile.tilePositionY -= 4;
         if(this.player.gameOver != true){
@@ -214,7 +221,11 @@ class Play extends Phaser.Scene {
             }else if(this.player.health <= 0){
                 this.heart.alpha = 0;
                 this.player.gameOver = true;
+                this.cameras.main.startFollow(this.enemy, true, 0.1, 0.1);
+                this.check = this.add.text(game.config.width/2-30, game.config.height/2 + 64, 'Press (R) to Restart or (M) for Menu',
+                menuConfig).setOrigin(0.5);
                 this.player.death();
+
             }
     
             if(this.player.attack.isDown){
