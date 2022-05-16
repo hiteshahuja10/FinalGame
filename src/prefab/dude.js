@@ -7,7 +7,7 @@ class dude extends Phaser.Physics.Arcade.Sprite{
         this.left;
         this.right;
         this.jump;
-        this.health = 100;
+        this.health = 3;
         this.leftrun;
         this.slide;
         this.airdash;
