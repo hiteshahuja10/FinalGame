@@ -127,8 +127,6 @@ class Play extends Phaser.Scene {
             repeat: -1
         });
 
-        //this.swordbar.body.setCollideWorldBounds(true);
-        //this.physics.add.collider(this.swordbar, this.line);
         this.cameras.main.setBounds(0, 0, 1500, 700);
         this.cameras.main.setZoom(1.5);
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
@@ -258,31 +256,6 @@ class Play extends Phaser.Scene {
         console.log("yo");
         enemy.death();
         //console.log("hello")
-    }
-
-    // createPlatform(x,y, velocity){
-    //     let test = this.random(1, 2);
-    //     //let size = this.random(1, 2);
-    //     console.log(test);
-    //     let tile = this.physics.add.sprite(x,y,'platform').setScale(1.2);
-    //     tile.body.immovable = true;
-    //     tile.body.allowGravity = false;
-    //     tile.body.setVelocityY(velocity);
-    //     this.platforms.add(tile);
-    //     let coin = this.physics.add.sprite(x,y-30,'coin').setScale(0.5);
-    //     coin.body.immovable = true;
-    //     coin.body.allowGravity = false;
-    //     coin.body.setVelocityY(velocity);
-    //     this.coin.add(coin);
-    //     if(test % 2 == 0) {
-    //         if (x != 300 && y != 600){
-    //             let spikes = this.physics.add.sprite(x,y+26,'downspike').setScale(1);
-    //             spikes.body.immovable = true;
-    //             spikes.body.allowGravity = false;
-    //             spikes.body.setVelocityY(velocity);
-    //             this.spikes.add(spikes);
-    //         }
-    //     }
-    // }    
+    }  
 
 }
