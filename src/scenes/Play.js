@@ -56,8 +56,6 @@ class Play extends Phaser.Scene {
         this.title = this.add.rectangle(0, borderUISize-12, game.config.width, (scoreUISize * 2)-5, 
         0x00699a).setOrigin(0, 0);
 
-        //this.swordbar = this.physics.add.sprite(150, 650, 'swordbar').setScale(1.5);
-
         
         this.line = this.physics.add.staticGroup();
         this.line.create(100,65,'line');
