@@ -53,6 +53,9 @@ class Menu extends Phaser.Scene {
         
         this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 150,
             'Press Space Bar to start the game!', menuConfig).setOrigin(0.5);
+        
+        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 115,
+            'Press M to return to Main Menu', menuConfig).setOrigin(0.5);
 
         // define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
