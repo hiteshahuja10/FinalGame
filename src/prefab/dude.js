@@ -90,7 +90,7 @@ class dude extends Phaser.Physics.Arcade.Sprite{
       //this.on('animationcomplete', this.destroy); 
       this.alive = false;
       this.body = null;
-      //this.destroy();
+      this.destroy();
   }
 
 }

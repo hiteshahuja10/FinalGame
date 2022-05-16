@@ -189,48 +189,47 @@ class Play extends Phaser.Scene {
             this.scene.start('menuScene');
             this.music.stop();
         }
-        this.swordbar.x = this.player.body.position.x;
         //this.tile.tilePositionY -= 4;
         if(this.player.gameOver != true){
             this.player.update();
             this.enemy.update();
-        }
-        if (this.player.right.isDown && this.heart.x < 1320){
-            this.heart.x += 3.35;
-            this.heart1.x += 3.35;
-            this.heart2.x += 3.35;
-        }
-        else if(this.player.left.isDown && this.heart.x > 20){
-            this.heart.x -= 3.1;
-            this.heart1.x -= 3.1;
-            this.heart2.x -= 3.1;
-        }
-        if(this.player.health == 2){
-            if (this.heart2){
-                console.log("yoyoyoyo");
-                this.heart2.alpha = 0;;
-            };
-        }else if(this.player.health == 1){
-            this.heart1.alpha = 0;
-        }else if(this.player.health <= 0){
-            this.heart.alpha = 0;
-            //this.gameOver = true;
-            //this.player.gameOver = true;
-            //this.player.death();
+            this.swordbar.x = this.player.body.position.x;
+            if (this.player.right.isDown && this.heart.x < 1320){
+                this.heart.x += 3.35;
+                this.heart1.x += 3.35;
+                this.heart2.x += 3.35;
+            }
+            else if(this.player.left.isDown && this.heart.x > 20){
+                this.heart.x -= 3.1;
+                this.heart1.x -= 3.1;
+                this.heart2.x -= 3.1;
+            }
+            if(this.player.health == 2){
+                if (this.heart2){
+                    console.log("yoyoyoyo");
+                    this.heart2.alpha = 0;;
+                };
+            }else if(this.player.health == 1){
+                this.heart1.alpha = 0;
+            }else if(this.player.health <= 0){
+                this.heart.alpha = 0;
+                this.player.gameOver = true;
+                this.player.death();
+            }
+    
+            if(this.player.attack.isDown){
+                this.slash.visible = true;
+                this.slash.body.x = this.player.body.x +10;
+                this.slash.body.y = this.player.body.y;
+                this.slash.anims.play('SlashAni', true)
+                this.slash.on('animationcomplete', ()=>{ 
+                    console.log('animationcomplete')
+                    this.slash.visible = false;
+                }); 
+                //this.slash.visible = false;
+            }
         }
 
-        if(this.player.attack.isDown){
-            this.slash.visible = true;
-            this.slash.body.x = this.player.body.x +10;
-            this.slash.body.y = this.player.body.y;
-            this.slash.anims.play('SlashAni', true)
-            this.slash.on('animationcomplete', ()=>{ 
-                console.log('animationcomplete')
-                this.slash.visible = false;
-            }); 
-            //this.slash.visible = false;
-        }
-        //this.slash.visible = false;
         
     }
 
