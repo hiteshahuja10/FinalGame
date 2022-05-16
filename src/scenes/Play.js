@@ -210,15 +210,13 @@ class Play extends Phaser.Scene {
             this.heart1.x -= 3.1;
             this.heart2.x -= 3.1;
         }
-        if(this.player.health != 3){
-            if(this.player.health != 2){
-                if(this.player.health != 1){
-                    this.heart.destroy();
-                    this.player.gameOver = true;
-                }
-                this.heart1.destroy();
-            }
+        if(this.player.health == 2){
             this.heart2.destroy();
+        }else if(this.player.health == 1){
+            this.heart1.destroy();
+        }else if(this.player.health <= 0){
+            this.heart.destroy();
+            this.player.gameOver = true;
         }
 
         if(this.player.attack.isDown){
