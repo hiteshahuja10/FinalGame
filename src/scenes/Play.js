@@ -245,7 +245,7 @@ class Play extends Phaser.Scene {
     }
 
     playerhitenemy(enemy, player){
-        //player.health-=1;
+        player.health= player.health -1;
         //console.log("hello")
     }
     playerslashenemy(enemy, slash){
