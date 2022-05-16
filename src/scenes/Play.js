@@ -26,17 +26,6 @@ class Play extends Phaser.Scene {
         this.load.image('slash', './assets/slash.png');
         this.load.image('swordbar', './assets/swordbar2.png');
         this.load.image('collectone', './assets/collectone.png');
-        //this.load.tilemapTiledJSON('tilemap','./assets/back.json');
-        /*this.load.image('spike','./assets/Spikes.png');
-        this.load.image('spike1','./assets/Spikes1.png');
-        this.load.image('downspike','./assets/Spike_Down.png');
-        this.load.image('lava', './assets/Lava.png');
-        this.load.image('coin', './assets/coin.png');
-        this.load.image('line', './assets/line.png');
-        this.load.spritesheet('death_animation', './assets/DeathAnimation.png',{frameWidth:53, frameHeight:75, startFrame:0, endFrame:13});
-        this.load.spritesheet('leftrun', './assets/Player_LeftRun.png',{frameWidth:53, frameHeight:75, startFrame:0, endFrame:4});
-        this.load.spritesheet('rightrun', './assets/Play_RightRun.png',{frameWidth:53, frameHeight:75, startFrame:0, endFrame:4});
-        this.load.spritesheet('vibing', './assets/Player.png',{frameWidth:53, frameHeight:75, startFrame:0, endFrame:0} )*/
         this.load.spritesheet('enemy1', './assets/enemy_attack.png',{frameWidth:32, frameHeight:32, startFrame:0, endFrame:5});
         this.load.spritesheet('run_right','./assets/Player_Run.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:10});
         this.load.spritesheet('run_left','./assets/Player_Run_Left.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:10});
