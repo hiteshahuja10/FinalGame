@@ -33,9 +33,6 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('jump_left','./assets/Jump_Left.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:0});
         this.load.spritesheet('vibing','./assets/knight.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:0});
         this.load.spritesheet('SlashAni','./assets/Slash_Ani.png',{frameWidth:52, frameHeight:40, startFrame:0, endFrame:10});
-        
-
-
     }
 
     create() {
@@ -47,7 +44,6 @@ class Play extends Phaser.Scene {
         this.torch = this.physics.add.sprite(100, 350, 'torch').setScale(1.5);
         this.torch = this.physics.add.sprite(500, 350, 'torch').setScale(1.5);
         this.torch = this.physics.add.sprite(900, 350, 'torch').setScale(1.5);
-
         this.heart = this.physics.add.sprite(30, 250, 'heart').setScale(1);
         this.heart1 = this.physics.add.sprite(60, 250, 'heart').setScale(1);
         this.heart2 = this.physics.add.sprite(90, 250, 'heart').setScale(1);
@@ -249,6 +245,29 @@ class Play extends Phaser.Scene {
         //console.log("hello")
     }
 
-    
+    // createPlatform(x,y, velocity){
+    //     let test = this.random(1, 2);
+    //     //let size = this.random(1, 2);
+    //     console.log(test);
+    //     let tile = this.physics.add.sprite(x,y,'platform').setScale(1.2);
+    //     tile.body.immovable = true;
+    //     tile.body.allowGravity = false;
+    //     tile.body.setVelocityY(velocity);
+    //     this.platforms.add(tile);
+    //     let coin = this.physics.add.sprite(x,y-30,'coin').setScale(0.5);
+    //     coin.body.immovable = true;
+    //     coin.body.allowGravity = false;
+    //     coin.body.setVelocityY(velocity);
+    //     this.coin.add(coin);
+    //     if(test % 2 == 0) {
+    //         if (x != 300 && y != 600){
+    //             let spikes = this.physics.add.sprite(x,y+26,'downspike').setScale(1);
+    //             spikes.body.immovable = true;
+    //             spikes.body.allowGravity = false;
+    //             spikes.body.setVelocityY(velocity);
+    //             this.spikes.add(spikes);
+    //         }
+    //     }
+    // }    
 
 }
