@@ -17,7 +17,6 @@ class Play extends Phaser.Scene {
         this.load.image('player', './assets/knight.png');
         this.load.image('floor','./assets/ground.png')
         this.load.image('wall','./assets/walls.png')
-        this.load.tilemapTiledJSON('tilemap','./assets/Test_Map.json')
         this.load.image('line', './assets/line.png');
         this.load.image('line2', './assets/outline.png');
         this.load.image('sword1', './assets/SwordPiece_1.png');
