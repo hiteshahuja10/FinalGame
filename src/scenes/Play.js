@@ -83,7 +83,7 @@ class Play extends Phaser.Scene {
         ground.setCollisionByProperty({collides: true})*/
         
         this.player = new dude(this,300, 250, 'player');
-        this.player.body.gravity.y = 200;
+        this.player.body.gravity.y = 400;
 
         this.enemy = new enemy(this,400, 580, 'enemy').setScale(1.2);
         this.enemy.body.gravity.y = 200;
@@ -182,7 +182,7 @@ class Play extends Phaser.Scene {
         //Platforms and Spikes
         this.physics.add.collider(this.player, this.platform); 
         this.physics.add.collider(this.player, this.spike); 
-        this.createPlatform(100,350);
+        //this.createPlatform(100,350).setScale(0.5);
         this.createPlatform(300,350);
         this.createPlatform(700,350);
         this.createPlatform(1100,350);
@@ -287,14 +287,13 @@ class Play extends Phaser.Scene {
         //console.log("hello")
     }  
     createPlatform(x,y){
-        
-        this.platform.create(x,y,'platform').setScale(2).refreshBody();
+        this.platform.create(x,y,'platform').setScale(0.5).refreshBody();
     }
     createSpike(x,y,num){
         if(num == 1){
-            this.spike.create(x,y,'spike');
+            this.spike.create(x,y,'spike').setScale(0.5);
         }else if(num == 2){
-            this.spike.create(x,y,'spike2');
+            this.spike.create(x,y,'spike2').setScale(0.5);
         }
         
     }
