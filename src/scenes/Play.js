@@ -44,7 +44,7 @@ class Play extends Phaser.Scene {
         this.music.loop = true;
         this.music.play();
         this.tile = this.add.tileSprite(0, 0, 1400, 700, 'sep').setOrigin(0, 0);
-        this.sword1 = this.physics.add.sprite(1300, 585, 'sword1').setScale(0.5);
+        this.sword1 = this.physics.add.sprite(1300, 90, 'sword1').setScale(0.5);
         this.torch = this.physics.add.sprite(100, 350, 'torch').setScale(1.5);
         this.torch = this.physics.add.sprite(500, 350, 'torch').setScale(1.5);
         this.torch = this.physics.add.sprite(900, 350, 'torch').setScale(1.5);
@@ -185,6 +185,8 @@ class Play extends Phaser.Scene {
         this.createPlatform(100,350);
         this.createPlatform(300,350);
         this.createPlatform(700,350);
+        this.createPlatform(1100,350);
+        this.createPlatform(1300,150);
         this.createSpike(500,575,1);
         
     }
