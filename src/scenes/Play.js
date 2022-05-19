@@ -4,6 +4,7 @@ class Play extends Phaser.Scene {
         super("playScene");
         this.line;
         this.holy = 0;
+        this.gameOver = false;
     }
 
     preload() {
@@ -16,7 +17,6 @@ class Play extends Phaser.Scene {
         this.load.image('player', './assets/knight.png');
         this.load.image('floor','./assets/ground.png')
         this.load.image('wall','./assets/walls.png')
-        this.load.tilemapTiledJSON('tilemap','./assets/Test_Map.json')
         this.load.image('line', './assets/line.png');
         this.load.image('line2', './assets/outline.png');
         this.load.image('sword1', './assets/SwordPiece_1.png');
@@ -56,8 +56,6 @@ class Play extends Phaser.Scene {
         this.title = this.add.rectangle(0, borderUISize-12, game.config.width, (scoreUISize * 2)-5, 
         0x00699a).setOrigin(0, 0);
 
-        //this.swordbar = this.physics.add.sprite(150, 650, 'swordbar').setScale(1.5);
-
         
         this.line = this.physics.add.staticGroup();
         this.line.create(100,65,'line');
@@ -91,6 +89,7 @@ class Play extends Phaser.Scene {
         this.player.slide = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
         this.player.airdash = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
         this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+        this.restart = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.player.health = 3;
         this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 
@@ -128,8 +127,6 @@ class Play extends Phaser.Scene {
             repeat: -1
         });
 
-        //this.swordbar.body.setCollideWorldBounds(true);
-        //this.physics.add.collider(this.swordbar, this.line);
         this.cameras.main.setBounds(0, 0, 1500, 700);
         this.cameras.main.setZoom(1.5);
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
@@ -179,50 +176,66 @@ class Play extends Phaser.Scene {
     }
     
     update(){
-        if (Phaser.Input.Keyboard.JustDown(this.menu)){
-            this.scene.start('menuScene');
-            this.music.stop();
+
+        if (this.player.gameOver){
+            if (Phaser.Input.Keyboard.JustDown(this.restart)){
+                this.music.stop();
+                this.scene.start('playScene');
+            }
+            if (Phaser.Input.Keyboard.JustDown(this.menu)){
+                this.music.stop();
+                this.scene.start('menuScene');
+            }
         }
-        this.swordbar.x = this.player.body.position.x;
+        if (Phaser.Input.Keyboard.JustDown(this.menu)){
+            this.music.stop();
+            this.scene.start('menuScene');
+        }
         //this.tile.tilePositionY -= 4;
         if(this.player.gameOver != true){
             this.player.update();
             this.enemy.update();
-        }
-        if (this.player.right.isDown && this.heart.x < 1320){
-            this.heart.x += 3.35;
-            this.heart1.x += 3.35;
-            this.heart2.x += 3.35;
-        }
-        else if(this.player.left.isDown && this.heart.x > 20){
-            this.heart.x -= 3.1;
-            this.heart1.x -= 3.1;
-            this.heart2.x -= 3.1;
-        }
-        if(this.player.health == 2){
-            if (this.heart2){
-                console.log("yoyoyoyo");
-                this.heart2.alpha = 0;;
-            };
-        }else if(this.player.health == 1){
-            this.heart1.alpha = 0;
-        }else if(this.player.health <= 0){
-            this.heart.alpha = 0;
-            //this.player.gameOver = true;
+            this.swordbar.x = this.player.body.position.x;
+            if (this.player.right.isDown && this.heart.x < 1320){
+                this.heart.x += 3.35;
+                this.heart1.x += 3.35;
+                this.heart2.x += 3.35;
+            }
+            else if(this.player.left.isDown && this.heart.x > 20){
+                this.heart.x -= 3.1;
+                this.heart1.x -= 3.1;
+                this.heart2.x -= 3.1;
+            }
+            if(this.player.health == 2){
+                if (this.heart2){
+                    console.log("yoyoyoyo");
+                    this.heart2.alpha = 0;;
+                };
+            }else if(this.player.health == 1){
+                this.heart1.alpha = 0;
+            }else if(this.player.health <= 0){
+                this.heart.alpha = 0;
+                this.player.gameOver = true;
+                this.cameras.main.startFollow(this.enemy, true, 0.1, 0.1);
+                this.check = this.add.text(game.config.width/2-30, game.config.height/2 + 64, 'Press (R) to Restart or (M) for Menu',
+                menuConfig).setOrigin(0.5);
+                this.player.death();
+
+            }
+    
+            if(this.player.attack.isDown){
+                this.slash.visible = true;
+                this.slash.body.x = this.player.body.x +10;
+                this.slash.body.y = this.player.body.y;
+                this.slash.anims.play('SlashAni', true)
+                this.slash.on('animationcomplete', ()=>{ 
+                    console.log('animationcomplete')
+                    this.slash.visible = false;
+                }); 
+                //this.slash.visible = false;
+            }
         }
 
-        if(this.player.attack.isDown){
-            this.slash.visible = true;
-            this.slash.body.x = this.player.body.x +10;
-            this.slash.body.y = this.player.body.y;
-            this.slash.anims.play('SlashAni', true)
-            this.slash.on('animationcomplete', ()=>{ 
-                console.log('animationcomplete')
-                this.slash.visible = false;
-            }); 
-            //this.slash.visible = false;
-        }
-        //this.slash.visible = false;
         
     }
 
@@ -236,37 +249,13 @@ class Play extends Phaser.Scene {
 
     playerhitenemy(enemy, player){
         player.health= player.health -1;
+        player.x -= 25;
         //console.log("hello")
     }
     playerslashenemy(enemy, slash){
         console.log("yo");
         enemy.death();
         //console.log("hello")
-    }
-
-    // createPlatform(x,y, velocity){
-    //     let test = this.random(1, 2);
-    //     //let size = this.random(1, 2);
-    //     console.log(test);
-    //     let tile = this.physics.add.sprite(x,y,'platform').setScale(1.2);
-    //     tile.body.immovable = true;
-    //     tile.body.allowGravity = false;
-    //     tile.body.setVelocityY(velocity);
-    //     this.platforms.add(tile);
-    //     let coin = this.physics.add.sprite(x,y-30,'coin').setScale(0.5);
-    //     coin.body.immovable = true;
-    //     coin.body.allowGravity = false;
-    //     coin.body.setVelocityY(velocity);
-    //     this.coin.add(coin);
-    //     if(test % 2 == 0) {
-    //         if (x != 300 && y != 600){
-    //             let spikes = this.physics.add.sprite(x,y+26,'downspike').setScale(1);
-    //             spikes.body.immovable = true;
-    //             spikes.body.allowGravity = false;
-    //             spikes.body.setVelocityY(velocity);
-    //             this.spikes.add(spikes);
-    //         }
-    //     }
-    // }    
+    }  
 
 }
