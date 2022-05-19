@@ -84,7 +84,7 @@ class Play extends Phaser.Scene {
         ground.setOrigin(0,0);
         ground.setCollisionByProperty({collides: true})*/
         
-        this.player = new dude(this,300, 250, 'player');
+        this.player = new dude(this,200, 250, 'player');
         this.player.body.gravity.y = 400;
 
         this.enemy = new enemy(this,400, 580, 'enemy').setScale(1.2);
