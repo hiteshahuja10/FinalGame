@@ -302,12 +302,12 @@ class Play extends Phaser.Scene {
     playerhitenemy(enemy, player){
         player.health= player.health -1;
         player.x -= 25;
-        this.time.addEvent({
+        /*this.time.addEvent({
             delay: 500,
             callback: ()=>{
                 this.player.visible = false;
             },
-        })
+        })*/
         //console.log("hello")
     }
     playerslashenemy(enemy, slash){
