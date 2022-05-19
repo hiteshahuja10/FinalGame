@@ -23,6 +23,7 @@ class dude extends Phaser.Physics.Arcade.Sprite{
         this.gameOver = false;
 
         this.sfxDude = scene.sound.add('sfx_jump');
+        this.faceLeft = false;
         //this.sfxDude = scene.sound.add('sfx_jump');
         //this.sfxDeath = scene.sound.add('sfx_death');
 
@@ -34,7 +35,14 @@ class dude extends Phaser.Physics.Arcade.Sprite{
     }
     //this.setVelocityX(0);
     if(!this.left.isDown && !this.right.isDown){
-        this.anims.play('vibing')
+        if (this.faceLeft == false){
+            this.anims.play('vibing');
+            //this.slashan = 'SlashAni';
+        }
+        else if(this.faceLeft == true){
+            this.anims.play('vibingL');
+            //this.slashan = 'SlashAniL';
+        }
     }
     if(this.left.isDown){
         this.setVelocityX(-200);
@@ -42,11 +50,15 @@ class dude extends Phaser.Physics.Arcade.Sprite{
             this.setVelocityX(-5000);
         }
         this.anims.play('run_left',true);
+        this.faceLeft = true;
+        this.slashan = 'SlashAniL';
 
         //add animation line here for when facing left
     }
 
     if(this.right.isDown){
+        this.faceLeft = false;
+        this.slashan = 'SlashAni';
         this.setVelocityX(200);
         if(Phaser.Input.Keyboard.JustDown(this.airdash)){
             this.setVelocityX(4000);
