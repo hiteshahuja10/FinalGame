@@ -5,6 +5,8 @@ class Play extends Phaser.Scene {
         this.line;
         this.holy = 0;
         this.gameOver = false;
+        this.platform;
+        this.spike;
     }
 
     preload() {
@@ -53,6 +55,8 @@ class Play extends Phaser.Scene {
         this.ground2 = this.physics.add.sprite(0,700,'ground').setScale(1);
         this.ground.body.immovable = true;
         this.ground.body.allowGravity = false;
+        this.platform = this.physics.add.staticGroup();
+        this.spike = this.physics.add.staticGroup();
 
 
         this.title = this.add.rectangle(0, borderUISize-12, game.config.width, (scoreUISize * 2)-5, 
@@ -175,6 +179,14 @@ class Play extends Phaser.Scene {
         //this.physics.add.collider(this.player, ground); 
         this.physics.add.overlap(this.player, this.sword1, this.holySword, null, this);
 
+        //Platforms and Spikes
+        this.physics.add.collider(this.player, this.platform); 
+        this.physics.add.collider(this.player, this.spike); 
+        this.createPlatform(100,350);
+        this.createPlatform(300,350);
+        this.createPlatform(700,350);
+        this.createSpike(500,575,1);
+        
     }
     
     update(){
@@ -259,5 +271,17 @@ class Play extends Phaser.Scene {
         enemy.death();
         //console.log("hello")
     }  
+    createPlatform(x,y){
+        
+        this.platform.create(x,y,'platform').setScale(2).refreshBody();
+    }
+    createSpike(x,y,num){
+        if(num == 1){
+            this.spike.create(x,y,'spike');
+        }else if(num == 2){
+            this.spike.create(x,y,'spike2');
+        }
+        
+    }
 
 }
