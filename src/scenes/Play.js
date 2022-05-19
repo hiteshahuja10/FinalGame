@@ -13,7 +13,7 @@ class Play extends Phaser.Scene {
         this.load.image('sep2', './assets/sep2.png');
         this.load.image('ground', './assets/ground2.png');
         this.load.image('new', './assets/new1.png');
-        this.load.image('platform', './assets/StonePlatform.png');
+        this.load.image('platform', './assets/Platform.png');
         this.load.image('player', './assets/knight.png');
         this.load.image('floor','./assets/ground.png')
         this.load.image('wall','./assets/walls.png')
@@ -26,6 +26,8 @@ class Play extends Phaser.Scene {
         this.load.image('slash', './assets/slash.png');
         this.load.image('swordbar', './assets/swordbar2.png');
         this.load.image('collectone', './assets/collectone.png');
+        this.load.image('spike','./assets/spikes.png');
+        this.load.image('spike2','./assets/double_spike.png');
         this.load.spritesheet('enemy1', './assets/enemy_attack.png',{frameWidth:32, frameHeight:32, startFrame:0, endFrame:5});
         this.load.spritesheet('run_right','./assets/Player_Run.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:10});
         this.load.spritesheet('run_left','./assets/Player_Run_Left.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:10});
