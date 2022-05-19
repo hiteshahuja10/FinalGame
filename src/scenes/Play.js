@@ -36,6 +36,7 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('jump_right','./assets/Jump_Right.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:0});
         this.load.spritesheet('jump_left','./assets/Jump_Left.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:0});
         this.load.spritesheet('vibing','./assets/knight.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:0});
+        this.load.spritesheet('vibingL','./assets/knight_left.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:0});
         this.load.spritesheet('SlashAni','./assets/Slash_Ani.png',{frameWidth:52, frameHeight:40, startFrame:0, endFrame:10});
     }
 
@@ -101,6 +102,8 @@ class Play extends Phaser.Scene {
 
         this.slash = this.physics.add.sprite(100,200,'slash');
         this.slash.visible = false;
+        this.slash.setOrigin(0,0);
+
         //this.slash.animations.add('SlashAni', false);
         //this.player.attack = this.input.activePointer.leftButton;
 
@@ -160,6 +163,11 @@ class Play extends Phaser.Scene {
             frameRate: 30
         });
         this.anims.create({
+            key: 'vibingL',
+            frames: this.anims.generateFrameNumbers('vibingL', { start: 0, end: 0, first: 0}),
+            frameRate: 30
+        });
+        this.anims.create({
             key: 'jump_right',
             frames: this.anims.generateFrameNumbers('jump_right', { start: 0, end: 0, first: 0}),
             frameRate: 30
@@ -174,6 +182,7 @@ class Play extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('SlashAni', { start: 0, end: 10, first: 0}),
             frameRate: 60
         });
+        //this.player.slashan ='SlashAni';
 
         
         //this.physics.add.collider(this.player, ground); 
@@ -249,24 +258,31 @@ class Play extends Phaser.Scene {
                 this.check = this.add.text(game.config.width/2-30, game.config.height/2 + 64, 'Press (R) to Restart or (M) for Menu',
                 menuConfig).setOrigin(0.5);
                 this.player.death();
-
             }
-    
-            if(this.player.attack.isDown){
-                this.slash.visible = true;
+
+        if(this.player.attack.isDown){
+            this.slash.visible = true;
+            if (this.player.faceLeft == false){
                 this.slash.body.x = this.player.body.x +10;
                 this.slash.body.y = this.player.body.y;
-                this.slash.anims.play('SlashAni', true)
-                this.slash.on('animationcomplete', ()=>{ 
-                    console.log('animationcomplete')
-                    this.slash.visible = false;
-                }); 
-                //this.slash.visible = false;
+                this.slash.setScale(1);
             }
+            else if (this.player.faceLeft == true){
+                this.slash.body.x = this.player.body.x -20;
+                this.slash.body.y = this.player.body.y;
+                //this.slash.setScale(-1,1);
+            }
+            this.slash.anims.play(this.player.slashan, true)
+            this.slash.on('animationcomplete', ()=>{ 
+                console.log('animationcomplete')
+                this.slash.visible = false;
+            }); 
+            //this.slash.visible = false;
         }
 
         
     }
+}
 
     holySword(player,piece){
         piece.disableBody(true,true);
