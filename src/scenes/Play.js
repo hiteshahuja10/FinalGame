@@ -84,10 +84,10 @@ class Play extends Phaser.Scene {
         ground.setOrigin(0,0);
         ground.setCollisionByProperty({collides: true})*/
         
-        this.player = new dude(this,300, 250, 'player');
+        this.player = new dude(this, 300, 250, 'player');
         this.player.body.gravity.y = 400;
 
-        this.enemy = new enemy(this,400, 580, 'enemy').setScale(1.2);
+        this.enemy = new enemy(this, 400, 580, 'enemy').setScale(1.2);
         this.enemy.body.gravity.y = 200;
         this.input.mouse.capture = true;
         this.player.left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -305,7 +305,9 @@ class Play extends Phaser.Scene {
     }
     playerslashenemy(enemy, slash){
         console.log("yo");
-        enemy.death();
+        if(slash.visible == true){
+          enemy.death();
+        }
         //console.log("hello")
     }  
     createPlatform(x,y){
