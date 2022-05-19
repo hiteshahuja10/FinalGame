@@ -106,6 +106,7 @@ class Play extends Phaser.Scene {
         this.slash.setOrigin(0,0);
 
         //this.slash.animations.add('SlashAni', false);
+        //this.slash.animations.add('SlashAni', true);
         //this.player.attack = this.input.activePointer.leftButton;
 
         this.physics.add.collider(this.player, this.platforms); 
