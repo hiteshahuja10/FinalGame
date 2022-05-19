@@ -38,6 +38,7 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('vibing','./assets/knight.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:0});
         this.load.spritesheet('vibingL','./assets/knight_left.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:0});
         this.load.spritesheet('SlashAni','./assets/Slash_Ani.png',{frameWidth:52, frameHeight:40, startFrame:0, endFrame:10});
+        this.load.spritesheet('SlashAniL','./assets/Slash_Ani_Left.png',{frameWidth:39, frameHeight:39, startFrame:0, endFrame:10});
     }
 
     create() {
@@ -182,6 +183,11 @@ class Play extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('SlashAni', { start: 0, end: 10, first: 0}),
             frameRate: 60
         });
+        this.anims.create({
+            key: 'SlashAniL',
+            frames: this.anims.generateFrameNumbers('SlashAniL', { start: 0, end: 10, first: 0}),
+            frameRate: 60
+        });
         //this.player.slashan ='SlashAni';
 
         
@@ -268,7 +274,7 @@ class Play extends Phaser.Scene {
                 this.slash.setScale(1);
             }
             else if (this.player.faceLeft == true){
-                this.slash.body.x = this.player.body.x -20;
+                this.slash.body.x = this.player.body.x -30;
                 this.slash.body.y = this.player.body.y;
                 //this.slash.setScale(-1,1);
             }
