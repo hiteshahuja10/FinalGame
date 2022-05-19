@@ -175,7 +175,11 @@ class Play extends Phaser.Scene {
         //this.physics.add.collider(this.player, ground); 
         this.physics.add.overlap(this.player, this.sword1, this.holySword, null, this);
 
+        // see if enemy and player within 400px of each other
+    
     }
+
+    
     
     update(){
 
@@ -198,6 +202,17 @@ class Play extends Phaser.Scene {
             this.player.update();
             this.enemy.update();
             this.swordbar.x = this.player.body.position.x;
+            this.distance = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy);
+            if (this.enemy.body != null){
+                if (this.distance < 200) {
+                    if (this.player.x < this.enemy.x && this.enemy.body.velocity.x >= 0) {
+                        this.enemy.body.velocity.x = -150;
+                    }
+                    else if (this.player.x > this.enemy.x && this.enemy.body.velocity.x <= 0) {
+                        this.enemy.body.velocity.x = 150;
+                    }
+                }
+            }
             if (this.player.right.isDown && this.heart.x < 1320){
                 this.heart.x += 3.35;
                 this.heart1.x += 3.35;
