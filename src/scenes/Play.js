@@ -46,7 +46,7 @@ class Play extends Phaser.Scene {
         this.music.loop = true;
         this.music.play();
         this.tile = this.add.tileSprite(0, 0, 1400, 700, 'sep').setOrigin(0, 0);
-        this.sword1 = this.physics.add.sprite(1300, 90, 'sword1').setScale(0.5);
+        this.sword1 = this.physics.add.sprite(1300, 585, 'sword1').setScale(0.5);
         this.torch = this.physics.add.sprite(100, 350, 'torch').setScale(1.5);
         this.torch = this.physics.add.sprite(500, 350, 'torch').setScale(1.5);
         this.torch = this.physics.add.sprite(900, 350, 'torch').setScale(1.5);
@@ -84,7 +84,7 @@ class Play extends Phaser.Scene {
         ground.setOrigin(0,0);
         ground.setCollisionByProperty({collides: true})*/
         
-        this.player = new dude(this, 300, 250, 'player');
+        this.player = new dude(this,200, 250, 'player');
         this.player.body.gravity.y = 400;
 
         this.enemy = new enemy(this, 400, 580, 'enemy').setScale(1.2);
@@ -106,6 +106,7 @@ class Play extends Phaser.Scene {
         this.slash.setOrigin(0,0);
 
         //this.slash.animations.add('SlashAni', false);
+        //this.slash.animations.add('SlashAni', true);
         //this.player.attack = this.input.activePointer.leftButton;
 
         this.physics.add.collider(this.player, this.platforms); 
@@ -198,11 +199,11 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.player, this.platform); 
         this.physics.add.collider(this.player, this.spike); 
         //this.createPlatform(100,350).setScale(0.5);
-        this.createPlatform(300,350);
-        this.createPlatform(700,350);
-        this.createPlatform(1100,350);
-        this.createPlatform(1300,150);
-        this.createSpike(500,575,1);
+        this.createPlatform(500,520);
+        this.createPlatform(700,520);
+        this.createPlatform(1100,520);
+        this.createPlatform(1300,520);
+        this.createSpike(500,585,1);
         
     }
 
@@ -261,7 +262,7 @@ class Play extends Phaser.Scene {
                 this.heart.alpha = 0;
                 this.player.gameOver = true;
                 this.cameras.main.startFollow(this.enemy, true, 0.1, 0.1);
-                this.check = this.add.text(game.config.width/2-30, game.config.height/2 + 64, 'Press (R) to Restart or (M) for Menu',
+                this.check = this.add.text(game.config.width/2-150, game.config.height/2 + 64, 'Press (R) to Restart or (M) for Menu',
                 menuConfig).setOrigin(0.5);
                 this.player.death();
             }
@@ -301,6 +302,12 @@ class Play extends Phaser.Scene {
     playerhitenemy(enemy, player){
         player.health= player.health -1;
         player.x -= 25;
+        this.time.addEvent({
+            delay: 500,
+            callback: ()=>{
+                this.player.visible = false;
+            },
+        })
         //console.log("hello")
     }
     playerslashenemy(enemy, slash){
