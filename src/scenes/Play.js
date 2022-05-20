@@ -29,7 +29,8 @@ class Play extends Phaser.Scene {
         this.load.image('swordbar', './assets/swordbar2.png');
         this.load.image('collectone', './assets/collectone.png');
         this.load.image('spike','./assets/spikes.png');
-        this.load.image('spike2','./assets/double_spike.png');
+        this.load.image('spike2','./assets/double_spike2.png');
+        this.load.image('spike3','./assets/backspike.png');
         this.load.spritesheet('enemy1', './assets/enemy_attack.png',{frameWidth:32, frameHeight:32, startFrame:0, endFrame:5});
         this.load.spritesheet('run_right','./assets/Player_Run.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:10});
         this.load.spritesheet('run_left','./assets/Player_Run_Left.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:10});
@@ -195,15 +196,17 @@ class Play extends Phaser.Scene {
         //this.physics.add.collider(this.player, ground); 
         this.physics.add.overlap(this.player, this.sword1, this.holySword, null, this);
 
-        //Platforms and Spikes
-        this.physics.add.collider(this.player, this.platform); 
-        this.physics.add.collider(this.player, this.spike); 
         //this.createPlatform(100,350).setScale(0.5);
-        this.createPlatform(500,520);
+        this.createPlatform(350,520);
         this.createPlatform(700,520);
         this.createPlatform(1100,520);
         this.createPlatform(1300,520);
-        this.createSpike(500,585,1);
+        this.createSpike(500,585,2);
+        this.createSpike(1100,535,3);
+
+        //Platforms and Spikes
+        this.physics.add.collider(this.player, this.platform); 
+        this.physics.add.collider(this.player, this.spike, this.playerhitspikes); 
         
     }
 
@@ -304,6 +307,12 @@ class Play extends Phaser.Scene {
         player.x -= 25;
         //console.log("hello")
     }
+
+    playerhitspikes(player, spikes){
+        player.health= player.health -1;
+        player.x -= 50;
+    }
+
     playerslashenemy(enemy, slash){
         console.log("yo");
         enemy.death();
@@ -316,7 +325,10 @@ class Play extends Phaser.Scene {
         if(num == 1){
             this.spike.create(x,y,'spike').setScale(0.5);
         }else if(num == 2){
-            this.spike.create(x,y,'spike2').setScale(0.5);
+            this.spike.create(x,y,'spike2').setScale(1);
+        }
+        else if (num == 3){
+            this.spike.create(x,y,'spike3').setScale(0.5);
         }
         
     }
