@@ -84,16 +84,16 @@ class dude extends Phaser.Physics.Arcade.Sprite{
 
     }
 
-    if(this.damaged == true){
+    /*if(this.damaged == true){
         //this.visible = false
         this.scene.time.addEvent({
-            delay: 1500,
+            delay: 2000,
             callback: ()=>{
                this.damaged = false; // spawn a new apple
             },
             //loop: true
         })
-    }
+    }*/
 
     //if(Phaser.Input.Keyboard.JustDown(this.airdash) && !this.body.touching.down){
         //this.setVelocityX(5000);
@@ -115,6 +115,18 @@ class dude extends Phaser.Physics.Arcade.Sprite{
       this.alive = false;
       this.body = null;
       this.destroy();
+  }
+
+  hurt(){
+        //this.visible = false
+        this.scene.time.addEvent({
+            delay: 2000,
+            callback: ()=>{
+               this.damaged = false;
+               this.visible = true; // spawn a new apple
+            },
+            //loop: true
+        })
   }
 
 }

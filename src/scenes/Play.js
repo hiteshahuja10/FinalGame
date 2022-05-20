@@ -304,6 +304,7 @@ class Play extends Phaser.Scene {
 
     playerhitenemy(enemy, player){
         if(player.damaged == false){
+            player.hurt();
             player.damaged = true;
             player.scene.time.addEvent({
                 delay: 60,
@@ -332,7 +333,7 @@ class Play extends Phaser.Scene {
 
     playerhitspikes(player, spikes){
         player.health= player.health -1;
-        player.x -= 50;
+        player.x -= 25;
     }
 
     playerslashenemy(enemy, slash){
