@@ -305,8 +305,6 @@ class Play extends Phaser.Scene {
     playerhitenemy(enemy, player){
         if(player.damaged == false){
             player.hurt();
-            player.damaged = true;
-            player.x -= 50;
         }
         //player.visible = false;
         //console.log("hello")
