@@ -123,7 +123,7 @@ class dude extends Phaser.Physics.Arcade.Sprite{
             delay: 2000,
             callback: ()=>{
                this.damaged = false;
-               this.visible = true; // spawn a new apple
+               this.visible = true;
             },
             //loop: true
         })
