@@ -125,8 +125,29 @@ class dude extends Phaser.Physics.Arcade.Sprite{
                this.damaged = false;
                this.visible = true; // spawn a new apple
             },
-            //loop: true
         })
+
+            this.damaged = true;
+            this.scene.time.addEvent({
+                delay: 60,
+                callback: ()=>{
+                   if (this.damaged == true){
+                     this.visible = false;
+                   }
+                },
+                loop: true
+            })
+            this.scene.time.addEvent({
+                delay: 50,
+                callback: ()=>{
+                    if (this.damaged == true){
+                        this.visible = true;
+                    }
+                },
+                loop: true
+            })
+            this.health= this.health -1;
+            //loop: true
   }
 
 }
