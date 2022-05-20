@@ -87,7 +87,7 @@ class Play extends Phaser.Scene {
         this.player = new dude(this,200, 250, 'player');
         this.player.body.gravity.y = 400;
 
-        this.enemy = new enemy(this,400, 580, 'enemy').setScale(1.2);
+        this.enemy = new enemy(this, 400, 580, 'enemy').setScale(1.2);
         this.enemy.body.gravity.y = 200;
         this.input.mouse.capture = true;
         this.player.left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -302,11 +302,19 @@ class Play extends Phaser.Scene {
     playerhitenemy(enemy, player){
         player.health= player.health -1;
         player.x -= 25;
+        /*this.time.addEvent({
+            delay: 500,
+            callback: ()=>{
+                this.player.visible = false;
+            },
+        })*/
         //console.log("hello")
     }
     playerslashenemy(enemy, slash){
         console.log("yo");
-        enemy.death();
+        if(slash.visible == true){
+          enemy.death();
+        }
         //console.log("hello")
     }  
     createPlatform(x,y){
