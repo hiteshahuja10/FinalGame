@@ -89,8 +89,8 @@ class Play extends Phaser.Scene {
         this.player.body.gravity.y = 400;
 
         this.enemy = new enemy(this, 400, 580, 'enemy').setScale(1.2);
-        this.enemy2 = new enemy(this, 500, 580, 'enemy').setScale(1.2);
-        this.enemy3 = new enemy(this, 600, 580, 'enemy').setScale(1.2);
+        this.enemy2 = new enemy(this, 550, 580, 'enemy').setScale(1.2);
+        this.enemy3 = new enemy(this, 650, 580, 'enemy').setScale(1.2);
 
         this.enemy.body.gravity.y = 200;
         this.input.mouse.capture = true;
@@ -120,6 +120,8 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.enemy, this.ground);
         this.physics.add.collider(this.enemy, this.platforms);
         this.physics.add.collider(this.enemy, this.player, this.playerhitenemy);
+        this.physics.add.collider(this.enemy2, this.player, this.playerhitenemy);
+        this.physics.add.collider(this.enemy3, this.player, this.playerhitenemy);
         this.physics.add.overlap(this.enemy, this.slash, this.playerslashenemy);
         this.physics.add.overlap(this.enemy2, this.slash, this.playerslashenemy);
         this.physics.add.overlap(this.enemy3, this.slash, this.playerslashenemy);
@@ -245,26 +247,6 @@ class Play extends Phaser.Scene {
 
             this.swordbar.x = this.player.body.position.x;
             this.distance = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy);
-            if (this.enemy2.body != null){
-                if (this.distance < 200) {
-                    if (this.player.x < this.enemy2.x && this.enemy2.body.velocity.x >= 0) {
-                        this.enemy2.body.velocity.x = -150;
-                    }
-                    else if (this.player.x > this.enemy2.x && this.enemy2.body.velocity.x <= 0) {
-                        this.enemy2.body.velocity.x = 150;
-                    }
-                }
-            }
-            if (this.enemy3.body != null){
-                if (this.distance < 200) {
-                    if (this.player.x < this.enemy3.x && this.enemy3.body.velocity.x >= 0) {
-                        this.enemy3.body.velocity.x = -150;
-                    }
-                    else if (this.player.x > this.enemy3.x && this.enemy3.body.velocity.x <= 0) {
-                        this.enemy3.body.velocity.x = 150;
-                    }
-                }
-            }
             if (this.enemy.body != null){
                 if (this.distance < 200) {
                     if (this.player.x < this.enemy.x && this.enemy.body.velocity.x >= 0) {
@@ -272,6 +254,26 @@ class Play extends Phaser.Scene {
                     }
                     else if (this.player.x > this.enemy.x && this.enemy.body.velocity.x <= 0) {
                         this.enemy.body.velocity.x = 150;
+                    }
+                }
+            }
+            if (this.enemy2.body != null){
+                if (this.distance < 200) {
+                    if (this.player.x < this.enemy2.x && this.enemy2.body.velocity.x >= 0) {
+                        this.enemy2.body.velocity.x = -100;
+                    }
+                    else if (this.player.x > this.enemy2.x && this.enemy2.body.velocity.x <= 0) {
+                        this.enemy2.body.velocity.x = 100;
+                    }
+                }
+            }
+            if (this.enemy3.body != null){
+                if (this.distance < 200) {
+                    if (this.player.x < this.enemy3.x && this.enemy3.body.velocity.x >= 0) {
+                        this.enemy3.body.velocity.x = -50;
+                    }
+                    else if (this.player.x > this.enemy3.x && this.enemy3.body.velocity.x <= 0) {
+                        this.enemy3.body.velocity.x = 50;
                     }
                 }
             }
@@ -330,7 +332,8 @@ class Play extends Phaser.Scene {
         this.swordbar.disableBody(true,true);
         this.holy += 1;
         this.swordbar = this.physics.add.sprite(0, 650, 'collectone').setScale(1.5);
-        //this.scene.start('LevelTwoScene');
+        //this.music.stop();
+        //this.scene.start('levelTwo');
 
     }
 
