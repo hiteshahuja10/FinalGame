@@ -337,8 +337,9 @@ class Play extends Phaser.Scene {
     }
 
     playerhitspikes(player, spikes){
-        player.health= player.health -1;
-        player.x -= 25;
+        if(player.damaged == false){
+            player.hurt();
+        }
     }
 
     playerslashenemy(enemy, slash){
