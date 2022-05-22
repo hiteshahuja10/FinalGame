@@ -89,6 +89,9 @@ class Play extends Phaser.Scene {
         this.player.body.gravity.y = 400;
 
         this.enemy = new enemy(this, 400, 580, 'enemy').setScale(1.2);
+        this.enemy2 = new enemy(this, 500, 580, 'enemy').setScale(1.2);
+        this.enemy3 = new enemy(this, 600, 580, 'enemy').setScale(1.2);
+
         this.enemy.body.gravity.y = 200;
         this.input.mouse.capture = true;
         this.player.left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -99,6 +102,7 @@ class Play extends Phaser.Scene {
         this.player.airdash = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
         this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         this.restart = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        this.leveltwo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
         this.player.health = 3;
         this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 
@@ -117,6 +121,8 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.enemy, this.platforms);
         this.physics.add.collider(this.enemy, this.player, this.playerhitenemy);
         this.physics.add.overlap(this.enemy, this.slash, this.playerslashenemy);
+        this.physics.add.overlap(this.enemy2, this.slash, this.playerslashenemy);
+        this.physics.add.overlap(this.enemy3, this.slash, this.playerslashenemy);
 
 
         this.bar = this.add.container(10, 50);
@@ -210,8 +216,6 @@ class Play extends Phaser.Scene {
         
     }
 
-    
-    
     update(){
 
         if (this.player.gameOver){
@@ -228,12 +232,39 @@ class Play extends Phaser.Scene {
             this.music.stop();
             this.scene.start('menuScene');
         }
+        if(Phaser.Input.Keyboard.JustDown(this.leveltwo)) {
+            this.music.stop();
+            this.scene.start('levelTwo');
+        }
         //this.tile.tilePositionY -= 4;
         if(this.player.gameOver != true){
             this.player.update();
             this.enemy.update();
+            this.enemy2.update();
+            this.enemy3.update();
+
             this.swordbar.x = this.player.body.position.x;
             this.distance = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy);
+            if (this.enemy2.body != null){
+                if (this.distance < 200) {
+                    if (this.player.x < this.enemy2.x && this.enemy2.body.velocity.x >= 0) {
+                        this.enemy2.body.velocity.x = -150;
+                    }
+                    else if (this.player.x > this.enemy2.x && this.enemy2.body.velocity.x <= 0) {
+                        this.enemy2.body.velocity.x = 150;
+                    }
+                }
+            }
+            if (this.enemy3.body != null){
+                if (this.distance < 200) {
+                    if (this.player.x < this.enemy3.x && this.enemy3.body.velocity.x >= 0) {
+                        this.enemy3.body.velocity.x = -150;
+                    }
+                    else if (this.player.x > this.enemy3.x && this.enemy3.body.velocity.x <= 0) {
+                        this.enemy3.body.velocity.x = 150;
+                    }
+                }
+            }
             if (this.enemy.body != null){
                 if (this.distance < 200) {
                     if (this.player.x < this.enemy.x && this.enemy.body.velocity.x >= 0) {
@@ -299,6 +330,7 @@ class Play extends Phaser.Scene {
         this.swordbar.disableBody(true,true);
         this.holy += 1;
         this.swordbar = this.physics.add.sprite(0, 650, 'collectone').setScale(1.5);
+        //this.scene.start('LevelTwoScene');
 
     }
 
