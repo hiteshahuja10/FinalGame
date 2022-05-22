@@ -12,10 +12,10 @@ var config = {
             gravity: { 
                 x: 0,
                 y: 0 },
-            debug: false
+            debug: true
         }
     },
-    scene: [Menu,Play]
+    scene: [Menu,Play, Level]
 };
 
 var menuConfig = {

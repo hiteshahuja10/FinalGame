@@ -102,6 +102,7 @@ class Play extends Phaser.Scene {
         this.player.airdash = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
         this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         this.restart = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        this.leveltwo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
         this.player.health = 3;
         this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 
@@ -231,6 +232,10 @@ class Play extends Phaser.Scene {
             this.music.stop();
             this.scene.start('menuScene');
         }
+        if(Phaser.Input.Keyboard.JustDown(this.leveltwo)) {
+            this.music.stop();
+            this.scene.start('levelTwo');
+        }
         //this.tile.tilePositionY -= 4;
         if(this.player.gameOver != true){
             this.player.update();
@@ -325,6 +330,7 @@ class Play extends Phaser.Scene {
         this.swordbar.disableBody(true,true);
         this.holy += 1;
         this.swordbar = this.physics.add.sprite(0, 650, 'collectone').setScale(1.5);
+        //this.scene.start('LevelTwoScene');
 
     }
 
