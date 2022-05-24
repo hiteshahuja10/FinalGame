@@ -316,11 +316,15 @@ class Play extends Phaser.Scene {
                 //this.slash.setScale(-1,1);
             }
             this.slash.anims.play(this.player.slashan, true)
-            this.slash.on('animationcomplete', ()=>{ 
-                console.log('animationcomplete')
-                this.slash.visible = false;
-            }); 
             //this.slash.visible = false;
+            this.time.addEvent({
+                delay: 167,
+                callback: ()=>{
+                        if(this.slash.visible == true){
+                          this.slash.visible = false;
+                        }
+                },
+            })
         }
 
         
