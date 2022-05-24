@@ -233,6 +233,7 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.player, this.platform); 
         this.physics.add.collider(this.player, this.spike, this.playerhitspikes); 
         this.physics.add.collider(this.healthbar, this.outline);
+        this.player.jumpheight = -275;
         
     }
 
