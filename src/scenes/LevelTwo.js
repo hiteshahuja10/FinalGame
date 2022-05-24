@@ -66,7 +66,7 @@ class Level extends Phaser.Scene {
         ground.setCollisionByProperty({collides: true})
 
         //player movement/player
-        this.player = new dude(this,44, 610, 'player').setScale(0.8);
+        this.player = new dude(this,44, 610, 'player');
         this.physics.add.collider(this.player,ground);
         this.player.left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.player.right = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
@@ -80,6 +80,7 @@ class Level extends Phaser.Scene {
         this.player.health = 3;
         this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
         this.player.body.gravity.y = 400;
+        this.player.jumpheight = -300;
     }
 
     update(){
