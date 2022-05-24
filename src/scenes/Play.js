@@ -31,6 +31,9 @@ class Play extends Phaser.Scene {
         this.load.image('spike','./assets/spikes.png');
         this.load.image('spike2','./assets/double_spike2.png');
         this.load.image('spike3','./assets/backspike2.png');
+        this.load.image('healthbar', './assets/healthbar.png');
+        this.load.image('healthbar2', './assets/healthbar2.png');
+        this.load.image('healthbar3', './assets/healthbar3.png');
         this.load.spritesheet('enemy1', './assets/enemy_attack.png',{frameWidth:32, frameHeight:32, startFrame:0, endFrame:5});
         this.load.spritesheet('run_right','./assets/Player_Run.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:10});
         this.load.spritesheet('run_left','./assets/Player_Run_Left.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:10});
@@ -47,13 +50,13 @@ class Play extends Phaser.Scene {
         this.music.loop = true;
         this.music.play();
         this.tile = this.add.tileSprite(0, 0, 1400, 700, 'sep').setOrigin(0, 0);
-        this.sword1 = this.physics.add.sprite(1300, 585, 'sword1').setScale(0.5);
+        this.sword1 = this.physics.add.sprite(1235, 585, 'sword1').setScale(0.5);
         this.torch = this.physics.add.sprite(100, 350, 'torch').setScale(1.5);
         this.torch = this.physics.add.sprite(500, 350, 'torch').setScale(1.5);
         this.torch = this.physics.add.sprite(900, 350, 'torch').setScale(1.5);
-        this.heart = this.physics.add.sprite(30, 250, 'heart').setScale(1);
-        this.heart1 = this.physics.add.sprite(60, 250, 'heart').setScale(1);
-        this.heart2 = this.physics.add.sprite(90, 250, 'heart').setScale(1);
+        //this.heart = this.physics.add.sprite(30, 250, 'heart').setScale(1);
+        //this.heart1 = this.physics.add.sprite(60, 250, 'heart').setScale(1);
+        //this.heart2 = this.physics.add.sprite(90, 250, 'heart').setScale(1);
         this.ground = this.physics.add.sprite(700,700,'ground').setScale(1);
         this.ground2 = this.physics.add.sprite(0,700,'ground').setScale(1);
         this.ground.body.immovable = true;
@@ -87,6 +90,8 @@ class Play extends Phaser.Scene {
         
         this.player = new dude(this,200, 250, 'player');
         this.player.body.gravity.y = 400;
+        this.enter = true;
+        this.enter2 = true;
 
         this.enemy = new enemy(this, 400, 580, 'enemy').setScale(1.2);
         this.enemy2 = new enemy(this, 550, 580, 'enemy').setScale(1.2);
@@ -126,26 +131,24 @@ class Play extends Phaser.Scene {
         this.physics.add.overlap(this.enemy2, this.slash, this.playerslashenemy);
         this.physics.add.overlap(this.enemy3, this.slash, this.playerslashenemy);
 
+        //this.hbar = this.add.container(50, 50);
+        this.healthbar = this.add.group();
+        this.hbar = this.physics.add.sprite(100, 260, 'healthbar').setScale(1);
+        this.healthbar.add(this.hbar);
 
-        this.bar = this.add.container(10, 50);
-        //this.healthbar1 = this.add.container(20, 50);
-        //this.healthbar2 = this.add.container(30, 50);
-        //this.heart = this.physics.add.sprite(30, 250, 'heart').setScale(1);
-        this.swordbar = this.physics.add.sprite(50, 600, 'swordbar').setScale(1.5);
-        //this.heart1 = this.physics.add.sprite(60, 250, 'heart').setScale(1);
-        //this.heart2 = this.physics.add.sprite(90, 250, 'heart').setScale(1);
+        //this.bar = this.add.container(10, 50);
+        this.bar = this.add.group();
+        this.swordbar = this.physics.add.sprite(0, 650, 'swordbar').setScale(1.5);
         this.bar.add(this.swordbar);
-        //this.healthbar1.add(this.heart1);
-        //this.healthbar2.add(this.heart2);
-        this.tweens.add({
+        /*this.tweens.add({
             targets: this.bar,
-            x: 80,
+            x: 110,
             ease: 'Linear',
             duration: 1,
             delay: 30,
             yoyo: false,
             repeat: -1
-        });
+        });*/
 
         this.cameras.main.setBounds(0, 0, 1500, 700);
         this.cameras.main.setZoom(1.5);
@@ -215,11 +218,11 @@ class Play extends Phaser.Scene {
         //Platforms and Spikes
         this.physics.add.collider(this.player, this.platform); 
         this.physics.add.collider(this.player, this.spike, this.playerhitspikes); 
+        this.physics.add.collider(this.healthbar, this.outline);
         
     }
 
     update(){
-
         if (this.player.gameOver){
             if (Phaser.Input.Keyboard.JustDown(this.restart)){
                 this.music.stop();
@@ -245,8 +248,16 @@ class Play extends Phaser.Scene {
             this.enemy2.update();
             this.enemy3.update();
 
-            this.swordbar.x = this.player.body.position.x;
+            //this.swordbar.x = this.player.body.position.x;
+            if (this.player.body.position.x > 50 && this.player.body.position.x < 1350){
+                this.hbar.x = this.player.body.position.x;
+            }
+            if (this.player.body.position.x > 110 && this.player.body.position.x < 1300){
+                this.swordbar.x = this.player.body.position.x;
+            }
             this.distance = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy);
+            this.distance2 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy2);
+            this.distance3 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy3);
             if (this.enemy.body != null){
                 if (this.distance < 200) {
                     if (this.player.x < this.enemy.x && this.enemy.body.velocity.x >= 0) {
@@ -258,7 +269,7 @@ class Play extends Phaser.Scene {
                 }
             }
             if (this.enemy2.body != null){
-                if (this.distance < 200) {
+                if (this.distance2 < 200) {
                     if (this.player.x < this.enemy2.x && this.enemy2.body.velocity.x >= 0) {
                         this.enemy2.body.velocity.x = -100;
                     }
@@ -268,7 +279,7 @@ class Play extends Phaser.Scene {
                 }
             }
             if (this.enemy3.body != null){
-                if (this.distance < 200) {
+                if (this.distance3 < 200) {
                     if (this.player.x < this.enemy3.x && this.enemy3.body.velocity.x >= 0) {
                         this.enemy3.body.velocity.x = -50;
                     }
@@ -277,7 +288,7 @@ class Play extends Phaser.Scene {
                     }
                 }
             }
-            if (this.player.right.isDown && this.heart.x < 1320){
+            /*if (this.player.right.isDown && this.heart.x < 1320){
                 this.heart.x += 3.35;
                 this.heart1.x += 3.35;
                 this.heart2.x += 3.35;
@@ -286,16 +297,23 @@ class Play extends Phaser.Scene {
                 this.heart.x -= 3.1;
                 this.heart1.x -= 3.1;
                 this.heart2.x -= 3.1;
-            }
-            if(this.player.health == 2){
-                if (this.heart2){
+            }*/
+            if(this.player.health == 2 && this.enter){
+                this.hbar.disableBody(true,true);
+                this.hbar = this.physics.add.sprite(this.player.body.position.x, 260, 'healthbar2').setScale(1);
+                this.enter = false;
+                /*if (this.heart2){
                     console.log("yoyoyoyo");
-                    this.heart2.alpha = 0;;
-                };
-            }else if(this.player.health == 1){
-                this.heart1.alpha = 0;
+                    this.heart2.alpha = 0;
+                };*/
+
+            }else if(this.player.health == 1 && this.enter2){
+                this.hbar.disableBody(true,true);
+                this.hbar = this.physics.add.sprite(this.player.body.position.x, 260, 'healthbar3').setScale(1);
+                this.enter2 = false;
+                //this.heart1.alpha = 0;
             }else if(this.player.health <= 0){
-                this.heart.alpha = 0;
+                //this.heart.alpha = 0;
                 this.player.gameOver = true;
                 this.cameras.main.startFollow(this.enemy, true, 0.1, 0.1);
                 this.check = this.add.text(game.config.width/2-150, game.config.height/2 + 64, 'Press (R) to Restart or (M) for Menu',
@@ -346,7 +364,6 @@ class Play extends Phaser.Scene {
             player.hurt();
         }
         //player.visible = false;
-        //console.log("hello")
     }
 
     playerhitspikes(player, spikes){
@@ -360,7 +377,6 @@ class Play extends Phaser.Scene {
         if(slash.visible == true){
           enemy.death();
         }
-        //console.log("hello")
     }  
     createPlatform(x,y){
         this.platform.create(x,y,'platform').setScale(0.5).refreshBody();
