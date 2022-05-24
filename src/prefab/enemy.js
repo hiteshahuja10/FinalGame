@@ -11,6 +11,7 @@ class enemy extends Phaser.Physics.Arcade.Sprite{
         this.setVelocityX(0)
         this.alive = true;
         this.gameOver = false;
+        this.ani;
         //this.setGravityY(100);
         this.body.setAllowGravity(false);
         this.setImmovable(true);
@@ -22,8 +23,7 @@ class enemy extends Phaser.Physics.Arcade.Sprite{
   update(){
     if(this.alive == true){
         //this.setVelocityX(2);
-        this.anims.play('enemy1',true);
-        console.log("hi");
+        this.anims.play(this.ani,true);
     }
     
 
