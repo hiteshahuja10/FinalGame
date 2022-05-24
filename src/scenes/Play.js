@@ -74,19 +74,6 @@ class Play extends Phaser.Scene {
         this.line.create(320,65,'line');
         this.line.create(0,250,'line2');
         this.line.create(1398, 250, 'line2');
-
-
-
-        /*const map = this.make.tilemap({key: 'tilemap'})
-        const tileset = map.addTilesetImage('castle-ground','floor')
-        const tileset2 = map.addTilesetImage('bg','wall')
-        const bg = map.createLayer('background',tileset2,0,400);
-        const ground = map.createLayer('ground',tileset);
-        map.setCollisionBetween(1, 12);
-        ground.setPosition(0, 400);
-        bg.setPosition(0,400)
-        ground.setOrigin(0,0);
-        ground.setCollisionByProperty({collides: true})*/
         
         this.player = new dude(this,200, 250, 'player');
         this.player.body.gravity.y = 400;
@@ -354,8 +341,8 @@ class Play extends Phaser.Scene {
         this.swordbar.disableBody(true,true);
         this.holy += 1;
         this.swordbar = this.physics.add.sprite(0, 650, 'collectone').setScale(1.5);
-        //this.music.stop();
-        //this.scene.start('levelTwo');
+        this.music.stop();
+        this.scene.start('levelTwo');
 
     }
 
