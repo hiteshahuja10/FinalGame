@@ -30,7 +30,7 @@ class Play extends Phaser.Scene {
         this.load.image('collectone', './assets/collectone.png');
         this.load.image('spike','./assets/spikes.png');
         this.load.image('spike2','./assets/double_spike2.png');
-        this.load.image('spike3','./assets/backspike.png');
+        this.load.image('spike3','./assets/backspike2.png');
         this.load.spritesheet('enemy1', './assets/enemy_attack.png',{frameWidth:32, frameHeight:32, startFrame:0, endFrame:5});
         this.load.spritesheet('run_right','./assets/Player_Run.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:10});
         this.load.spritesheet('run_left','./assets/Player_Run_Left.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:10});
@@ -210,7 +210,7 @@ class Play extends Phaser.Scene {
         this.createPlatform(1100,520);
         this.createPlatform(1300,520);
         this.createSpike(500,585,2);
-        this.createSpike(1100,535,3);
+        this.createSpike(1101,538,3);
 
         //Platforms and Spikes
         this.physics.add.collider(this.player, this.platform); 
@@ -368,7 +368,7 @@ class Play extends Phaser.Scene {
             this.spike.create(x,y,'spike2').setScale(1);
         }
         else if (num == 3){
-            this.spike.create(x,y,'spike3').setScale(0.5);
+            this.spike.create(x,y,'spike3').setScale(1);
         }
         
     }
