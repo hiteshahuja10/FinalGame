@@ -34,6 +34,7 @@ class Play extends Phaser.Scene {
         this.load.image('healthbar', './assets/healthbar.png');
         this.load.image('healthbar2', './assets/healthbar2.png');
         this.load.image('healthbar3', './assets/healthbar3.png');
+        this.load.image('bat', './assets/bat.png');
         this.load.spritesheet('enemy1', './assets/enemy_attack.png',{frameWidth:32, frameHeight:32, startFrame:0, endFrame:5});
         this.load.spritesheet('run_right','./assets/Player_Run.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:10});
         this.load.spritesheet('run_left','./assets/Player_Run_Left.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:10});
@@ -43,6 +44,7 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('vibingL','./assets/knight_left.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:0});
         this.load.spritesheet('SlashAni','./assets/Slash_Ani.png',{frameWidth:52, frameHeight:40, startFrame:0, endFrame:10});
         this.load.spritesheet('SlashAniL','./assets/Slash_Ani_Left.png',{frameWidth:39, frameHeight:39, startFrame:0, endFrame:10});
+        this.load.spritesheet('batani','./assets/Bat_ani.png',{frameWidth:35, frameHeight:26, startFrame:0, endFrame:1});
     }
 
     create() {
@@ -94,8 +96,13 @@ class Play extends Phaser.Scene {
         this.enter2 = true;
 
         this.enemy = new enemy(this, 400, 580, 'enemy').setScale(1.2);
+        this.enemy.ani = 'enemy1';
         this.enemy2 = new enemy(this, 550, 580, 'enemy').setScale(1.2);
+        this.enemy2.ani = 'enemy1';
         this.enemy3 = new enemy(this, 650, 580, 'enemy').setScale(1.2);
+        this.enemy3.ani = 'enemy1';
+        this.bat1 = new enemy(this, 650, 400, 'bat').setScale(1.2);
+        this.bat1.ani = 'batani';
 
         this.enemy.body.gravity.y = 200;
         this.input.mouse.capture = true;
@@ -125,11 +132,13 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.enemy, this.ground);
         this.physics.add.collider(this.enemy, this.platforms);
         this.physics.add.collider(this.enemy, this.player, this.playerhitenemy);
+        this.physics.add.collider(this.bat1, this.player, this.playerhitenemy);
         this.physics.add.collider(this.enemy2, this.player, this.playerhitenemy);
         this.physics.add.collider(this.enemy3, this.player, this.playerhitenemy);
         this.physics.add.overlap(this.enemy, this.slash, this.playerslashenemy);
         this.physics.add.overlap(this.enemy2, this.slash, this.playerslashenemy);
         this.physics.add.overlap(this.enemy3, this.slash, this.playerslashenemy);
+        this.physics.add.overlap(this.bat1, this.slash, this.playerslashenemy);
 
         //this.hbar = this.add.container(50, 50);
         this.healthbar = this.add.group();
@@ -201,6 +210,11 @@ class Play extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('SlashAniL', { start: 0, end: 10, first: 0}),
             frameRate: 60
         });
+        this.anims.create({
+            key: 'batani',
+            frames: this.anims.generateFrameNumbers('batani', { start: 0, end: 1, first: 0}),
+            frameRate: 4
+        });
         //this.player.slashan ='SlashAni';
 
         
@@ -247,6 +261,7 @@ class Play extends Phaser.Scene {
             this.enemy.update();
             this.enemy2.update();
             this.enemy3.update();
+            this.bat1.update();
 
             //this.swordbar.x = this.player.body.position.x;
             if (this.player.body.position.x > 50 && this.player.body.position.x < 1350){
