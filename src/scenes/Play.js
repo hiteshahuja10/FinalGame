@@ -357,8 +357,8 @@ class Play extends Phaser.Scene {
         this.swordbar.disableBody(true,true);
         this.holy += 1;
         this.swordbar = this.physics.add.sprite(0, 650, 'collectone').setScale(1.5);
-        this.music.stop();
-        this.scene.start('levelTwo');
+        //this.music.stop();
+        //this.scene.start('levelTwo');
 
     }
 
