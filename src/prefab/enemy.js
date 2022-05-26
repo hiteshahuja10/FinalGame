@@ -14,8 +14,7 @@ class enemy extends Phaser.Physics.Arcade.Sprite{
         this.ani;
         //this.setGravityY(100);
         this.body.setAllowGravity(false);
-        this.setImmovable(true);
-
+        this.setImmovable(false);
         //this.sfxDeath = scene.sound.add('sfx_death');
 
     }
