@@ -59,7 +59,7 @@ class dude extends Phaser.Physics.Arcade.Sprite{
             console.log("hello")
             //this.body.setAllowGravity(false);
             if(!this.jump.isDown && !Phaser.Input.Keyboard.JustDown(this.right)){
-              this.body.setVelocityY(0);
+              this.body.setVelocityY(50);
             }
         }
         else{
@@ -81,7 +81,7 @@ class dude extends Phaser.Physics.Arcade.Sprite{
         if( this.body.blocked.right){
             //this.body.setAllowGravity(false);
             if(!this.jump.isDown && !Phaser.Input.Keyboard.JustDown(this.left)){
-                this.body.setVelocityY(0);
+                this.body.setVelocityY(50);
             }
         }
         else{
