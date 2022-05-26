@@ -34,6 +34,8 @@ class Play extends Phaser.Scene {
         this.load.image('healthbar', './assets/healthbar.png');
         this.load.image('healthbar2', './assets/healthbar2.png');
         this.load.image('healthbar3', './assets/healthbar3.png');
+        this.load.image('fireL', './assets/fire_left.png');
+        this.load.image('fireR', './assets/fire_right.png');
         this.load.image('bat', './assets/bat.png');
         this.load.spritesheet('enemy1', './assets/enemy_attack.png',{frameWidth:32, frameHeight:32, startFrame:0, endFrame:5});
         this.load.spritesheet('run_right','./assets/Player_Run.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:10});
@@ -224,6 +226,12 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.player, this.spike, this.playerhitspikes); 
         this.physics.add.collider(this.healthbar, this.outline);
         this.player.jumpheight = -275;
+        this.time.addEvent({
+            delay: 500,
+            callback: ()=>{
+                
+            },
+        })
         
     }
 
