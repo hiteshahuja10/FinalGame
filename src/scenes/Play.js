@@ -86,10 +86,13 @@ class Play extends Phaser.Scene {
 
         this.enemy = new enemy(this, 400, 580, 'enemy').setScale(1.2);
         this.enemy.ani = 'enemy1';
+        this.enemy.setCollideWorldBounds(false);
         this.enemy2 = new enemy(this, 550, 580, 'enemy').setScale(1.2);
         this.enemy2.ani = 'enemy1';
+        this.enemy2.setCollideWorldBounds(false);
         this.enemy3 = new enemy(this, 650, 580, 'enemy').setScale(1.2);
         this.enemy3.ani = 'enemy1';
+        this.enemy3.setCollideWorldBounds(false);
         this.bat1 = new enemy(this, 650, 400, 'bat').setScale(1.2);
         this.bat1.ani = 'batani';
 
@@ -365,6 +368,8 @@ class Play extends Phaser.Scene {
         this.swordbar.disableBody(true,true);
         this.holy += 1;
         this.swordbar = this.physics.add.sprite(0, 650, 'collectone').setScale(1.5);
+        this.next = this.add.text(this.player.x-20, game.config.height/2 + 64, 'Press (2) for next level!',
+            menuConfig).setOrigin(0.5);
         //this.music.stop();
         //this.scene.start('levelTwo');
 

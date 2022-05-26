@@ -6,7 +6,7 @@ class enemy extends Phaser.Physics.Arcade.Sprite{
 
         this.setScale(0.75);
     
-        this.setCollideWorldBounds(true);
+        this.setCollideWorldBounds(false);
         this.setBounce(0);
         this.setVelocityX(0)
         this.alive = true;
