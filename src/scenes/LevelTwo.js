@@ -68,7 +68,7 @@ class Level extends Phaser.Scene {
 
         //player movement/player
         this.player = new dude(this,44, 610, 'player');
-        this.physics.add.collider(this.player, ground, this.walljump() );
+        this.physics.add.collider(this.player, this.ground, this.walljump() );
         this.player.left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.player.right = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         this.player.jump = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
