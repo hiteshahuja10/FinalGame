@@ -67,7 +67,7 @@ class Level extends Phaser.Scene {
 
         //player movement/player
         this.player = new dude(this,44, 610, 'player');
-        this.physics.add.collider(this.player,ground);
+        this.physics.add.collider(this.player, ground, this.walljump() );
         this.player.left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.player.right = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         this.player.jump = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -77,6 +77,7 @@ class Level extends Phaser.Scene {
         this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         this.restart = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.leveltwo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
+        this.player.stick = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
         this.player.health = 3;
         this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
         this.player.body.gravity.y = 400;
@@ -200,6 +201,12 @@ class Level extends Phaser.Scene {
         }
 
     }
+
+    walljump(player, ground){
+        console.log("touching");
+
+    }
+
 
     playerhitenemy(enemy, player){
         if(player.damaged == false){

@@ -14,6 +14,7 @@ class dude extends Phaser.Physics.Arcade.Sprite{
         this.down;
         this.attack;
         this.health;
+        this.stick;
         this.jumpheight;
         this.damaged =false;
         this.setScale(0.5);
@@ -54,6 +55,17 @@ class dude extends Phaser.Physics.Arcade.Sprite{
         this.anims.play('run_left',true);
         this.faceLeft = true;
         this.slashan = 'SlashAniL';
+        if(this.body.blocked.left){
+            console.log("hello")
+            //this.body.setAllowGravity(false);
+            if(!this.jump.isDown && !Phaser.Input.Keyboard.JustDown(this.right)){
+              this.body.setVelocityY(0);
+            }
+        }
+        else{
+            console.log("yo")
+            this.body.setAllowGravity(true);
+        }
 
         //add animation line here for when facing left
     }
@@ -66,6 +78,15 @@ class dude extends Phaser.Physics.Arcade.Sprite{
             this.setVelocityX(4000);
         }
         this.anims.play('run_right',true);
+        if( this.body.blocked.right){
+            //this.body.setAllowGravity(false);
+            if(!this.jump.isDown && !Phaser.Input.Keyboard.JustDown(this.left)){
+                this.body.setVelocityY(0);
+            }
+        }
+        else{
+            this.body.setAllowGravity(true);
+        }
 
         //add animation line here for when facing left
     }
@@ -78,12 +99,18 @@ class dude extends Phaser.Physics.Arcade.Sprite{
         this.setVelocityX(450);
     }
 
-    if(Phaser.Input.Keyboard.JustDown(this.jump) && this.body.onFloor() ){ // add checking to see if its on the floor befoe jumping or else it will keep jumping
-        //270
+    if((Phaser.Input.Keyboard.JustDown(this.jump) && (this.body.onFloor() || this.body.blocked.right|| this.body.blocked.left) )){ // add checking to see if its on the floor befoe jumping or else it will keep jumping
         this.setVelocityY(this.jumpheight);
-        this.sfxDude.play();
+        //this.sfxDude.play();
 
     }
+
+    //if(Phaser.Input.Keyboard.JustDown(this.jump) && (this.body.blocked.right|| this.body.blocked.left)){
+            //this.body.setAllowGravity(false);
+    //}
+   // else{
+    //    this.body.setAllowGravity(true);
+    //}
 
     /*if(this.damaged == true){
         //this.visible = false
