@@ -79,8 +79,8 @@ class Level extends Phaser.Scene {
         this.leveltwo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
         this.player.health = 3;
         this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
-        this.player.body.gravity.y = 400;
-        this.player.jumpheight = -500;
+        this.player.body.gravity.y = 470;
+        this.player.jumpheight = -285;
 
         this.cameras.main.setBounds(0, 0, 4080, 1020);
         this.cameras.main.setZoom(1);
