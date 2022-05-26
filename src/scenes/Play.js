@@ -76,19 +76,6 @@ class Play extends Phaser.Scene {
         this.line.create(320,65,'line');
         this.line.create(0,250,'line2');
         this.line.create(1398, 250, 'line2');
-
-
-
-        /*const map = this.make.tilemap({key: 'tilemap'})
-        const tileset = map.addTilesetImage('castle-ground','floor')
-        const tileset2 = map.addTilesetImage('bg','wall')
-        const bg = map.createLayer('background',tileset2,0,400);
-        const ground = map.createLayer('ground',tileset);
-        map.setCollisionBetween(1, 12);
-        ground.setPosition(0, 400);
-        bg.setPosition(0,400)
-        ground.setOrigin(0,0);
-        ground.setCollisionByProperty({collides: true})*/
         
         this.player = new dude(this,200, 250, 'player');
         this.player.body.gravity.y = 400;
@@ -223,7 +210,7 @@ class Play extends Phaser.Scene {
 
         //this.createPlatform(100,350).setScale(0.5);
         this.createPlatform(350,520);
-        this.createPlatform(700,520);
+        this.createPlatform(750,520);
         this.createPlatform(1100,520);
         this.createPlatform(1300,520);
         this.createSpike(500,585,2);
@@ -233,6 +220,7 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.player, this.platform); 
         this.physics.add.collider(this.player, this.spike, this.playerhitspikes); 
         this.physics.add.collider(this.healthbar, this.outline);
+        this.player.jumpheight = -275;
         
     }
 
