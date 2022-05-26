@@ -1,6 +1,7 @@
 class Level extends Phaser.Scene {
     constructor(){
         super("levelTwo");
+        this.enemy;
     }
 
     preload(){
@@ -62,12 +63,12 @@ class Level extends Phaser.Scene {
         const tileset4 =map.addTilesetImage('platform','floor2')
         const tileset2 = map.addTilesetImage('bg','back_ground')
         const bg = map.createLayer('background',tileset2);
-        const ground = map.createLayer('Ground',[tileset,tileset3,tileset4]);
-        ground.setCollisionByProperty({collides: true})
+        this.ground = map.createLayer('Ground',[tileset,tileset3,tileset4]);
+        this.ground.setCollisionByProperty({collides: true})
 
         //player movement/player
         this.player = new dude(this,44, 610, 'player');
-        this.physics.add.collider(this.player,ground);
+        this.physics.add.collider(this.player, this.ground, this.walljump() );
         this.player.left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.player.right = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         this.player.jump = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -77,6 +78,7 @@ class Level extends Phaser.Scene {
         this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         this.restart = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.leveltwo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
+        this.player.stick = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
         this.player.health = 3;
         this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
         this.player.body.gravity.y = 470;
@@ -89,22 +91,36 @@ class Level extends Phaser.Scene {
         this.cameras.main.setName("center");
 
         this.enemy = new enemy(this, 300, 500, 'enemy').setScale(1.2);
-        this.physics.add.collider(this.enemy,ground);
+        this.physics.add.collider(this.enemy, this.ground);
         this.enemy.ani = 'enemy1';
         this.enemy.body.setAllowGravity(true);
+        this.enemy.body.gravity.y = 200;
+        //this.enemy = this.physics.add.staticGroup();
+        //this.enemy = this.createEnemy(300, 700, 'enemy', 'enemy1');
+        //this.physics.add.collider(this.enemy,this.ground);
+        
         this.enemy2 = new enemy(this, 550, 580, 'enemy').setScale(1.2);
         this.enemy2.ani = 'enemy1';
         this.enemy2.body.setAllowGravity(true)
-        this.physics.add.collider(this.enemy2,ground);
+        this.physics.add.collider(this.enemy2, this.ground);
         this.enemy2.body.gravity.y = 200;
 
-        this.enemy.body.gravity.y = 200;
+        this.enemy3 = new enemy(this, 300, 133, 'enemy').setScale(1.2);
+        this.enemy3.ani = 'enemy1';
+        this.enemy3.body.setAllowGravity(true)
+        this.physics.add.collider(this.enemy3, this.ground);
+        this.enemy3.body.gravity.y = 200;
+
         this.slash = this.physics.add.sprite(100,200,'slash');
         this.slash.visible = false;
         this.slash.setOrigin(0,0);
 
         this.physics.add.collider(this.enemy, this.player, this.playerhitenemy);
         this.physics.add.overlap(this.enemy, this.slash, this.playerslashenemy);
+        this.physics.add.collider(this.enemy2, this.player, this.playerhitenemy);
+        this.physics.add.overlap(this.enemy2, this.slash, this.playerslashenemy);
+        this.physics.add.collider(this.enemy3, this.player, this.playerhitenemy);
+        this.physics.add.overlap(this.enemy3, this.slash, this.playerslashenemy);
 
         this.anims.create({
             key: 'enemy1',
@@ -162,7 +178,10 @@ class Level extends Phaser.Scene {
         this.player.update();
         this.enemy.update();
         this.enemy2.update();
+        this.enemy3.update();
         this.distance = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy);
+        this.distance2 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy2);
+        this.distance3 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy3);
         if (this.enemy.body != null){
             //console.log("not null");
             if (this.distance < 200) {
@@ -174,6 +193,28 @@ class Level extends Phaser.Scene {
                 }
             }
         }
+        if (this.enemy2.body != null){
+            this.enemy2.body.gravity.y = 200;
+            if (this.distance2 < 200) {
+                if (this.player.x < this.enemy2.x && this.enemy2.body.velocity.x >= 0) {
+                    this.enemy2.body.velocity.x = -150;
+                }
+                else if (this.player.x > this.enemy2.x && this.enemy2.body.velocity.x <= 0) {
+                    this.enemy2.body.velocity.x = 150;
+                }
+            }
+        }
+        if (this.enemy3.body != null){
+            if (this.distance3 < 200) {
+                if (this.player.x < this.enemy3.x && this.enemy3.body.velocity.x >= 0) {
+                    this.enemy3.body.velocity.x = -150;
+                }
+                else if (this.player.x > this.enemy3.x && this.enemy3.body.velocity.x <= 0) {
+                    this.enemy3.body.velocity.x = 150;
+                }
+            }
+        }
+        
 
         if(this.player.attack.isDown){
             this.slash.visible = true;
@@ -201,6 +242,12 @@ class Level extends Phaser.Scene {
 
     }
 
+    walljump(player, ground){
+        console.log("touching");
+
+    }
+
+
     playerhitenemy(enemy, player){
         if(player.damaged == false){
             player.hurt();
@@ -220,4 +267,13 @@ class Level extends Phaser.Scene {
           enemy.death();
         }
     }  
+
+    /*createEnemy(x, y, picture, p2){
+        this.enemy = new enemy(this, x, y, picture).setScale(1.2);
+        this.enemy.ani = p2;
+        //this.enemy.body.setAllowGravity(true);
+        this.enemy.body.setAllowGravity(true);
+        this.enemy.body.gravity.y = 200;
+        return this.enemy;
+    }*/
 }
