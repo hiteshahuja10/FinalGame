@@ -210,7 +210,7 @@ class Play extends Phaser.Scene {
 
         //this.createPlatform(100,350).setScale(0.5);
         this.createPlatform(350,520);
-        this.createPlatform(700,520);
+        this.createPlatform(750,520);
         this.createPlatform(1100,520);
         this.createPlatform(1300,520);
         this.createSpike(500,585,2);
