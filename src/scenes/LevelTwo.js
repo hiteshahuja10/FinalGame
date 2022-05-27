@@ -59,6 +59,7 @@ class Level extends Phaser.Scene {
         this.music.loop = true;
         this.music.play();
         this.scale.updateBounds(4080, 1020);
+        this.spike = this.physics.add.staticGroup();
         //this.scale.setGameSize(4080, 1020);
 
         //map loading
@@ -121,7 +122,37 @@ class Level extends Phaser.Scene {
         this.enemy4.body.setAllowGravity(true)
         this.physics.add.collider(this.enemy4, this.ground);
         this.enemy4.body.gravity.y = 200;
-        //this.torch = this.physics.add.sprite(1000, 350, 'torch').setScale(1.5);
+
+        this.enemy5 = new enemy(this, 1085, 527, 'enemy').setScale(1.2);
+        this.enemy5.ani = 'enemy1';
+        this.enemy5.body.setAllowGravity(true)
+        this.physics.add.collider(this.enemy5, this.ground);
+        this.enemy5.body.gravity.y = 200;
+
+        this.enemy6 = new enemy(this, 1290, 102, 'enemy').setScale(1.2);
+        this.enemy6.ani = 'enemy1';
+        this.enemy6.body.setAllowGravity(true)
+        this.physics.add.collider(this.enemy6, this.ground);
+        this.enemy6.body.gravity.y = 200;
+
+        this.enemy7 = new enemy(this, 1860, 986, 'enemy').setScale(1.2);
+        this.enemy7.ani = 'enemy1';
+        this.enemy7.body.setAllowGravity(true)
+        this.physics.add.collider(this.enemy7, this.ground);
+        this.enemy7.body.gravity.y = 200;
+
+        this.enemy8 = new enemy(this, 3030, 816, 'enemy').setScale(1.2);
+        this.enemy8.ani = 'enemy1';
+        this.enemy8.body.setAllowGravity(true)
+        this.physics.add.collider(this.enemy8, this.ground);
+        this.enemy8.body.gravity.y = 200;
+
+        this.enemy9 = new enemy(this, 3810, 816, 'enemy').setScale(1.2);
+        this.enemy9.ani = 'enemy1';
+        this.enemy9.body.setAllowGravity(true)
+        this.physics.add.collider(this.enemy9, this.ground);
+        this.enemy9.body.gravity.y = 200;
+
 
         this.slash = this.physics.add.sprite(100,200,'slash');
         this.slash.visible = false;
@@ -135,6 +166,25 @@ class Level extends Phaser.Scene {
         this.physics.add.overlap(this.enemy3, this.slash, this.playerslashenemy);
         this.physics.add.collider(this.enemy4, this.player, this.playerhitenemy);
         this.physics.add.overlap(this.enemy4, this.slash, this.playerslashenemy);
+        this.physics.add.collider(this.enemy5, this.player, this.playerhitenemy);
+        this.physics.add.overlap(this.enemy5, this.slash, this.playerslashenemy);
+        this.physics.add.collider(this.enemy6, this.player, this.playerhitenemy);
+        this.physics.add.overlap(this.enemy6, this.slash, this.playerslashenemy);
+        this.physics.add.collider(this.enemy7, this.player, this.playerhitenemy);
+        this.physics.add.overlap(this.enemy7, this.slash, this.playerslashenemy);
+        this.physics.add.collider(this.enemy8, this.player, this.playerhitenemy);
+        this.physics.add.overlap(this.enemy8, this.slash, this.playerslashenemy);
+        this.physics.add.collider(this.enemy9, this.player, this.playerhitenemy);
+        this.physics.add.overlap(this.enemy9, this.slash, this.playerslashenemy);
+
+        this.createSpike(635,395,2);
+        this.createSpike(710,395,2);
+        this.createSpike(1625,867,2);
+        this.createSpike(1700,867,2);
+        this.createSpike(1775,867,2);
+        this.createSpike(1850,867,2);
+        this.createSpike(1918,867,2);
+        this.physics.add.collider(this.player, this.spike, this.playerhitspikes); 
 
         this.anims.create({
             key: 'enemy1',
@@ -194,10 +244,20 @@ class Level extends Phaser.Scene {
         this.enemy2.update();
         this.enemy3.update();
         this.enemy4.update();
+        this.enemy5.update();
+        this.enemy6.update();
+        this.enemy7.update();
+        this.enemy8.update();
+        this.enemy9.update();
         this.distance = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy);
         this.distance2 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy2);
         this.distance3 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy3);
         this.distance4 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy4);
+        this.distance5 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy5);
+        this.distance6 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy6);
+        this.distance7 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy7);
+        this.distance8 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy8);
+        this.distance9 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy9);
         if (this.enemy.body != null){
             //console.log("not null");
             if (this.distance < 200) {
@@ -236,6 +296,56 @@ class Level extends Phaser.Scene {
                 }
                 else if (this.player.x > this.enemy4.x && this.enemy4.body.velocity.x <= 0) {
                     this.enemy4.body.velocity.x = 150;
+                }
+            }
+        }
+        if (this.enemy5.body != null){
+            if (this.distance5 < 200) {
+                if (this.player.x < this.enemy5.x && this.enemy5.body.velocity.x >= 0) {
+                    this.enemy5.body.velocity.x = -150;
+                }
+                else if (this.player.x > this.enemy5.x && this.enemy5.body.velocity.x <= 0) {
+                    this.enemy5.body.velocity.x = 150;
+                }
+            }
+        }
+        if (this.enemy6.body != null){
+            if (this.distance6 < 200) {
+                if (this.player.x < this.enemy6.x && this.enemy6.body.velocity.x >= 0) {
+                    this.enemy6.body.velocity.x = -150;
+                }
+                else if (this.player.x > this.enemy6.x && this.enemy6.body.velocity.x <= 0) {
+                    this.enemy6.body.velocity.x = 150;
+                }
+            }
+        }
+        if (this.enemy7.body != null){
+            if (this.distance7 < 200) {
+                if (this.player.x < this.enemy7.x && this.enemy7.body.velocity.x >= 0) {
+                    this.enemy7.body.velocity.x = -150;
+                }
+                else if (this.player.x > this.enemy7.x && this.enemy7.body.velocity.x <= 0) {
+                    this.enemy7.body.velocity.x = 150;
+                }
+            }
+        }
+        if (this.enemy8.body != null){
+            if (this.distance8 < 200) {
+                if (this.player.x < this.enemy8.x && this.enemy8.body.velocity.x >= 0) {
+                    this.enemy8.body.velocity.x = -150;
+                }
+                else if (this.player.x > this.enemy8.x && this.enemy8.body.velocity.x <= 0) {
+                    this.enemy8.body.velocity.x = 150;
+                }
+            }
+        }
+        if (this.enemy9.body != null){
+            if (this.distance9 < 200) {
+                if (this.player.x < this.enemy9.x && this.enemy9.body.velocity.x >= 0) {
+                    this.enemy9.body.velocity.x = -150;
+                }
+                else if (this.player.x > this.enemy9.x && this.enemy9.body.velocity.x <= 0) {
+                    this.enemy9.body.velocity.x = 150;
                 }
             }
         }
@@ -291,6 +401,23 @@ class Level extends Phaser.Scene {
           enemy.death();
         }
     }  
+
+    playerhitspikes(player, spikes){
+        if(player.damaged == false){
+            player.hurt();
+        }
+    }
+    createSpike(x,y,num){
+        if(num == 1){
+            this.spike.create(x,y,'spike').setScale(0.5);
+        }else if(num == 2){
+            this.spike.create(x,y,'spike2').setScale(1);
+        }
+        else if (num == 3){
+            this.spike.create(x,y,'spike3').setScale(1);
+        }
+        
+    }
 
     /*createEnemy(x, y, picture, p2){
         this.enemy = new enemy(this, x, y, picture).setScale(1.2);
