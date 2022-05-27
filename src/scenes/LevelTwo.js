@@ -154,6 +154,17 @@ class Level extends Phaser.Scene {
         this.physics.add.collider(this.enemy9, this.ground);
         this.enemy9.body.gravity.y = 200;
 
+        this.enemy10 = new enemy(this, 2190, 595, 'enemy').setScale(1.2);
+        this.enemy10.ani = 'enemy1';
+        this.enemy10.body.setAllowGravity(true)
+        this.physics.add.collider(this.enemy10, this.ground);
+        this.enemy10.body.gravity.y = 200;
+
+        this.enemy11 = new enemy(this, 3510, 408, 'enemy').setScale(1.2);
+        this.enemy11.ani = 'enemy1';
+        this.enemy11.body.setAllowGravity(true)
+        this.physics.add.collider(this.enemy11, this.ground);
+        this.enemy11.body.gravity.y = 200;
 
         this.slash = this.physics.add.sprite(100,200,'slash');
         this.slash.visible = false;
@@ -177,6 +188,10 @@ class Level extends Phaser.Scene {
         this.physics.add.overlap(this.enemy8, this.slash, this.playerslashenemy);
         this.physics.add.collider(this.enemy9, this.player, this.playerhitenemy);
         this.physics.add.overlap(this.enemy9, this.slash, this.playerslashenemy);
+        this.physics.add.collider(this.enemy10, this.player, this.playerhitenemy);
+        this.physics.add.overlap(this.enemy10, this.slash, this.playerslashenemy);
+        this.physics.add.collider(this.enemy11, this.player, this.playerhitenemy);
+        this.physics.add.overlap(this.enemy11, this.slash, this.playerslashenemy);
 
         this.createSpike(635,395,2);
         this.createSpike(710,395,2);
@@ -250,6 +265,8 @@ class Level extends Phaser.Scene {
         this.enemy7.update();
         this.enemy8.update();
         this.enemy9.update();
+        this.enemy10.update();
+        this.enemy11.update();
         this.distance = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy);
         this.distance2 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy2);
         this.distance3 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy3);
@@ -259,6 +276,8 @@ class Level extends Phaser.Scene {
         this.distance7 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy7);
         this.distance8 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy8);
         this.distance9 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy9);
+        this.distance10 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy10);
+        this.distance11 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy11);
         if(Phaser.Input.Keyboard.JustDown(this.levelthree)) {
             this.music.stop();
             this.scene.start('levelThree');
@@ -351,6 +370,26 @@ class Level extends Phaser.Scene {
                 }
                 else if (this.player.x > this.enemy9.x && this.enemy9.body.velocity.x <= 0) {
                     this.enemy9.body.velocity.x = 150;
+                }
+            }
+        }
+        if (this.enemy10.body != null){
+            if (this.distance10 < 200) {
+                if (this.player.x < this.enemy10.x && this.enemy10.body.velocity.x >= 0) {
+                    this.enemy10.body.velocity.x = -150;
+                }
+                else if (this.player.x > this.enemy10.x && this.enemy10.body.velocity.x <= 0) {
+                    this.enemy10.body.velocity.x = 150;
+                }
+            }
+        }
+        if (this.enemy11.body != null){
+            if (this.distance11 < 200) {
+                if (this.player.x < this.enemy11.x && this.enemy11.body.velocity.x >= 0) {
+                    this.enemy11.body.velocity.x = -150;
+                }
+                else if (this.player.x > this.enemy11.x && this.enemy11.body.velocity.x <= 0) {
+                    this.enemy11.body.velocity.x = 150;
                 }
             }
         }
