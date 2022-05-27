@@ -44,9 +44,9 @@ class Three extends Phaser.Scene {
         //map Assets
         this.load.image('sep', './assets/sep1.png');
         this.load.image('heart', './assets/heart.png');
-        this.load.image('tile', './assets/atlas.png');
-        this.load.image('back_ground', './assets/stage3Back.png');
-        this.load.tilemapTiledJSON('tilemap','./assets/test_map2.json');
+        this.load.image('floor_three', './assets/atlas.png');
+        this.load.image('back_ground2', './assets/stage3Back.png');
+        this.load.tilemapTiledJSON('tilemap2','./assets/test_map2.json');
     }
 
     create(){
@@ -54,21 +54,21 @@ class Three extends Phaser.Scene {
         this.music = this.sound.add('sfx_music');
         this.music.loop = true;
         this.music.play();
-        this.scale.updateBounds(4080, 1020);
+        //this.scale.updateBounds(4080, 1020);
         //this.scale.setGameSize(4080, 1020);
 
         //map loading
-        const map = this.make.tilemap({key: 'tilemap'})
-        const tileset = map.addTilesetImage('ground','tile');
-        const tileset2 = map.addTilesetImage('bg','back_ground');
-        const tileset3 = map.addTilesetImage('bg2','tile')
-        const bg = map.createLayer('background',[tileset2,tileset3]);
-        this.ground = map.createLayer('Ground',tileset);
+        const map = this.make.tilemap({key: 'tilemap2'})
+        const tileset_three = map.addTilesetImage('tiles','floor_three');
+        const tileset2_three = map.addTilesetImage('bg','back_ground2');
+        const tileset3_three = map.addTilesetImage('tiles','floor_three');
+        const bg = map.createLayer('background2',[tileset2_three,tileset3_three]);
+        this.ground = map.createLayer('Ground2',tileset_three);
         this.ground.setCollisionByProperty({collides: true})
 
         //player movement/player
         this.player = new dude(this,44, 610, 'player');
-        this.physics.add.collider(this.player, this.ground, this.walljump() );
+        this.physics.add.collider(this.player, this.ground );
         this.player.left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.player.right = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         this.player.jump = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
