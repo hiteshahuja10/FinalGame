@@ -84,6 +84,7 @@ class Level extends Phaser.Scene {
         this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         this.restart = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.leveltwo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
+        this.levelthree = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE);
         this.player.stick = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
         this.player.health = 3;
         this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
@@ -258,6 +259,10 @@ class Level extends Phaser.Scene {
         this.distance7 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy7);
         this.distance8 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy8);
         this.distance9 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy9);
+        if(Phaser.Input.Keyboard.JustDown(this.levelthree)) {
+            this.music.stop();
+            this.scene.start('levelThree');
+        }
         if (this.enemy.body != null){
             //console.log("not null");
             if (this.distance < 200) {

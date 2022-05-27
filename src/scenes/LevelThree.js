@@ -1,6 +1,6 @@
-class Level_Three extends Phaser.Scene {
+class Three extends Phaser.Scene {
     constructor(){
-        super("levelTwo");
+        super("levelThree");
         this.enemy;
     }
 
