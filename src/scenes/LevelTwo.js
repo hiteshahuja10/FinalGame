@@ -17,6 +17,7 @@ class Level extends Phaser.Scene {
         this.load.image('line', './assets/line.png');
         this.load.image('line2', './assets/outline.png');
         this.load.image('sword1', './assets/SwordPiece_1.png');
+        this.load.image('sword2', './assets/SwordPiece_2.png');
         this.load.image('torch', './assets/torch2.png');
         this.load.image('heart', './assets/heart.png');
         this.load.image('enemy', './assets/enemy.png');
@@ -97,6 +98,7 @@ class Level extends Phaser.Scene {
         //this.cameras.main.setDeadzone(0, 200);
         this.cameras.main.setName("center");
 
+        this.sword2 = this.physics.add.sprite(3930, 830, 'sword2').setScale(0.5);
         this.enemy = new enemy(this, 300, 500, 'enemy').setScale(1.2);
         this.physics.add.collider(this.enemy, this.ground);
         this.enemy.ani = 'enemy1';
@@ -201,6 +203,7 @@ class Level extends Phaser.Scene {
         this.createSpike(1850,867,2);
         this.createSpike(1918,867,2);
         this.physics.add.collider(this.player, this.spike, this.playerhitspikes); 
+        this.physics.add.overlap(this.player, this.sword2, this.holySword, null, this);
 
         this.anims.create({
             key: 'enemy1',
@@ -422,6 +425,18 @@ class Level extends Phaser.Scene {
 
     walljump(player, ground){
         console.log("touching");
+
+    }
+
+    holySword(player,piece){
+        piece.disableBody(true,true);
+        //this.swordbar.disableBody(true,true);
+        //this.holy += 1;
+        //this.swordbar = this.physics.add.sprite(0, 650, 'collectone').setScale(1.5);
+        this.next = this.add.text(this.player.x-20, game.config.height/2 + 64, 'Press (3) for next level!',
+            menuConfig).setOrigin(0.5);
+        //this.music.stop();
+        //this.scene.start('levelTwo');
 
     }
 
