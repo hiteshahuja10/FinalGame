@@ -46,7 +46,7 @@ class Level_Three extends Phaser.Scene {
         this.load.image('heart', './assets/heart.png');
         this.load.image('tile', './assets/atlas.png');
         this.load.image('back_ground', './assets/stage3Back.png');
-        this.load.tilemapTiledJSON('tilemap','./assets/test_map.json');
+        this.load.tilemapTiledJSON('tilemap','./assets/test_map2.json');
     }
 
     create(){
