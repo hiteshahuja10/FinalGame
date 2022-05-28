@@ -175,7 +175,7 @@ class dude extends Phaser.Physics.Arcade.Sprite{
                 loop: true
             })
             this.health= this.health -1;
-            this.x -= 50;
+            //this.x -= 50;
             //loop: true
   }
 
