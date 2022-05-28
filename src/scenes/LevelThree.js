@@ -54,8 +54,8 @@ class Three extends Phaser.Scene {
         this.music = this.sound.add('sfx_music');
         this.music.loop = true;
         this.music.play();
-        //this.scale.updateBounds(4080, 1020);
-        //this.scale.setGameSize(4080, 1020);
+        //this.scale.updateBounds(1632, 720);
+        //this.scale.setGameSize(850, 1000);
 
         //map loading
         const map = this.make.tilemap({key: 'tilemap2'})
@@ -67,7 +67,9 @@ class Three extends Phaser.Scene {
         this.ground.setCollisionByProperty({collides: true})
 
         //player movement/player
-        this.player = new dude(this,44, 610, 'player');
+        //1632 width
+        //720
+        this.player = new dude(this,44, 610, 'player').setScale(0.3);
         this.physics.add.collider(this.player, this.ground );
         this.player.left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.player.right = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
@@ -84,8 +86,8 @@ class Three extends Phaser.Scene {
         this.player.body.gravity.y = 470;
         this.player.jumpheight = -285;
 
-        this.cameras.main.setBounds(0, 0, 4080, 1020);
-        this.cameras.main.setZoom(1);
+        this.cameras.main.setBounds(0, 0, 1632, 720);
+        this.cameras.main.setZoom(2.2);
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         //this.cameras.main.setDeadzone(0, 200);
         this.cameras.main.setName("center");
