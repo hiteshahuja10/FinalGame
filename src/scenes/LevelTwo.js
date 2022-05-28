@@ -92,8 +92,12 @@ class Level extends Phaser.Scene {
         this.player.body.gravity.y = 470;
         this.player.jumpheight = -285;
 
+        this.healthbar = this.add.group();
+        this.hbar = this.physics.add.sprite(100, 600, 'healthbar').setScale(0.5);
+        this.healthbar.add(this.hbar);
+
         this.cameras.main.setBounds(0, 0, 4080, 1020);
-        this.cameras.main.setZoom(1);
+        this.cameras.main.setZoom(1.5);
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         //this.cameras.main.setDeadzone(0, 200);
         this.cameras.main.setName("center");
@@ -167,6 +171,9 @@ class Level extends Phaser.Scene {
         this.enemy11.body.setAllowGravity(true)
         this.physics.add.collider(this.enemy11, this.ground);
         this.enemy11.body.gravity.y = 200;
+
+        this.enter = true;
+        this.enter2 = true;
 
         this.slash = this.physics.add.sprite(100,200,'slash');
         this.slash.visible = false;
@@ -281,12 +288,27 @@ class Level extends Phaser.Scene {
         this.distance9 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy9);
         this.distance10 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy10);
         this.distance11 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy11);
+        if (this.player.gameOver){
+            if (Phaser.Input.Keyboard.JustDown(this.restart)){
+                this.music.stop();
+                this.scene.start('levelTwo');
+            }
+            if (Phaser.Input.Keyboard.JustDown(this.menu)){
+                this.music.stop();
+                this.scene.start('menuScene');
+            }
+        }
+        if (this.player.body.position.x > 50 && this.player.body.position.x < 4070){
+            this.hbar.x = this.player.body.position.x+10;
+        }
+        if (this.player.body.position.y > 50 && this.player.body.position.y < 1010){
+            this.hbar.y = this.player.body.position.y-25;
+        }
         if(Phaser.Input.Keyboard.JustDown(this.levelthree)) {
             this.music.stop();
             this.scene.start('levelThree');
         }
         if (this.enemy.body != null){
-            //console.log("not null");
             if (this.distance < 200) {
                 if (this.player.x < this.enemy.x && this.enemy.body.velocity.x >= 0) {
                     this.enemy.body.velocity.x = -150;
@@ -397,6 +419,23 @@ class Level extends Phaser.Scene {
             }
         }
 
+        if(this.player.health == 2 && this.enter){
+            this.hbar.disableBody(true,true);
+            this.hbar = this.physics.add.sprite(this.player.body.position.x, 260, 'healthbar2').setScale(0.5);
+            this.enter = false;
+
+        }else if(this.player.health == 1 && this.enter2){
+            this.hbar.disableBody(true,true);
+            this.hbar = this.physics.add.sprite(this.player.body.position.x, 260, 'healthbar3').setScale(0.5);
+            this.enter2 = false;
+        }else if(this.player.health <= 0){
+            this.player.gameOver = true;
+            this.cameras.main.startFollow(this.enemy, true, 0.1, 0.1);
+            this.check = this.add.text(game.config.width/2-150, game.config.height/2 + 64, 'Press (R) to Restart or (M) for Menu',
+            menuConfig).setOrigin(0.5);
+            this.player.death();
+        }
+
         if(this.player.attack.isDown){
             this.slash.visible = true;
             if (this.player.faceLeft == false){
@@ -433,7 +472,7 @@ class Level extends Phaser.Scene {
         //this.swordbar.disableBody(true,true);
         //this.holy += 1;
         //this.swordbar = this.physics.add.sprite(0, 650, 'collectone').setScale(1.5);
-        this.next = this.add.text(this.player.x-20, game.config.height/2 + 64, 'Press (3) for next level!',
+        this.next = this.add.text(this.player.x-20, this.player.y-100, 'Press (3) for next level!',
             menuConfig).setOrigin(0.5);
         //this.music.stop();
         //this.scene.start('levelTwo');

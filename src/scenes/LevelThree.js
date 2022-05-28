@@ -54,6 +54,7 @@ class Three extends Phaser.Scene {
         this.music = this.sound.add('sfx_music');
         this.music.loop = true;
         this.music.play();
+        this.spike = this.physics.add.staticGroup();
         //this.scale.updateBounds(1632, 720);
         //this.scale.setGameSize(850, 1000);
 
@@ -65,11 +66,110 @@ class Three extends Phaser.Scene {
         const bg = map.createLayer('background2',[tileset2_three,tileset3_three]);
         this.ground = map.createLayer('Ground2',tileset_three);
         this.ground.setCollisionByProperty({collides: true})
-
-        //player movement/player
-        //1632 width
-        //720
+        
         this.player = new dude(this,44, 610, 'player').setScale(0.3);
+
+        this.enemy = new enemy(this, 408, 636, 'enemy').setScale(0.8);
+        this.physics.add.collider(this.enemy, this.ground);
+        this.enemy.ani = 'enemy1';
+        this.enemy.body.setAllowGravity(true);
+        this.enemy.body.gravity.y = 200;
+
+        this.enemy2 = new enemy(this, 456, 540, 'enemy').setScale(0.8);
+        this.enemy2.ani = 'enemy1';
+        this.enemy2.body.setAllowGravity(true)
+        this.physics.add.collider(this.enemy2, this.ground);
+        this.enemy2.body.gravity.y = 200;
+
+        this.enemy3 = new enemy(this, 312, 408, 'enemy').setScale(0.8);
+        this.enemy3.ani = 'enemy1';
+        this.enemy3.body.setAllowGravity(true)
+        this.physics.add.collider(this.enemy3, this.ground);
+        this.enemy3.body.gravity.y = 200;
+
+        this.enemy4 = new enemy(this, 300, 552, 'enemy').setScale(0.8);
+        this.enemy4.ani = 'enemy1';
+        this.enemy4.body.setAllowGravity(true)
+        this.physics.add.collider(this.enemy4, this.ground);
+        this.enemy4.body.gravity.y = 200;
+
+        this.enemy5 = new enemy(this, 156, 384, 'enemy').setScale(0.8);
+        this.enemy5.ani = 'enemy1';
+        this.enemy5.body.setAllowGravity(true)
+        this.physics.add.collider(this.enemy5, this.ground);
+        this.enemy5.body.gravity.y = 200;
+
+
+        this.slash = this.physics.add.sprite(100,200,'slash');
+        this.slash.visible = false;
+        this.slash.setOrigin(0,0);
+
+        this.physics.add.collider(this.enemy, this.player, this.playerhitenemy);
+        this.physics.add.overlap(this.enemy, this.slash, this.playerslashenemy);
+        this.physics.add.collider(this.enemy2, this.player, this.playerhitenemy);
+        this.physics.add.overlap(this.enemy2, this.slash, this.playerslashenemy);
+        this.physics.add.collider(this.enemy3, this.player, this.playerhitenemy);
+        this.physics.add.overlap(this.enemy3, this.slash, this.playerslashenemy);
+        this.physics.add.collider(this.enemy4, this.player, this.playerhitenemy);
+        this.physics.add.overlap(this.enemy4, this.slash, this.playerslashenemy);
+        this.physics.add.collider(this.enemy5, this.player, this.playerhitenemy);
+        this.physics.add.overlap(this.enemy5, this.slash, this.playerslashenemy);
+
+
+        this.anims.create({
+            key: 'enemy1',
+            frames: this.anims.generateFrameNumbers('enemy1', { start: 0, end: 5, first: 0}),
+            frameRate: 15
+        });
+        this.anims.create({
+            key: 'run_right',
+            frames: this.anims.generateFrameNumbers('run_right', { start: 0, end: 10, first: 0}),
+            frameRate: 30
+        });
+        this.anims.create({
+            key: 'run_left',
+            frames: this.anims.generateFrameNumbers('run_left', { start: 0, end: 10, first: 0}),
+            frameRate: 30
+        });
+        this.anims.create({
+            key: 'vibing',
+            frames: this.anims.generateFrameNumbers('vibing', { start: 0, end: 0, first: 0}),
+            frameRate: 30
+        });
+        this.anims.create({
+            key: 'vibingL',
+            frames: this.anims.generateFrameNumbers('vibingL', { start: 0, end: 0, first: 0}),
+            frameRate: 30
+        });
+        this.anims.create({
+            key: 'jump_right',
+            frames: this.anims.generateFrameNumbers('jump_right', { start: 0, end: 0, first: 0}),
+            frameRate: 30
+        });
+        this.anims.create({
+            key: 'jump_left',
+            frames: this.anims.generateFrameNumbers('jump_left', { start: 0, end: 0, first: 0}),
+            frameRate: 30
+        });
+        this.anims.create({
+            key: 'SlashAni',
+            frames: this.anims.generateFrameNumbers('SlashAni', { start: 0, end: 10, first: 0}),
+            frameRate: 60
+        });
+        this.anims.create({
+            key: 'SlashAniL',
+            frames: this.anims.generateFrameNumbers('SlashAniL', { start: 0, end: 10, first: 0}),
+            frameRate: 60
+        });
+        this.anims.create({
+            key: 'batani',
+            frames: this.anims.generateFrameNumbers('batani', { start: 0, end: 1, first: 0}),
+            frameRate: 4
+        });
+
+        this.createSpike(140,640,2);
+        
+
         this.physics.add.collider(this.player, this.ground );
         this.player.left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.player.right = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
@@ -94,5 +194,125 @@ class Three extends Phaser.Scene {
     }
     update(){
         this.player.update();
+        this.enemy.update();
+        this.enemy2.update();
+        this.enemy3.update();
+        this.enemy4.update();
+        this.enemy5.update();
+        this.distance = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy);
+        this.distance2 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy2);
+        this.distance3 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy3);
+        this.distance4 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy4);
+        this.distance5 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy5);
+        if (this.player.left.isDown){
+            this.player.setVelocityX(-150);
+        }
+        if (this.player.right.isDown){
+            this.player.setVelocityX(150);
+        }
+        if (this.enemy.body != null){
+            if (this.distance < 200) {
+                if (this.player.x < this.enemy.x && this.enemy.body.velocity.x >= 0) {
+                    this.enemy.body.velocity.x = -50;
+                }
+                else if (this.player.x > this.enemy.x && this.enemy.body.velocity.x <= 0) {
+                    this.enemy.body.velocity.x = 50;
+                }
+            }
+        }
+        if (this.enemy2.body != null){
+            if (this.distance2 < 200) {
+                if (this.player.x < this.enemy2.x && this.enemy2.body.velocity.x >= 0) {
+                    this.enemy2.body.velocity.x = -50;
+                }
+                else if (this.player.x > this.enemy2.x && this.enemy2.body.velocity.x <= 0) {
+                    this.enemy2.body.velocity.x = 50;
+                }
+            }
+        }
+        if (this.enemy3.body != null){
+            if (this.distance3 < 200) {
+                if (this.player.x < this.enemy3.x && this.enemy3.body.velocity.x >= 0) {
+                    this.enemy3.body.velocity.x = -100;
+                }
+                else if (this.player.x > this.enemy3.x && this.enemy3.body.velocity.x <= 0) {
+                    this.enemy3.body.velocity.x = 100;
+                }
+            }
+        }
+        if (this.enemy4.body != null){
+            if (this.distance4 < 100) {
+                if (this.player.x < this.enemy4.x && this.enemy4.body.velocity.x >= 0) {
+                    this.enemy4.body.velocity.x = -50;
+                }
+                else if (this.player.x > this.enemy4.x && this.enemy4.body.velocity.x <= 0) {
+                    this.enemy4.body.velocity.x = 50;
+                }
+            }
+        }
+        if (this.enemy5.body != null){
+            if (this.distance5 < 200) {
+                if (this.player.x < this.enemy5.x && this.enemy5.body.velocity.x >= 0) {
+                    this.enemy5.body.velocity.x = -50;
+                }
+                else if (this.player.x > this.enemy5.x && this.enemy5.body.velocity.x <= 0) {
+                    this.enemy5.body.velocity.x = 50;
+                }
+            }
+        }
+
+        if(this.player.attack.isDown){
+            this.slash.visible = true;
+            if (this.player.faceLeft == false){
+                this.slash.body.x = this.player.body.x +10;
+                this.slash.body.y = this.player.body.y;
+                this.slash.setScale(0.5);
+            }
+            else if (this.player.faceLeft == true){
+                this.slash.body.x = this.player.body.x -30;
+                this.slash.body.y = this.player.body.y;
+                //this.slash.setScale(-1,1);
+            }
+            this.slash.anims.play(this.player.slashan, true)
+            //this.slash.visible = false;
+            this.time.addEvent({
+                delay: 167,
+                callback: ()=>{
+                        if(this.slash.visible == true){
+                          this.slash.visible = false;
+                        }
+                },
+            })
+        }
+    }
+
+    playerhitenemy(enemy, player){
+        if(player.damaged == false){
+            player.hurt();
+        }
+        //player.visible = false;
+    }
+
+    playerslashenemy(enemy, slash){
+        if(slash.visible == true){
+          enemy.death();
+        }
+    } 
+
+    playerhitspikes(player, spikes){
+        if(player.damaged == false){
+            player.hurt();
+        }
+    }
+    createSpike(x,y,num){
+        if(num == 1){
+            this.spike.create(x,y,'spike').setScale(0.5);
+        }else if(num == 2){
+            this.spike.create(x,y,'spike2').setScale(0.5);
+        }
+        else if (num == 3){
+            this.spike.create(x,y,'spike3').setScale(1);
+        }
+        
     }
 }
