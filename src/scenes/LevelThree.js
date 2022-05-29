@@ -193,6 +193,10 @@ class Three extends Phaser.Scene {
         this.cameras.main.setName("center");
     }
     update(){
+        if (Phaser.Input.Keyboard.JustDown(this.menu)){
+            this.music.stop();
+            this.scene.start('menuScene');
+        }
         this.player.update();
         this.enemy.update();
         this.enemy2.update();

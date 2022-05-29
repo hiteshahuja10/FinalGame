@@ -298,6 +298,10 @@ class Level extends Phaser.Scene {
                 this.scene.start('menuScene');
             }
         }
+        if (Phaser.Input.Keyboard.JustDown(this.menu)){
+            this.music.stop();
+            this.scene.start('menuScene');
+        }
         if (this.player.body.position.x > 50 && this.player.body.position.x < 4070){
             this.hbar.x = this.player.body.position.x+10;
         }

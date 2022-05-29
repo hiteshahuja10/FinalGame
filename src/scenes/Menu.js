@@ -41,26 +41,29 @@ class Menu extends Phaser.Scene {
         }
         this.background = this.add.tileSprite(0, 0, 850, 700, 'background').setOrigin(0, 0);
         //show menu text
-        this.add.text(game.config.width/2, game.config.height/2 - borderUISize - 100, 
+        this.add.text(game.config.width/2, game.config.height/2 - borderUISize - 150, 
             'Knight Runner!', titleConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 
+        this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding - 50, 
             'P1: Use A&D to move & Space Bar to jump', menuConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 
+        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding - 50, 
             'Use S to decline (come down faster)', menuConfig).setOrigin(0.5);
 
-            this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 34,
+            this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 34-50,
             'Press Enter to attack the enemies!', menuConfig).setOrigin(0.5);
         
-        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 150,
+        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 150-50,
             'Press Space Bar to start the game!', menuConfig).setOrigin(0.5);
         
-        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 115,
+        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 115-50,
             'Press M to return to Main Menu', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 135,
+            'Press C for Credits Scene', menuConfig).setOrigin(0.5);
 
         // define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.credits = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
         //this.keyP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
     }
 
@@ -68,6 +71,9 @@ class Menu extends Phaser.Scene {
         this.background.tilePositionX += 4;
         if (Phaser.Input.Keyboard.JustDown(spaceBar)) {
             this.scene.start('playScene');
+        }
+        if (Phaser.Input.Keyboard.JustDown(this.credits)) {
+            this.scene.start('credits');
         }
     }
 }

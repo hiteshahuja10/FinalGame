@@ -15,7 +15,7 @@ var config = {
             debug: false
         }
     },
-    scene: [Menu,Play, Level,Three]
+    scene: [Menu,Play, Level, Three, Credits]
 };
 
 var menuConfig = {
