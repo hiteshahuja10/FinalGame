@@ -1,6 +1,6 @@
-class Three extends Phaser.Scene {
+class four extends Phaser.Scene {
     constructor(){
-        super("levelThree");
+        super("levelFour");
         this.enemy;
     }
 
@@ -44,9 +44,8 @@ class Three extends Phaser.Scene {
         //map Assets
         this.load.image('sep', './assets/sep1.png');
         this.load.image('heart', './assets/heart.png');
-        this.load.image('floor_three', './assets/atlas.png');
-        this.load.image('back_ground2', './assets/stage3Back.png');
-        this.load.tilemapTiledJSON('tilemap2','./assets/test_map2.json');
+        this.load.image('tile_four', './assets/stage4atlas.png');
+        this.load.tilemapTiledJSON('tilemap3','./assets/test_map3.json');
     }
 
     create(){
@@ -59,61 +58,15 @@ class Three extends Phaser.Scene {
         //this.scale.setGameSize(850, 1000);
 
         //map loading
-        const map = this.make.tilemap({key: 'tilemap2'})
-        const tileset_three = map.addTilesetImage('tiles','floor_three');
-        const tileset2_three = map.addTilesetImage('bg','back_ground2');
-        const tileset3_three = map.addTilesetImage('tiles','floor_three');
-        const bg = map.createLayer('background2',[tileset2_three,tileset3_three]);
-        this.ground = map.createLayer('Ground2',tileset_three);
-        this.ground.setCollisionByProperty({collides: true})
-        
-        this.player = new dude(this,44, 610, 'player').setScale(0.3);
+        const map = this.make.tilemap({key: 'tilemap3'})
+        const tileset_four = map.addTilesetImage('tileset','tile_four');
+        const bg = map.createLayer('background3', tileset_four);
+        this.ground = map.createLayer('Ground3',tileset_four);
+        this.ground.setCollisionByProperty({collides: true});
 
-        this.enemy = new enemy(this, 408, 636, 'enemy').setScale(0.8);
-        this.physics.add.collider(this.enemy, this.ground);
-        this.enemy.ani = 'enemy1';
-        this.enemy.body.setAllowGravity(true);
-        this.enemy.body.gravity.y = 200;
-
-        this.enemy2 = new enemy(this, 456, 540, 'enemy').setScale(0.8);
-        this.enemy2.ani = 'enemy1';
-        this.enemy2.body.setAllowGravity(true)
-        this.physics.add.collider(this.enemy2, this.ground);
-        this.enemy2.body.gravity.y = 200;
-
-        this.enemy3 = new enemy(this, 312, 408, 'enemy').setScale(0.8);
-        this.enemy3.ani = 'enemy1';
-        this.enemy3.body.setAllowGravity(true)
-        this.physics.add.collider(this.enemy3, this.ground);
-        this.enemy3.body.gravity.y = 200;
-
-        this.enemy4 = new enemy(this, 300, 552, 'enemy').setScale(0.8);
-        this.enemy4.ani = 'enemy1';
-        this.enemy4.body.setAllowGravity(true)
-        this.physics.add.collider(this.enemy4, this.ground);
-        this.enemy4.body.gravity.y = 200;
-
-        this.enemy5 = new enemy(this, 156, 384, 'enemy').setScale(0.8);
-        this.enemy5.ani = 'enemy1';
-        this.enemy5.body.setAllowGravity(true)
-        this.physics.add.collider(this.enemy5, this.ground);
-        this.enemy5.body.gravity.y = 200;
+        this.player = new dude(this,44, 500, 'player').setScale(0.3);
 
 
-        this.slash = this.physics.add.sprite(100,200,'slash');
-        this.slash.visible = false;
-        this.slash.setOrigin(0,0);
-
-        this.physics.add.collider(this.enemy, this.player, this.playerhitenemy);
-        this.physics.add.overlap(this.enemy, this.slash, this.playerslashenemy);
-        this.physics.add.collider(this.enemy2, this.player, this.playerhitenemy);
-        this.physics.add.overlap(this.enemy2, this.slash, this.playerslashenemy);
-        this.physics.add.collider(this.enemy3, this.player, this.playerhitenemy);
-        this.physics.add.overlap(this.enemy3, this.slash, this.playerslashenemy);
-        this.physics.add.collider(this.enemy4, this.player, this.playerhitenemy);
-        this.physics.add.overlap(this.enemy4, this.slash, this.playerslashenemy);
-        this.physics.add.collider(this.enemy5, this.player, this.playerhitenemy);
-        this.physics.add.overlap(this.enemy5, this.slash, this.playerslashenemy);
 
 
         this.anims.create({
@@ -167,9 +120,6 @@ class Three extends Phaser.Scene {
             frameRate: 4
         });
 
-        //this.createSpike(140,640,2);
-        
-
         this.physics.add.collider(this.player, this.ground );
         this.player.left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.player.right = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
@@ -178,21 +128,16 @@ class Three extends Phaser.Scene {
         this.player.slide = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
         this.player.airdash = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
         this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+        this.four = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR);
         this.restart = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.leveltwo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
-        this.four = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR);
         this.player.stick = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
         this.player.health = 3;
         this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
         this.player.body.gravity.y = 470;
         this.player.jumpheight = -285;
-
-        this.cameras.main.setBounds(0, 0, 1632, 720);
-        this.cameras.main.setZoom(2.2);
-        this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
-        //this.cameras.main.setDeadzone(0, 200);
-        this.cameras.main.setName("center");
     }
+
     update(){
         if (Phaser.Input.Keyboard.JustDown(this.menu)){
             this.music.stop();
@@ -202,75 +147,13 @@ class Three extends Phaser.Scene {
             this.music.stop();
             this.scene.start('levelFour');
         }
-
         this.player.update();
-        this.enemy.update();
-        this.enemy2.update();
-        this.enemy3.update();
-        this.enemy4.update();
-        this.enemy5.update();
-        this.distance = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy);
-        this.distance2 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy2);
-        this.distance3 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy3);
-        this.distance4 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy4);
-        this.distance5 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy5);
         if (this.player.left.isDown){
             this.player.setVelocityX(-150);
         }
         if (this.player.right.isDown){
             this.player.setVelocityX(150);
         }
-        if (this.enemy.body != null){
-            if (this.distance < 200) {
-                if (this.player.x < this.enemy.x && this.enemy.body.velocity.x >= 0) {
-                    this.enemy.body.velocity.x = -50;
-                }
-                else if (this.player.x > this.enemy.x && this.enemy.body.velocity.x <= 0) {
-                    this.enemy.body.velocity.x = 50;
-                }
-            }
-        }
-        if (this.enemy2.body != null){
-            if (this.distance2 < 200) {
-                if (this.player.x < this.enemy2.x && this.enemy2.body.velocity.x >= 0) {
-                    this.enemy2.body.velocity.x = -50;
-                }
-                else if (this.player.x > this.enemy2.x && this.enemy2.body.velocity.x <= 0) {
-                    this.enemy2.body.velocity.x = 50;
-                }
-            }
-        }
-        if (this.enemy3.body != null){
-            if (this.distance3 < 200) {
-                if (this.player.x < this.enemy3.x && this.enemy3.body.velocity.x >= 0) {
-                    this.enemy3.body.velocity.x = -100;
-                }
-                else if (this.player.x > this.enemy3.x && this.enemy3.body.velocity.x <= 0) {
-                    this.enemy3.body.velocity.x = 100;
-                }
-            }
-        }
-        if (this.enemy4.body != null){
-            if (this.distance4 < 100) {
-                if (this.player.x < this.enemy4.x && this.enemy4.body.velocity.x >= 0) {
-                    this.enemy4.body.velocity.x = -50;
-                }
-                else if (this.player.x > this.enemy4.x && this.enemy4.body.velocity.x <= 0) {
-                    this.enemy4.body.velocity.x = 50;
-                }
-            }
-        }
-        if (this.enemy5.body != null){
-            if (this.distance5 < 200) {
-                if (this.player.x < this.enemy5.x && this.enemy5.body.velocity.x >= 0) {
-                    this.enemy5.body.velocity.x = -50;
-                }
-                else if (this.player.x > this.enemy5.x && this.enemy5.body.velocity.x <= 0) {
-                    this.enemy5.body.velocity.x = 50;
-                }
-            }
-        }
-
         if(this.player.attack.isDown){
             this.slash.visible = true;
             if (this.player.faceLeft == false){
@@ -294,14 +177,6 @@ class Three extends Phaser.Scene {
                 },
             })
         }
-    }
-
-    holySword(player,piece){
-        piece.disableBody(true,true);
-        this.next = this.add.text(this.player.x-20, this.player.y-100, 'Press (3) for next level!',
-            menuConfig).setOrigin(0.5);
-        //this.music.stop();
-        //this.scene.start('levelTwo');
     }
 
     playerhitenemy(enemy, player){
