@@ -64,7 +64,7 @@ class four extends Phaser.Scene {
         this.ground = map.createLayer('Ground3',tileset_four);
         this.ground.setCollisionByProperty({collides: true});
 
-        this.player = new dude(this,44, 610, 'player').setScale(0.3);
+        this.player = new dude(this,44, 500, 'player').setScale(0.3);
 
 
 
