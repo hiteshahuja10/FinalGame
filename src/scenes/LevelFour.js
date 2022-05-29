@@ -61,7 +61,7 @@ class Three extends Phaser.Scene {
         const map = this.make.tilemap({key: 'tilemap3'})
         const tileset_four = map.addTilesetImage('tileset','tile_four');
         const bg = map.createLayer('background3', tileset_four);
-        this.ground = map.createLayer('Ground3',tileset_three);
+        this.ground = map.createLayer('Ground3',tileset_four);
         this.ground.setCollisionByProperty({collides: true})
     }
 }
