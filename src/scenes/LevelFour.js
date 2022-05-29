@@ -1,6 +1,6 @@
-class Three extends Phaser.Scene {
+class four extends Phaser.Scene {
     constructor(){
-        super("levelThree");
+        super("levelFour");
         this.enemy;
     }
 
@@ -62,6 +62,150 @@ class Three extends Phaser.Scene {
         const tileset_four = map.addTilesetImage('tileset','tile_four');
         const bg = map.createLayer('background3', tileset_four);
         this.ground = map.createLayer('Ground3',tileset_four);
-        this.ground.setCollisionByProperty({collides: true})
+        this.ground.setCollisionByProperty({collides: true});
+
+        this.player = new dude(this,44, 610, 'player').setScale(0.3);
+
+
+
+
+        this.anims.create({
+            key: 'enemy1',
+            frames: this.anims.generateFrameNumbers('enemy1', { start: 0, end: 5, first: 0}),
+            frameRate: 15
+        });
+        this.anims.create({
+            key: 'run_right',
+            frames: this.anims.generateFrameNumbers('run_right', { start: 0, end: 10, first: 0}),
+            frameRate: 30
+        });
+        this.anims.create({
+            key: 'run_left',
+            frames: this.anims.generateFrameNumbers('run_left', { start: 0, end: 10, first: 0}),
+            frameRate: 30
+        });
+        this.anims.create({
+            key: 'vibing',
+            frames: this.anims.generateFrameNumbers('vibing', { start: 0, end: 0, first: 0}),
+            frameRate: 30
+        });
+        this.anims.create({
+            key: 'vibingL',
+            frames: this.anims.generateFrameNumbers('vibingL', { start: 0, end: 0, first: 0}),
+            frameRate: 30
+        });
+        this.anims.create({
+            key: 'jump_right',
+            frames: this.anims.generateFrameNumbers('jump_right', { start: 0, end: 0, first: 0}),
+            frameRate: 30
+        });
+        this.anims.create({
+            key: 'jump_left',
+            frames: this.anims.generateFrameNumbers('jump_left', { start: 0, end: 0, first: 0}),
+            frameRate: 30
+        });
+        this.anims.create({
+            key: 'SlashAni',
+            frames: this.anims.generateFrameNumbers('SlashAni', { start: 0, end: 10, first: 0}),
+            frameRate: 60
+        });
+        this.anims.create({
+            key: 'SlashAniL',
+            frames: this.anims.generateFrameNumbers('SlashAniL', { start: 0, end: 10, first: 0}),
+            frameRate: 60
+        });
+        this.anims.create({
+            key: 'batani',
+            frames: this.anims.generateFrameNumbers('batani', { start: 0, end: 1, first: 0}),
+            frameRate: 4
+        });
+
+        this.physics.add.collider(this.player, this.ground );
+        this.player.left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        this.player.right = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        this.player.jump = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.player.down = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        this.player.slide = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
+        this.player.airdash = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+        this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+        this.four = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR);
+        this.restart = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        this.leveltwo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
+        this.player.stick = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
+        this.player.health = 3;
+        this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+        this.player.body.gravity.y = 470;
+        this.player.jumpheight = -285;
+    }
+
+    update(){
+        if (Phaser.Input.Keyboard.JustDown(this.menu)){
+            this.music.stop();
+            this.scene.start('menuScene');
+        }
+        if (Phaser.Input.Keyboard.JustDown(this.four)){
+            this.music.stop();
+            this.scene.start('levelFour');
+        }
+        this.player.update();
+        if (this.player.left.isDown){
+            this.player.setVelocityX(-150);
+        }
+        if (this.player.right.isDown){
+            this.player.setVelocityX(150);
+        }
+        if(this.player.attack.isDown){
+            this.slash.visible = true;
+            if (this.player.faceLeft == false){
+                this.slash.body.x = this.player.body.x +10;
+                this.slash.body.y = this.player.body.y;
+                this.slash.setScale(0.5);
+            }
+            else if (this.player.faceLeft == true){
+                this.slash.body.x = this.player.body.x -30;
+                this.slash.body.y = this.player.body.y;
+                //this.slash.setScale(-1,1);
+            }
+            this.slash.anims.play(this.player.slashan, true)
+            //this.slash.visible = false;
+            this.time.addEvent({
+                delay: 167,
+                callback: ()=>{
+                        if(this.slash.visible == true){
+                          this.slash.visible = false;
+                        }
+                },
+            })
+        }
+    }
+
+    playerhitenemy(enemy, player){
+        if(player.damaged == false){
+            player.hurt();
+        }
+        //player.visible = false;
+    }
+
+    playerslashenemy(enemy, slash){
+        if(slash.visible == true){
+          enemy.death();
+        }
+    } 
+
+    playerhitspikes(player, spikes){
+        if(player.damaged == false){
+            player.hurt();
+        }
+    }
+    createSpike(x,y,num){
+        if(num == 1){
+            this.spike.create(x,y,'spike').setScale(0.5);
+        }else if(num == 2){
+            this.spike.create(x,y,'spike2').setScale(0.5);
+        }
+        else if (num == 3){
+            this.spike.create(x,y,'spike3').setScale(1);
+        }
+        
     }
 }

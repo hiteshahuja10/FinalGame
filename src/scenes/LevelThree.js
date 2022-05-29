@@ -180,6 +180,7 @@ class Three extends Phaser.Scene {
         this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         this.restart = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.leveltwo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
+        this.four = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR);
         this.player.stick = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
         this.player.health = 3;
         this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
@@ -197,6 +198,11 @@ class Three extends Phaser.Scene {
             this.music.stop();
             this.scene.start('menuScene');
         }
+        if (Phaser.Input.Keyboard.JustDown(this.four)){
+            this.music.stop();
+            this.scene.start('levelFour');
+        }
+
         this.player.update();
         this.enemy.update();
         this.enemy2.update();
