@@ -167,7 +167,7 @@ class Three extends Phaser.Scene {
             frameRate: 4
         });
 
-        this.createSpike(140,640,2);
+        //this.createSpike(140,640,2);
         
 
         this.physics.add.collider(this.player, this.ground );
