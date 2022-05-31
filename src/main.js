@@ -15,7 +15,7 @@ var config = {
             debug: false
         }
     },
-    scene: [Menu,Play, Level, Three, Credits]
+    scene: [Menu,Play, Level, Three, four, Credits]
 };
 
 var menuConfig = {
@@ -24,6 +24,19 @@ var menuConfig = {
     backgroundColor: '#000000',
     color: '#FFFFFF',
     align: 'right',
+    padding: {
+    top: 5,
+    bottom: 5,
+    },
+    fixedWidth: 0
+} 
+
+var restartConfig = {
+    fontFamily: 'Courier',
+    fontSize: '15px',
+    backgroundColor: '#000000',
+    color: '#FFFFFF',
+    align: 'center',
     padding: {
     top: 5,
     bottom: 5,
