@@ -45,6 +45,7 @@ var restartConfig = {
 } 
 
 var game = new Phaser.Game(config);
+var v = false;
 // reserve keyboard vars
 let keyF, keyR, keyLEFT, keyRIGHT, spaceBar;
 // set UI sizes

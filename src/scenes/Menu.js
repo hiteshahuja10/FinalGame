@@ -75,6 +75,7 @@ class Menu extends Phaser.Scene {
     update(){
         //this.background.tilePositionX += 4;
         if (Phaser.Input.Keyboard.JustDown(spaceBar)) {
+            v = false;
             this.scene.start('playScene');
         }
         if (Phaser.Input.Keyboard.JustDown(this.credits)) {
