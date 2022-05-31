@@ -302,7 +302,7 @@ class Three extends Phaser.Scene {
                 }
             }
             if (this.enemy3.body != null){
-                if (this.distance3 < 100) {
+                if (this.distance3 < 60) {
                     if (this.player.x < this.enemy3.x && this.enemy3.body.velocity.x >= 0) {
                         this.enemy3.body.velocity.x = -100;
                     }
@@ -312,7 +312,7 @@ class Three extends Phaser.Scene {
                 }
             }
             if (this.enemy4.body != null){
-                if (this.distance4 < 100) {
+                if (this.distance4 < 50) {
                     if (this.player.x < this.enemy4.x && this.enemy4.body.velocity.x >= 0) {
                         this.enemy4.body.velocity.x = -50;
                     }
