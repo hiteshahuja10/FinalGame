@@ -31,6 +31,19 @@ var menuConfig = {
     fixedWidth: 0
 } 
 
+var restartConfig = {
+    fontFamily: 'Courier',
+    fontSize: '15px',
+    backgroundColor: '#000000',
+    color: '#FFFFFF',
+    align: 'center',
+    padding: {
+    top: 5,
+    bottom: 5,
+    },
+    fixedWidth: 0
+} 
+
 var game = new Phaser.Game(config);
 // reserve keyboard vars
 let keyF, keyR, keyLEFT, keyRIGHT, spaceBar;

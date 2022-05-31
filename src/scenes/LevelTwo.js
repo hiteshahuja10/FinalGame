@@ -75,6 +75,7 @@ class Level extends Phaser.Scene {
 
         //player movement/player
         this.player = new dude(this,44, 610, 'player');
+        this.player.slashan = 'SlashAni';
         this.physics.add.collider(this.player, this.ground, this.walljump() );
         this.player.left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.player.right = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
@@ -82,13 +83,13 @@ class Level extends Phaser.Scene {
         this.player.down = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         this.player.slide = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
         this.player.airdash = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
-        this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+        this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.restart = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.leveltwo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
         this.levelthree = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE);
         this.player.stick = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
         this.player.health = 3;
-        this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+        this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         this.player.body.gravity.y = 470;
         this.player.jumpheight = -285;
 
@@ -265,29 +266,199 @@ class Level extends Phaser.Scene {
     }
 
     update(){
-        this.player.update();
-        this.enemy.update();
-        this.enemy2.update();
-        this.enemy3.update();
-        this.enemy4.update();
-        this.enemy5.update();
-        this.enemy6.update();
-        this.enemy7.update();
-        this.enemy8.update();
-        this.enemy9.update();
-        this.enemy10.update();
-        this.enemy11.update();
-        this.distance = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy);
-        this.distance2 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy2);
-        this.distance3 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy3);
-        this.distance4 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy4);
-        this.distance5 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy5);
-        this.distance6 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy6);
-        this.distance7 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy7);
-        this.distance8 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy8);
-        this.distance9 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy9);
-        this.distance10 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy10);
-        this.distance11 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy11);
+        if (!this.player.gameOver){
+            this.player.update();
+            this.enemy.update();
+            this.enemy2.update();
+            this.enemy3.update();
+            this.enemy4.update();
+            this.enemy5.update();
+            this.enemy6.update();
+            this.enemy7.update();
+            this.enemy8.update();
+            this.enemy9.update();
+            this.enemy10.update();
+            this.enemy11.update();
+            this.distance = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy);
+            this.distance2 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy2);
+            this.distance3 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy3);
+            this.distance4 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy4);
+            this.distance5 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy5);
+            this.distance6 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy6);
+            this.distance7 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy7);
+            this.distance8 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy8);
+            this.distance9 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy9);
+            this.distance10 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy10);
+            this.distance11 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy11);
+            if (Phaser.Input.Keyboard.JustDown(this.menu)){
+                this.music.stop();
+                this.scene.start('menuScene');
+            }
+            if (this.player.body.position.x > 50 && this.player.body.position.x < 4070){
+                this.hbar.x = this.player.body.position.x+10;
+            }
+            if (this.player.body.position.y > 50 && this.player.body.position.y < 1010){
+                this.hbar.y = this.player.body.position.y-25;
+            }
+            if(Phaser.Input.Keyboard.JustDown(this.levelthree)) {
+                this.music.stop();
+                this.scene.start('levelThree');
+            }
+            if (this.enemy.body != null){
+                if (this.distance < 200) {
+                    if (this.player.x < this.enemy.x && this.enemy.body.velocity.x >= 0) {
+                        this.enemy.body.velocity.x = -150;
+                    }
+                    else if (this.player.x > this.enemy.x && this.enemy.body.velocity.x <= 0) {
+                        this.enemy.body.velocity.x = 150;
+                    }
+                }
+            }
+            if (this.enemy2.body != null){
+                if (this.distance2 < 200) {
+                    if (this.player.x < this.enemy2.x && this.enemy2.body.velocity.x >= 0) {
+                        this.enemy2.body.velocity.x = -150;
+                    }
+                    else if (this.player.x > this.enemy2.x && this.enemy2.body.velocity.x <= 0) {
+                        this.enemy2.body.velocity.x = 150;
+                    }
+                }
+            }
+            if (this.enemy3.body != null){
+                if (this.distance3 < 200) {
+                    if (this.player.x < this.enemy3.x && this.enemy3.body.velocity.x >= 0) {
+                        this.enemy3.body.velocity.x = -150;
+                    }
+                    else if (this.player.x > this.enemy3.x && this.enemy3.body.velocity.x <= 0) {
+                        this.enemy3.body.velocity.x = 150;
+                    }
+                }
+            }
+            if (this.enemy4.body != null){
+                if (this.distance4 < 200) {
+                    if (this.player.x < this.enemy4.x && this.enemy4.body.velocity.x >= 0) {
+                        this.enemy4.body.velocity.x = -150;
+                    }
+                    else if (this.player.x > this.enemy4.x && this.enemy4.body.velocity.x <= 0) {
+                        this.enemy4.body.velocity.x = 150;
+                    }
+                }
+            }
+            if (this.enemy5.body != null){
+                if (this.distance5 < 200) {
+                    if (this.player.x < this.enemy5.x && this.enemy5.body.velocity.x >= 0) {
+                        this.enemy5.body.velocity.x = -150;
+                    }
+                    else if (this.player.x > this.enemy5.x && this.enemy5.body.velocity.x <= 0) {
+                        this.enemy5.body.velocity.x = 150;
+                    }
+                }
+            }
+            if (this.enemy6.body != null){
+                if (this.distance6 < 200) {
+                    if (this.player.x < this.enemy6.x && this.enemy6.body.velocity.x >= 0) {
+                        this.enemy6.body.velocity.x = -150;
+                    }
+                    else if (this.player.x > this.enemy6.x && this.enemy6.body.velocity.x <= 0) {
+                        this.enemy6.body.velocity.x = 150;
+                    }
+                }
+            }
+            if (this.enemy7.body != null){
+                if (this.distance7 < 200) {
+                    if (this.player.x < this.enemy7.x && this.enemy7.body.velocity.x >= 0) {
+                        this.enemy7.body.velocity.x = -150;
+                    }
+                    else if (this.player.x > this.enemy7.x && this.enemy7.body.velocity.x <= 0) {
+                        this.enemy7.body.velocity.x = 150;
+                    }
+                }
+            }
+            if (this.enemy8.body != null){
+                if (this.distance8 < 200) {
+                    if (this.player.x < this.enemy8.x && this.enemy8.body.velocity.x >= 0) {
+                        this.enemy8.body.velocity.x = -150;
+                    }
+                    else if (this.player.x > this.enemy8.x && this.enemy8.body.velocity.x <= 0) {
+                        this.enemy8.body.velocity.x = 150;
+                    }
+                }
+            }
+            if (this.enemy9.body != null){
+                if (this.distance9 < 200) {
+                    if (this.player.x < this.enemy9.x && this.enemy9.body.velocity.x >= 0) {
+                        this.enemy9.body.velocity.x = -150;
+                    }
+                    else if (this.player.x > this.enemy9.x && this.enemy9.body.velocity.x <= 0) {
+                        this.enemy9.body.velocity.x = 150;
+                    }
+                }
+            }
+            if (this.enemy10.body != null){
+                if (this.distance10 < 200) {
+                    if (this.player.x < this.enemy10.x && this.enemy10.body.velocity.x >= 0) {
+                        this.enemy10.body.velocity.x = -150;
+                    }
+                    else if (this.player.x > this.enemy10.x && this.enemy10.body.velocity.x <= 0) {
+                        this.enemy10.body.velocity.x = 150;
+                    }
+                }
+            }
+            if (this.enemy11.body != null){
+                if (this.distance11 < 200) {
+                    if (this.player.x < this.enemy11.x && this.enemy11.body.velocity.x >= 0) {
+                        this.enemy11.body.velocity.x = -150;
+                    }
+                    else if (this.player.x > this.enemy11.x && this.enemy11.body.velocity.x <= 0) {
+                        this.enemy11.body.velocity.x = 150;
+                    }
+                }
+            }
+
+            if(this.player.health == 2 && this.enter){
+                this.hbar.disableBody(true,true);
+                this.hbar = this.physics.add.sprite(this.player.body.position.x, 260, 'healthbar2').setScale(0.5);
+                this.enter = false;
+
+            }else if(this.player.health == 1 && this.enter2){
+                this.hbar.disableBody(true,true);
+                this.hbar = this.physics.add.sprite(this.player.body.position.x, 260, 'healthbar3').setScale(0.5);
+                this.enter2 = false;
+            }else if(this.player.health <= 0){
+                this.player.gameOver = true;
+                //this.cameras.main.startFollow(this.enemy, true, 0.1, 0.1);
+                this.check = this.add.text(game.config.width/2-150, game.config.height/2 + 64, 'Press (R) to Restart or (M) for Menu',
+                menuConfig).setOrigin(0.5);
+                this.cameras.main.startFollow(this.check, true, 0.1, 0.1);
+                this.player.death();
+            }
+
+            if(this.player.attack.isDown){
+                if (this.player.body){
+                    this.slash.visible = true;
+                    if (this.player.faceLeft == false){
+                        this.slash.body.x = this.player.body.x +10;
+                        this.slash.body.y = this.player.body.y;
+                        this.slash.setScale(1);
+                    }
+                    else if (this.player.faceLeft == true){
+                        this.slash.body.x = this.player.body.x -30;
+                        this.slash.body.y = this.player.body.y;
+                        //this.slash.setScale(-1,1);
+                    }
+                    this.slash.anims.play(this.player.slashan, true)
+                    //this.slash.visible = false;
+                    this.time.addEvent({
+                        delay: 167,
+                        callback: ()=>{
+                                if(this.slash.visible == true){
+                                this.slash.visible = false;
+                                }
+                        },
+                    })
+                }
+            }
+        }
         if (this.player.gameOver){
             if (Phaser.Input.Keyboard.JustDown(this.restart)){
                 this.music.stop();
@@ -298,172 +469,6 @@ class Level extends Phaser.Scene {
                 this.scene.start('menuScene');
             }
         }
-        if (Phaser.Input.Keyboard.JustDown(this.menu)){
-            this.music.stop();
-            this.scene.start('menuScene');
-        }
-        if (this.player.body.position.x > 50 && this.player.body.position.x < 4070){
-            this.hbar.x = this.player.body.position.x+10;
-        }
-        if (this.player.body.position.y > 50 && this.player.body.position.y < 1010){
-            this.hbar.y = this.player.body.position.y-25;
-        }
-        if(Phaser.Input.Keyboard.JustDown(this.levelthree)) {
-            this.music.stop();
-            this.scene.start('levelThree');
-        }
-        if (this.enemy.body != null){
-            if (this.distance < 200) {
-                if (this.player.x < this.enemy.x && this.enemy.body.velocity.x >= 0) {
-                    this.enemy.body.velocity.x = -150;
-                }
-                else if (this.player.x > this.enemy.x && this.enemy.body.velocity.x <= 0) {
-                    this.enemy.body.velocity.x = 150;
-                }
-            }
-        }
-        if (this.enemy2.body != null){
-            if (this.distance2 < 200) {
-                if (this.player.x < this.enemy2.x && this.enemy2.body.velocity.x >= 0) {
-                    this.enemy2.body.velocity.x = -150;
-                }
-                else if (this.player.x > this.enemy2.x && this.enemy2.body.velocity.x <= 0) {
-                    this.enemy2.body.velocity.x = 150;
-                }
-            }
-        }
-        if (this.enemy3.body != null){
-            if (this.distance3 < 200) {
-                if (this.player.x < this.enemy3.x && this.enemy3.body.velocity.x >= 0) {
-                    this.enemy3.body.velocity.x = -150;
-                }
-                else if (this.player.x > this.enemy3.x && this.enemy3.body.velocity.x <= 0) {
-                    this.enemy3.body.velocity.x = 150;
-                }
-            }
-        }
-        if (this.enemy4.body != null){
-            if (this.distance4 < 200) {
-                if (this.player.x < this.enemy4.x && this.enemy4.body.velocity.x >= 0) {
-                    this.enemy4.body.velocity.x = -150;
-                }
-                else if (this.player.x > this.enemy4.x && this.enemy4.body.velocity.x <= 0) {
-                    this.enemy4.body.velocity.x = 150;
-                }
-            }
-        }
-        if (this.enemy5.body != null){
-            if (this.distance5 < 200) {
-                if (this.player.x < this.enemy5.x && this.enemy5.body.velocity.x >= 0) {
-                    this.enemy5.body.velocity.x = -150;
-                }
-                else if (this.player.x > this.enemy5.x && this.enemy5.body.velocity.x <= 0) {
-                    this.enemy5.body.velocity.x = 150;
-                }
-            }
-        }
-        if (this.enemy6.body != null){
-            if (this.distance6 < 200) {
-                if (this.player.x < this.enemy6.x && this.enemy6.body.velocity.x >= 0) {
-                    this.enemy6.body.velocity.x = -150;
-                }
-                else if (this.player.x > this.enemy6.x && this.enemy6.body.velocity.x <= 0) {
-                    this.enemy6.body.velocity.x = 150;
-                }
-            }
-        }
-        if (this.enemy7.body != null){
-            if (this.distance7 < 200) {
-                if (this.player.x < this.enemy7.x && this.enemy7.body.velocity.x >= 0) {
-                    this.enemy7.body.velocity.x = -150;
-                }
-                else if (this.player.x > this.enemy7.x && this.enemy7.body.velocity.x <= 0) {
-                    this.enemy7.body.velocity.x = 150;
-                }
-            }
-        }
-        if (this.enemy8.body != null){
-            if (this.distance8 < 200) {
-                if (this.player.x < this.enemy8.x && this.enemy8.body.velocity.x >= 0) {
-                    this.enemy8.body.velocity.x = -150;
-                }
-                else if (this.player.x > this.enemy8.x && this.enemy8.body.velocity.x <= 0) {
-                    this.enemy8.body.velocity.x = 150;
-                }
-            }
-        }
-        if (this.enemy9.body != null){
-            if (this.distance9 < 200) {
-                if (this.player.x < this.enemy9.x && this.enemy9.body.velocity.x >= 0) {
-                    this.enemy9.body.velocity.x = -150;
-                }
-                else if (this.player.x > this.enemy9.x && this.enemy9.body.velocity.x <= 0) {
-                    this.enemy9.body.velocity.x = 150;
-                }
-            }
-        }
-        if (this.enemy10.body != null){
-            if (this.distance10 < 200) {
-                if (this.player.x < this.enemy10.x && this.enemy10.body.velocity.x >= 0) {
-                    this.enemy10.body.velocity.x = -150;
-                }
-                else if (this.player.x > this.enemy10.x && this.enemy10.body.velocity.x <= 0) {
-                    this.enemy10.body.velocity.x = 150;
-                }
-            }
-        }
-        if (this.enemy11.body != null){
-            if (this.distance11 < 200) {
-                if (this.player.x < this.enemy11.x && this.enemy11.body.velocity.x >= 0) {
-                    this.enemy11.body.velocity.x = -150;
-                }
-                else if (this.player.x > this.enemy11.x && this.enemy11.body.velocity.x <= 0) {
-                    this.enemy11.body.velocity.x = 150;
-                }
-            }
-        }
-
-        if(this.player.health == 2 && this.enter){
-            this.hbar.disableBody(true,true);
-            this.hbar = this.physics.add.sprite(this.player.body.position.x, 260, 'healthbar2').setScale(0.5);
-            this.enter = false;
-
-        }else if(this.player.health == 1 && this.enter2){
-            this.hbar.disableBody(true,true);
-            this.hbar = this.physics.add.sprite(this.player.body.position.x, 260, 'healthbar3').setScale(0.5);
-            this.enter2 = false;
-        }else if(this.player.health <= 0){
-            this.player.gameOver = true;
-            this.cameras.main.startFollow(this.enemy, true, 0.1, 0.1);
-            this.check = this.add.text(game.config.width/2-150, game.config.height/2 + 64, 'Press (R) to Restart or (M) for Menu',
-            menuConfig).setOrigin(0.5);
-            this.player.death();
-        }
-
-        if(this.player.attack.isDown){
-            this.slash.visible = true;
-            if (this.player.faceLeft == false){
-                this.slash.body.x = this.player.body.x +10;
-                this.slash.body.y = this.player.body.y;
-                this.slash.setScale(1);
-            }
-            else if (this.player.faceLeft == true){
-                this.slash.body.x = this.player.body.x -30;
-                this.slash.body.y = this.player.body.y;
-                //this.slash.setScale(-1,1);
-            }
-            this.slash.anims.play(this.player.slashan, true)
-            //this.slash.visible = false;
-            this.time.addEvent({
-                delay: 167,
-                callback: ()=>{
-                        if(this.slash.visible == true){
-                          this.slash.visible = false;
-                        }
-                },
-            })
-        }
-
     }
 
     walljump(player, ground){
@@ -498,7 +503,6 @@ class Level extends Phaser.Scene {
     }
 
     playerslashenemy(enemy, slash){
-        console.log("yo");
         if(slash.visible == true){
           enemy.death();
         }
@@ -520,13 +524,4 @@ class Level extends Phaser.Scene {
         }
         
     }
-
-    /*createEnemy(x, y, picture, p2){
-        this.enemy = new enemy(this, x, y, picture).setScale(1.2);
-        this.enemy.ani = p2;
-        //this.enemy.body.setAllowGravity(true);
-        this.enemy.body.setAllowGravity(true);
-        this.enemy.body.gravity.y = 200;
-        return this.enemy;
-    }*/
 }

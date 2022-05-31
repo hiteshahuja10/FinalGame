@@ -81,6 +81,7 @@ class Play extends Phaser.Scene {
         
         this.player = new dude(this,200, 250, 'player');
         this.player.body.gravity.y = 400;
+        this.player.slashan = 'SlashAni';
         this.enter = true;
         this.enter2 = true;
 
@@ -95,10 +96,13 @@ class Play extends Phaser.Scene {
         this.enemy3.setCollideWorldBounds(true);
         this.bat1 = new enemy(this, 650, 400, 'bat').setScale(1.2);
         this.bat1.ani = 'batani';
+        this.bat1.setImmovable(true);
         this.bat2 = new enemy(this, 300, 400, 'bat').setScale(1.2);
         this.bat2.ani = 'batani';
+        this.bat2.setImmovable(true);
         this.bat3 = new enemy(this, 1200, 400, 'bat').setScale(1.2);
         this.bat3.ani = 'batani';
+        this.bat3.setImmovable(true);
 
         this.enemy.body.gravity.y = 200;
         this.input.mouse.capture = true;
@@ -108,11 +112,11 @@ class Play extends Phaser.Scene {
         this.player.down = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         this.player.slide = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
         this.player.airdash = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
-        this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+        this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.restart = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.leveltwo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
         this.player.health = 3;
-        this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+        this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
 
         this.slash = this.physics.add.sprite(100,200,'slash');
         this.slash.visible = false;
@@ -133,6 +137,8 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.enemy3, this.platforms);
         this.physics.add.collider(this.enemy, this.player, this.playerhitenemy);
         this.physics.add.collider(this.bat1, this.player, this.playerhitenemy);
+        this.physics.add.collider(this.bat2, this.player, this.playerhitenemy);
+        this.physics.add.collider(this.bat3, this.player, this.playerhitenemy);
         this.physics.add.collider(this.enemy2, this.player, this.playerhitenemy);
         this.physics.add.collider(this.enemy3, this.player, this.playerhitenemy);
         this.physics.add.overlap(this.enemy, this.slash, this.playerslashenemy);
@@ -325,9 +331,10 @@ class Play extends Phaser.Scene {
                 this.enter2 = false;
             }else if(this.player.health <= 0){
                 this.player.gameOver = true;
-                this.cameras.main.startFollow(this.enemy, true, 0.1, 0.1);
+                //this.cameras.main.startFollow(this.enemy, true, 0.1, 0.1);
                 this.check = this.add.text(game.config.width/2-150, game.config.height/2 + 64, 'Press (R) to Restart or (M) for Menu',
                 menuConfig).setOrigin(0.5);
+                this.cameras.main.startFollow(this.check, true, 0.1, 0.1);
                 this.player.death();
             }
 
