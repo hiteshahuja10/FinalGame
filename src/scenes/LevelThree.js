@@ -431,6 +431,14 @@ class Three extends Phaser.Scene {
         //this.scene.start('levelTwo');
     }
 
+    holySword(player,piece){
+        piece.disableBody(true,true);
+        this.next = this.add.text(this.player.x-20, this.player.y-100, 'Press (3) for next level!',
+            menuConfig).setOrigin(0.5);
+        //this.music.stop();
+        //this.scene.start('levelTwo');
+    }
+
     playerhitenemy(enemy, player){
         if(player.damaged == false){
             player.hurt();
