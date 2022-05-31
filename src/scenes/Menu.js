@@ -11,14 +11,14 @@ class Menu extends Phaser.Scene {
         this.load.audio('sfx_jump1', './assets/Jump5.wav');
         this.load.audio('sfx_death', './assets/Death.wav');
         this.load.audio('sfx_coinpick', './assets/Pickup_Coin.wav');
-        this.load.image('background', './assets/sep1.png');
+        this.load.image('background', './assets/test_map3.png');
     }
 
     create() {
         let menuConfig = {
             fontFamily: 'Courier',
             fontSize: '24px',
-            backgroundColor: '#00a6c9',
+            backgroundColor: '#702963',
             color: '#FFFFFF',
             align: 'right',
             padding: {
@@ -30,7 +30,7 @@ class Menu extends Phaser.Scene {
         let titleConfig = {
             fontFamily: 'Courier',
             fontSize: '30px',
-            backgroundColor: '#0063c6',
+            backgroundColor: '#702963',
             color: '#ffffff',
             align: 'center',
             padding: {
