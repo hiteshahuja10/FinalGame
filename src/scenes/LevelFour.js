@@ -136,6 +136,12 @@ class four extends Phaser.Scene {
         this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
         this.player.body.gravity.y = 470;
         this.player.jumpheight = -285;
+
+        this.cameras.main.setBounds(0, 0, 1632, 720);
+        this.cameras.main.setZoom(2.2);
+        this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
+        //this.cameras.main.setDeadzone(0, 200);
+        this.cameras.main.setName("center");
     }
 
     update(){

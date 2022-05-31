@@ -55,6 +55,8 @@ class Three extends Phaser.Scene {
         this.music.loop = true;
         this.music.play();
         this.spike = this.physics.add.staticGroup();
+        this.enter = true;
+        this.enter2 = true;
         //this.scale.updateBounds(1632, 720);
         //this.scale.setGameSize(850, 1000);
 
@@ -68,6 +70,9 @@ class Three extends Phaser.Scene {
         this.ground.setCollisionByProperty({collides: true})
         
         this.player = new dude(this,44, 610, 'player').setScale(0.3);
+        this.healthbar = this.add.group();
+        this.hbar = this.physics.add.sprite(100, 600, 'healthbar').setScale(0.3);
+        this.healthbar.add(this.hbar);
 
         this.enemy = new enemy(this, 408, 636, 'enemy').setScale(0.8);
         this.physics.add.collider(this.enemy, this.ground);
@@ -99,6 +104,30 @@ class Three extends Phaser.Scene {
         this.physics.add.collider(this.enemy5, this.ground);
         this.enemy5.body.gravity.y = 200;
 
+        this.enemy6 = new enemy(this, 540, 312, 'enemy').setScale(0.8);
+        this.enemy6.ani = 'enemy1';
+        this.enemy6.body.setAllowGravity(true)
+        this.physics.add.collider(this.enemy6, this.ground);
+        this.enemy6.body.gravity.y = 200;
+
+        this.enemy7 = new enemy(this, 336, 228, 'enemy').setScale(0.8);
+        this.enemy7.ani = 'enemy1';
+        this.enemy7.body.setAllowGravity(true)
+        this.physics.add.collider(this.enemy7, this.ground);
+        this.enemy7.body.gravity.y = 200;
+
+        this.enemy8 = new enemy(this, 384, 684, 'enemy').setScale(0.8);
+        this.enemy8.ani = 'enemy1';
+        this.enemy8.body.setAllowGravity(true)
+        this.physics.add.collider(this.enemy8, this.ground);
+        this.enemy8.body.gravity.y = 200;
+
+        this.enemy9 = new enemy(this, 504, 492, 'enemy').setScale(0.8);
+        this.enemy9.ani = 'enemy1';
+        this.enemy9.body.setAllowGravity(true)
+        this.physics.add.collider(this.enemy9, this.ground);
+        this.enemy9.body.gravity.y = 200;
+
 
         this.slash = this.physics.add.sprite(100,200,'slash');
         this.slash.visible = false;
@@ -114,6 +143,14 @@ class Three extends Phaser.Scene {
         this.physics.add.overlap(this.enemy4, this.slash, this.playerslashenemy);
         this.physics.add.collider(this.enemy5, this.player, this.playerhitenemy);
         this.physics.add.overlap(this.enemy5, this.slash, this.playerslashenemy);
+        this.physics.add.collider(this.enemy6, this.player, this.playerhitenemy);
+        this.physics.add.overlap(this.enemy6, this.slash, this.playerslashenemy);
+        this.physics.add.collider(this.enemy7, this.player, this.playerhitenemy);
+        this.physics.add.overlap(this.enemy7, this.slash, this.playerslashenemy);
+        this.physics.add.collider(this.enemy8, this.player, this.playerhitenemy);
+        this.physics.add.overlap(this.enemy8, this.slash, this.playerslashenemy);
+        this.physics.add.collider(this.enemy9, this.player, this.playerhitenemy);
+        this.physics.add.overlap(this.enemy9, this.slash, this.playerslashenemy);
 
 
         this.anims.create({
@@ -187,6 +224,9 @@ class Three extends Phaser.Scene {
         this.player.body.gravity.y = 470;
         this.player.jumpheight = -285;
 
+        this.sword3 = this.physics.add.sprite(342, 700, 'sword2').setScale(0.3);
+        this.physics.add.overlap(this.player, this.sword3, this.holySword, null, this);
+
         this.cameras.main.setBounds(0, 0, 1632, 720);
         this.cameras.main.setZoom(2.2);
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
@@ -194,111 +234,198 @@ class Three extends Phaser.Scene {
         this.cameras.main.setName("center");
     }
     update(){
-        if (Phaser.Input.Keyboard.JustDown(this.menu)){
-            this.music.stop();
-            this.scene.start('menuScene');
-        }
-        if (Phaser.Input.Keyboard.JustDown(this.four)){
-            this.music.stop();
-            this.scene.start('levelFour');
-        }
+        if (!this.player.gameOver){
+            if (Phaser.Input.Keyboard.JustDown(this.menu)){
+                this.music.stop();
+                this.scene.start('menuScene');
+            }
+            if (Phaser.Input.Keyboard.JustDown(this.four)){
+                this.music.stop();
+                this.scene.start('levelFour');
+            }
+            if (this.player.body.position.x > 50 && this.player.body.position.x < 4070){
+                this.hbar.x = this.player.body.position.x+5;
+            }
+            if (this.player.body.position.y > 50 && this.player.body.position.y < 1010){
+                this.hbar.y = this.player.body.position.y-15;
+            }
+            this.player.update();
+            this.enemy.update();
+            this.enemy2.update();
+            this.enemy3.update();
+            this.enemy4.update();
+            this.enemy5.update();
+            this.enemy6.update();
+            this.enemy7.update();
+            this.enemy8.update();
+            this.enemy9.update();
+            this.distance = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy);
+            this.distance2 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy2);
+            this.distance3 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy3);
+            this.distance4 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy4);
+            this.distance5 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy5);
+            this.distance6 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy6);
+            this.distance7 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy7);
+            this.distance8 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy8);
+            this.distance9 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy9);
+            if (this.player.left.isDown){
+                this.player.setVelocityX(-150);
+            }
+            if (this.player.right.isDown){
+                this.player.setVelocityX(150);
+            }
+            if (this.enemy.body != null){
+                if (this.distance < 200) {
+                    if (this.player.x < this.enemy.x && this.enemy.body.velocity.x >= 0) {
+                        this.enemy.body.velocity.x = -50;
+                    }
+                    else if (this.player.x > this.enemy.x && this.enemy.body.velocity.x <= 0) {
+                        this.enemy.body.velocity.x = 50;
+                    }
+                }
+            }
+            if (this.enemy2.body != null){
+                if (this.distance2 < 50) {
+                    if (this.player.x < this.enemy2.x && this.enemy2.body.velocity.x >= 0) {
+                        this.enemy2.body.velocity.x = -50;
+                    }
+                    else if (this.player.x > this.enemy2.x && this.enemy2.body.velocity.x <= 0) {
+                        this.enemy2.body.velocity.x = 50;
+                    }
+                }
+            }
+            if (this.enemy3.body != null){
+                if (this.distance3 < 200) {
+                    if (this.player.x < this.enemy3.x && this.enemy3.body.velocity.x >= 0) {
+                        this.enemy3.body.velocity.x = -100;
+                    }
+                    else if (this.player.x > this.enemy3.x && this.enemy3.body.velocity.x <= 0) {
+                        this.enemy3.body.velocity.x = 100;
+                    }
+                }
+            }
+            if (this.enemy4.body != null){
+                if (this.distance4 < 100) {
+                    if (this.player.x < this.enemy4.x && this.enemy4.body.velocity.x >= 0) {
+                        this.enemy4.body.velocity.x = -50;
+                    }
+                    else if (this.player.x > this.enemy4.x && this.enemy4.body.velocity.x <= 0) {
+                        this.enemy4.body.velocity.x = 50;
+                    }
+                }
+            }
+            if (this.enemy5.body != null){
+                if (this.distance5 < 200) {
+                    if (this.player.x < this.enemy5.x && this.enemy5.body.velocity.x >= 0) {
+                        this.enemy5.body.velocity.x = -50;
+                    }
+                    else if (this.player.x > this.enemy5.x && this.enemy5.body.velocity.x <= 0) {
+                        this.enemy5.body.velocity.x = 50;
+                    }
+                }
+            }
+            if (this.enemy6.body != null){
+                if (this.distance6 < 30) {
+                    if (this.player.x < this.enemy6.x && this.enemy6.body.velocity.x >= 0) {
+                        this.enemy6.body.velocity.x = -50;
+                    }
+                    else if (this.player.x > this.enemy6.x && this.enemy6.body.velocity.x <= 0) {
+                        this.enemy6.body.velocity.x = 50;
+                    }
+                }
+            }
+            if (this.enemy7.body != null){
+                if (this.distance7 < 100) {
+                    if (this.player.x < this.enemy7.x && this.enemy7.body.velocity.x >= 0) {
+                        this.enemy7.body.velocity.x = -50;
+                    }
+                    else if (this.player.x > this.enemy7.x && this.enemy7.body.velocity.x <= 0) {
+                        this.enemy7.body.velocity.x = 50;
+                    }
+                }
+            }
+            if (this.enemy8.body != null){
+                if (this.distance8 < 50) {
+                    if (this.player.x < this.enemy8.x && this.enemy8.body.velocity.x >= 0) {
+                        this.enemy8.body.velocity.x = -50;
+                    }
+                    else if (this.player.x > this.enemy8.x && this.enemy8.body.velocity.x <= 0) {
+                        this.enemy8.body.velocity.x = 50;
+                    }
+                }
+            }
+            if (this.enemy9.body != null){
+                if (this.distance9 < 100) {
+                    if (this.player.x < this.enemy9.x && this.enemy9.body.velocity.x >= 0) {
+                        this.enemy9.body.velocity.x = -50;
+                    }
+                    else if (this.player.x > this.enemy9.x && this.enemy9.body.velocity.x <= 0) {
+                        this.enemy9.body.velocity.x = 50;
+                    }
+                }
+            }
 
-        this.player.update();
-        this.enemy.update();
-        this.enemy2.update();
-        this.enemy3.update();
-        this.enemy4.update();
-        this.enemy5.update();
-        this.distance = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy);
-        this.distance2 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy2);
-        this.distance3 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy3);
-        this.distance4 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy4);
-        this.distance5 = Phaser.Math.Distance.BetweenPoints(this.player, this.enemy5);
-        if (this.player.left.isDown){
-            this.player.setVelocityX(-150);
-        }
-        if (this.player.right.isDown){
-            this.player.setVelocityX(150);
-        }
-        if (this.enemy.body != null){
-            if (this.distance < 200) {
-                if (this.player.x < this.enemy.x && this.enemy.body.velocity.x >= 0) {
-                    this.enemy.body.velocity.x = -50;
-                }
-                else if (this.player.x > this.enemy.x && this.enemy.body.velocity.x <= 0) {
-                    this.enemy.body.velocity.x = 50;
-                }
-            }
-        }
-        if (this.enemy2.body != null){
-            if (this.distance2 < 200) {
-                if (this.player.x < this.enemy2.x && this.enemy2.body.velocity.x >= 0) {
-                    this.enemy2.body.velocity.x = -50;
-                }
-                else if (this.player.x > this.enemy2.x && this.enemy2.body.velocity.x <= 0) {
-                    this.enemy2.body.velocity.x = 50;
-                }
-            }
-        }
-        if (this.enemy3.body != null){
-            if (this.distance3 < 200) {
-                if (this.player.x < this.enemy3.x && this.enemy3.body.velocity.x >= 0) {
-                    this.enemy3.body.velocity.x = -100;
-                }
-                else if (this.player.x > this.enemy3.x && this.enemy3.body.velocity.x <= 0) {
-                    this.enemy3.body.velocity.x = 100;
-                }
-            }
-        }
-        if (this.enemy4.body != null){
-            if (this.distance4 < 100) {
-                if (this.player.x < this.enemy4.x && this.enemy4.body.velocity.x >= 0) {
-                    this.enemy4.body.velocity.x = -50;
-                }
-                else if (this.player.x > this.enemy4.x && this.enemy4.body.velocity.x <= 0) {
-                    this.enemy4.body.velocity.x = 50;
-                }
-            }
-        }
-        if (this.enemy5.body != null){
-            if (this.distance5 < 200) {
-                if (this.player.x < this.enemy5.x && this.enemy5.body.velocity.x >= 0) {
-                    this.enemy5.body.velocity.x = -50;
-                }
-                else if (this.player.x > this.enemy5.x && this.enemy5.body.velocity.x <= 0) {
-                    this.enemy5.body.velocity.x = 50;
-                }
-            }
-        }
+            if(this.player.health == 2 && this.enter){
+                this.hbar.disableBody(true,true);
+                this.hbar = this.physics.add.sprite(this.player.body.position.x, 260, 'healthbar2').setScale(0.3);
+                this.enter = false;
 
-        if(this.player.attack.isDown){
-            this.slash.visible = true;
-            if (this.player.faceLeft == false){
-                this.slash.body.x = this.player.body.x +10;
-                this.slash.body.y = this.player.body.y;
-                this.slash.setScale(0.5);
+            }else if(this.player.health == 1 && this.enter2){
+                this.hbar.disableBody(true,true);
+                this.hbar = this.physics.add.sprite(this.player.body.position.x, 260, 'healthbar3').setScale(0.3);
+                this.enter2 = false;
+            }else if(this.player.health <= 0){
+                this.player.gameOver = true;
+                this.cameras.main.startFollow(this.enemy, true, 0.1, 0.1);
+                //this.tempx = this.player.x;
+                //this.tempy = this.player.y;
+                this.player.death();
             }
-            else if (this.player.faceLeft == true){
-                this.slash.body.x = this.player.body.x -30;
-                this.slash.body.y = this.player.body.y;
-                //this.slash.setScale(-1,1);
+
+            if(this.player.attack.isDown){
+                if (this.player.body){
+                    this.slash.visible = true;
+                    if (this.player.faceLeft == false){
+                        this.slash.body.x = this.player.body.x +10;
+                        this.slash.body.y = this.player.body.y;
+                        this.slash.setScale(0.5);
+                    }
+                    else if (this.player.faceLeft == true){
+                        this.slash.body.x = this.player.body.x -30;
+                        this.slash.body.y = this.player.body.y;
+                        //this.slash.setScale(-1,1);
+                    }
+                    this.slash.anims.play(this.player.slashan, true)
+                    //this.slash.visible = false;
+                    this.time.addEvent({
+                        delay: 167,
+                        callback: ()=>{
+                                if(this.slash.visible == true){
+                                this.slash.visible = false;
+                                }
+                        },
+                    })
+                }
             }
-            this.slash.anims.play(this.player.slashan, true)
-            //this.slash.visible = false;
-            this.time.addEvent({
-                delay: 167,
-                callback: ()=>{
-                        if(this.slash.visible == true){
-                          this.slash.visible = false;
-                        }
-                },
-            })
+        }
+        if (this.player.gameOver){
+            this.check = this.add.text(game.config.width/2-150, game.config.height/2 + 64, 'Press (R) to Restart or (M) for Menu',
+                restartConfig).setOrigin(0.5);
+            this.cameras.main.startFollow(this.check, true, 0.1, 0.1);
+            if (Phaser.Input.Keyboard.JustDown(this.restart)){
+                this.music.stop();
+                this.scene.start('levelThree');
+            }
+            if (Phaser.Input.Keyboard.JustDown(this.menu)){
+                this.music.stop();
+                this.scene.start('menuScene');
+            }
         }
     }
 
     holySword(player,piece){
         piece.disableBody(true,true);
-        this.next = this.add.text(this.player.x-20, this.player.y-100, 'Press (3) for next level!',
+        this.next = this.add.text(this.player.x-10, this.player.y-100, 'Press (4) for next level!',
             menuConfig).setOrigin(0.5);
         //this.music.stop();
         //this.scene.start('levelTwo');
