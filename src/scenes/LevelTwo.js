@@ -86,9 +86,15 @@ class Level extends Phaser.Scene {
         this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.restart = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.leveltwo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
+        this.easy = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         this.levelthree = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE);
         this.player.stick = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
-        this.player.health = 3;
+        if (!v){
+            this.player.health = 3;
+        }
+        else{
+            this.player.health = 100;
+        }
         this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         this.player.body.gravity.y = 470;
         this.player.jumpheight = -285;
@@ -302,6 +308,7 @@ class Level extends Phaser.Scene {
             }
             if(Phaser.Input.Keyboard.JustDown(this.levelthree)) {
                 this.music.stop();
+                v = false;
                 this.scene.start('levelThree');
             }
             if (this.enemy.body != null){
@@ -427,7 +434,11 @@ class Level extends Phaser.Scene {
             }else if(this.player.health <= 0){
                 this.player.gameOver = true;
                 //this.cameras.main.startFollow(this.enemy, true, 0.1, 0.1);
-                this.check = this.add.text(game.config.width/2-150, game.config.height/2 + 64, 'Press (R) to Restart or (M) for Menu',
+                this.check = this.add.text(game.config.width/2-150, game.config.height/2, 'Press (R) to Restart or (G) for Menu',
+                menuConfig).setOrigin(0.5);
+                this.check2 = this.add.text(game.config.width/2-150, game.config.height/2+50, 'Press (E) for Grader Mode',
+                menuConfig).setOrigin(0.5);
+                this.check3 = this.add.text(game.config.width/2-150, game.config.height/2+85, '(Unlimited Health)',
                 menuConfig).setOrigin(0.5);
                 this.cameras.main.startFollow(this.check, true, 0.1, 0.1);
                 this.player.death();
@@ -467,6 +478,11 @@ class Level extends Phaser.Scene {
             if (Phaser.Input.Keyboard.JustDown(this.menu)){
                 this.music.stop();
                 this.scene.start('menuScene');
+            }
+            if (Phaser.Input.Keyboard.JustDown(this.easy)){
+                this.music.stop();
+                v = true;
+                this.scene.start('levelTwo');
             }
         }
     }

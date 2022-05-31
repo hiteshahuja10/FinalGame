@@ -216,11 +216,17 @@ class Three extends Phaser.Scene {
         this.player.slide = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
         this.player.airdash = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
         this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
+        this.easy = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         this.restart = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.leveltwo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
         this.four = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR);
         this.player.stick = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
-        this.player.health = 3;
+        if (!v){
+            this.player.health = 3;
+        }
+        else{
+            this.player.health = 100;
+        }
         this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         this.player.body.gravity.y = 470;
         this.player.jumpheight = -285;
@@ -410,7 +416,11 @@ class Three extends Phaser.Scene {
             }
         }
         if (this.player.gameOver){
-            this.check = this.add.text(game.config.width/2-150, game.config.height/2 + 64, 'Press (R) to Restart or (M) for Menu',
+            this.check = this.add.text(game.config.width/2-150, game.config.height/2, 'Press (R) to Restart or (G) for Menu',
+                restartConfig).setOrigin(0.5);
+            this.check2 = this.add.text(game.config.width/2-150, game.config.height/2+50, 'Press (E) for Grader Mode',
+                restartConfig).setOrigin(0.5);
+            this.check3 = this.add.text(game.config.width/2-150, game.config.height/2+80, '(Unlimited Health)',
                 restartConfig).setOrigin(0.5);
             this.cameras.main.startFollow(this.check, true, 0.1, 0.1);
             if (Phaser.Input.Keyboard.JustDown(this.restart)){
@@ -420,6 +430,11 @@ class Three extends Phaser.Scene {
             if (Phaser.Input.Keyboard.JustDown(this.menu)){
                 this.music.stop();
                 this.scene.start('menuScene');
+            }
+            if (Phaser.Input.Keyboard.JustDown(this.easy)){
+                this.music.stop();
+                v = true;
+                this.scene.start('levelThree');
             }
         }
     }

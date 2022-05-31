@@ -112,10 +112,17 @@ class Play extends Phaser.Scene {
         this.player.down = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         this.player.slide = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
         this.player.airdash = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+        this.easy = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.restart = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.leveltwo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
-        this.player.health = 3;
+        if (!v){
+            this.player.health = 3;
+        }
+        else{
+            this.player.health = 100;
+        }
+        //this.player.health = 3;
         this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
 
         this.slash = this.physics.add.sprite(100,200,'slash');
@@ -261,6 +268,11 @@ class Play extends Phaser.Scene {
                 this.music.stop();
                 this.scene.start('menuScene');
             }
+            if (Phaser.Input.Keyboard.JustDown(this.easy)){
+                this.music.stop();
+                v = true;
+                this.scene.start('playScene');
+            }
         }
         if (Phaser.Input.Keyboard.JustDown(this.menu)){
             this.music.stop();
@@ -268,6 +280,7 @@ class Play extends Phaser.Scene {
         }
         if(Phaser.Input.Keyboard.JustDown(this.leveltwo)) {
             this.music.stop();
+            v = false;
             this.scene.start('levelTwo');
         }
         //this.tile.tilePositionY -= 4;
@@ -332,7 +345,11 @@ class Play extends Phaser.Scene {
             }else if(this.player.health <= 0){
                 this.player.gameOver = true;
                 //this.cameras.main.startFollow(this.enemy, true, 0.1, 0.1);
-                this.check = this.add.text(game.config.width/2-150, game.config.height/2 + 64, 'Press (R) to Restart or (M) for Menu',
+                this.check = this.add.text(game.config.width/2-150, game.config.height/2, 'Press (R) to Restart or (G) for Menu',
+                menuConfig).setOrigin(0.5);
+                this.check2 = this.add.text(game.config.width/2-150, game.config.height/2+50, 'Press (E) for Grader Mode',
+                menuConfig).setOrigin(0.5);
+                this.check3 = this.add.text(game.config.width/2-150, game.config.height/2+85, '(Unlimited Health)',
                 menuConfig).setOrigin(0.5);
                 this.cameras.main.startFollow(this.check, true, 0.1, 0.1);
                 this.player.death();
