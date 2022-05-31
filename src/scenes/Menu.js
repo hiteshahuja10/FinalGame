@@ -49,13 +49,13 @@ class Menu extends Phaser.Scene {
             'Use S to decline (come down faster)', menuConfig).setOrigin(0.5);
 
             this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 34-50,
-            'Press Enter to attack the enemies!', menuConfig).setOrigin(0.5);
+            'Press M to attack the enemies!', menuConfig).setOrigin(0.5);
         
         this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 150-50,
             'Press Space Bar to start the game!', menuConfig).setOrigin(0.5);
         
         this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 115-50,
-            'Press M to return to Main Menu', menuConfig).setOrigin(0.5);
+            'Press G to return to Main Menu', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 135,
             'Press C for Credits Scene', menuConfig).setOrigin(0.5);
 

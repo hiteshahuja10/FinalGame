@@ -70,6 +70,7 @@ class Three extends Phaser.Scene {
         this.ground.setCollisionByProperty({collides: true})
         
         this.player = new dude(this,44, 610, 'player').setScale(0.3);
+        this.player.slashan = 'SlashAni';
         this.healthbar = this.add.group();
         this.hbar = this.physics.add.sprite(100, 600, 'healthbar').setScale(0.3);
         this.healthbar.add(this.hbar);
@@ -207,14 +208,14 @@ class Three extends Phaser.Scene {
         //this.createSpike(140,640,2);
         
 
-        this.physics.add.collider(this.player, this.ground );
+        this.physics.add.collider(this.player, this.ground);
         this.player.left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.player.right = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         this.player.jump = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.player.down = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         this.player.slide = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
         this.player.airdash = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
-        this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.H);
+        this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.restart = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.leveltwo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
         this.four = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR);
@@ -295,7 +296,7 @@ class Three extends Phaser.Scene {
                 }
             }
             if (this.enemy3.body != null){
-                if (this.distance3 < 200) {
+                if (this.distance3 < 100) {
                     if (this.player.x < this.enemy3.x && this.enemy3.body.velocity.x >= 0) {
                         this.enemy3.body.velocity.x = -100;
                     }
@@ -426,14 +427,6 @@ class Three extends Phaser.Scene {
     holySword(player,piece){
         piece.disableBody(true,true);
         this.next = this.add.text(this.player.x-10, this.player.y-100, 'Press (4) for next level!',
-            menuConfig).setOrigin(0.5);
-        //this.music.stop();
-        //this.scene.start('levelTwo');
-    }
-
-    holySword(player,piece){
-        piece.disableBody(true,true);
-        this.next = this.add.text(this.player.x-20, this.player.y-100, 'Press (3) for next level!',
             menuConfig).setOrigin(0.5);
         //this.music.stop();
         //this.scene.start('levelTwo');

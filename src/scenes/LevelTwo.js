@@ -75,6 +75,7 @@ class Level extends Phaser.Scene {
 
         //player movement/player
         this.player = new dude(this,44, 610, 'player');
+        this.player.slashan = 'SlashAni';
         this.physics.add.collider(this.player, this.ground, this.walljump() );
         this.player.left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.player.right = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
@@ -82,13 +83,13 @@ class Level extends Phaser.Scene {
         this.player.down = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         this.player.slide = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
         this.player.airdash = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
-        this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+        this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.restart = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.leveltwo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
         this.levelthree = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE);
         this.player.stick = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
         this.player.health = 3;
-        this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+        this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         this.player.body.gravity.y = 470;
         this.player.jumpheight = -285;
 

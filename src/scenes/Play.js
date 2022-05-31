@@ -81,6 +81,7 @@ class Play extends Phaser.Scene {
         
         this.player = new dude(this,200, 250, 'player');
         this.player.body.gravity.y = 400;
+        this.player.slashan = 'SlashAni';
         this.enter = true;
         this.enter2 = true;
 
@@ -111,11 +112,11 @@ class Play extends Phaser.Scene {
         this.player.down = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         this.player.slide = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
         this.player.airdash = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
-        this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+        this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.restart = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.leveltwo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
         this.player.health = 3;
-        this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+        this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
 
         this.slash = this.physics.add.sprite(100,200,'slash');
         this.slash.visible = false;
