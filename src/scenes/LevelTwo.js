@@ -26,6 +26,7 @@ class Level extends Phaser.Scene {
         this.load.image('collectone', './assets/collectone.png');
         this.load.image('spike','./assets/spikes.png');
         this.load.image('spike2','./assets/double_spike2.png');
+        this.load.image('four', './assets/swordbar4.png');
         this.load.image('spike3','./assets/backspike2.png');
         this.load.image('healthbar', './assets/healthbar.png');
         this.load.image('healthbar2', './assets/healthbar2.png');
@@ -496,7 +497,7 @@ class Level extends Phaser.Scene {
         piece.disableBody(true,true);
         //this.swordbar.disableBody(true,true);
         //this.holy += 1;
-        //this.swordbar = this.physics.add.sprite(0, 650, 'collectone').setScale(1.5);
+        this.swordbar = this.physics.add.sprite(this.player.x, this.player.y+70, 'four').setScale(1.5);
         this.next = this.add.text(this.player.x-20, this.player.y-100, 'Press (3) for next level!',
             menuConfig).setOrigin(0.5);
         //this.music.stop();
