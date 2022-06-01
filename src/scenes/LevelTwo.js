@@ -26,6 +26,7 @@ class Level extends Phaser.Scene {
         this.load.image('collectone', './assets/collectone.png');
         this.load.image('spike','./assets/spikes.png');
         this.load.image('spike2','./assets/double_spike2.png');
+        this.load.image('four', './assets/swordbar4.png');
         this.load.image('spike3','./assets/backspike2.png');
         this.load.image('healthbar', './assets/healthbar.png');
         this.load.image('healthbar2', './assets/healthbar2.png');
@@ -75,6 +76,7 @@ class Level extends Phaser.Scene {
 
         //player movement/player
         this.player = new dude(this,44, 610, 'player');
+        this.player.slashan = 'SlashAni';
         this.physics.add.collider(this.player, this.ground, this.walljump() );
         this.player.left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.player.right = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
@@ -82,13 +84,19 @@ class Level extends Phaser.Scene {
         this.player.down = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         this.player.slide = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
         this.player.airdash = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
-        this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+        this.menu = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.restart = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.leveltwo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
+        this.easy = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         this.levelthree = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE);
         this.player.stick = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
-        this.player.health = 3;
-        this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+        if (!v){
+            this.player.health = 3;
+        }
+        else{
+            this.player.health = 100;
+        }
+        this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         this.player.body.gravity.y = 470;
         this.player.jumpheight = -285;
 
@@ -301,6 +309,7 @@ class Level extends Phaser.Scene {
             }
             if(Phaser.Input.Keyboard.JustDown(this.levelthree)) {
                 this.music.stop();
+                v = false;
                 this.scene.start('levelThree');
             }
             if (this.enemy.body != null){
@@ -426,7 +435,11 @@ class Level extends Phaser.Scene {
             }else if(this.player.health <= 0){
                 this.player.gameOver = true;
                 //this.cameras.main.startFollow(this.enemy, true, 0.1, 0.1);
-                this.check = this.add.text(game.config.width/2-150, game.config.height/2 + 64, 'Press (R) to Restart or (M) for Menu',
+                this.check = this.add.text(game.config.width/2-150, game.config.height/2, 'Press (R) to Restart or (G) for Menu',
+                menuConfig).setOrigin(0.5);
+                this.check2 = this.add.text(game.config.width/2-150, game.config.height/2+50, 'Press (E) for Grader Mode',
+                menuConfig).setOrigin(0.5);
+                this.check3 = this.add.text(game.config.width/2-150, game.config.height/2+85, '(Unlimited Health)',
                 menuConfig).setOrigin(0.5);
                 this.cameras.main.startFollow(this.check, true, 0.1, 0.1);
                 this.player.death();
@@ -467,6 +480,11 @@ class Level extends Phaser.Scene {
                 this.music.stop();
                 this.scene.start('menuScene');
             }
+            if (Phaser.Input.Keyboard.JustDown(this.easy)){
+                this.music.stop();
+                v = true;
+                this.scene.start('levelTwo');
+            }
         }
     }
 
@@ -479,7 +497,7 @@ class Level extends Phaser.Scene {
         piece.disableBody(true,true);
         //this.swordbar.disableBody(true,true);
         //this.holy += 1;
-        //this.swordbar = this.physics.add.sprite(0, 650, 'collectone').setScale(1.5);
+        this.swordbar = this.physics.add.sprite(this.player.x, this.player.y+70, 'four').setScale(1.5);
         this.next = this.add.text(this.player.x-20, this.player.y-100, 'Press (3) for next level!',
             menuConfig).setOrigin(0.5);
         //this.music.stop();

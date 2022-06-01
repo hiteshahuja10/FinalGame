@@ -20,7 +20,7 @@ class Credits extends Phaser.Scene {
         let titleConfig = {
             fontFamily: 'Courier',
             fontSize: '24px',
-            backgroundColor: '#00a6c9',
+            backgroundColor: '#702963',
             color: '#FFFFFF',
             align: 'right',
             padding: {

@@ -103,42 +103,9 @@ class dude extends Phaser.Physics.Arcade.Sprite{
         //this.sfxDude.play();
 
     }
-
-    //if(Phaser.Input.Keyboard.JustDown(this.jump) && (this.body.blocked.right|| this.body.blocked.left)){
-            //this.body.setAllowGravity(false);
-    //}
-   // else{
-    //    this.body.setAllowGravity(true);
-    //}
-
-    /*if(this.damaged == true){
-        //this.visible = false
-        this.scene.time.addEvent({
-            delay: 2000,
-            callback: ()=>{
-               this.damaged = false; // spawn a new apple
-            },
-            //loop: true
-        })
-    }*/
-
-    //if(Phaser.Input.Keyboard.JustDown(this.airdash) && !this.body.touching.down){
-        //this.setVelocityX(5000);
-        //add airdash animation
-    //}
-
-    //if(this.attack.isDown){
-    //    console.log("yo");
-        //this.anims.play('slash');
-    //}
-
-
   }
 
   death(){
-      //this.sfxDeath.play();
-      //this.anims.play('death_animation', true);
-      //this.on('animationcomplete', this.destroy); 
       this.alive = false;
       this.body = null;
       this.destroy();
