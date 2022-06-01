@@ -26,6 +26,7 @@ class Three extends Phaser.Scene {
         this.load.image('spike','./assets/spikes.png');
         this.load.image('spike2','./assets/double_spike2.png');
         this.load.image('spike3','./assets/backspike2.png');
+        this.load.image('five', './assets/swordbar5.png');
         this.load.image('healthbar', './assets/healthbar.png');
         this.load.image('healthbar2', './assets/healthbar2.png');
         this.load.image('healthbar3', './assets/healthbar3.png');
@@ -398,7 +399,7 @@ class Three extends Phaser.Scene {
                         this.slash.setScale(0.5);
                     }
                     else if (this.player.faceLeft == true){
-                        this.slash.body.x = this.player.body.x -30;
+                        this.slash.body.x = this.player.body.x -15;
                         this.slash.body.y = this.player.body.y;
                         //this.slash.setScale(-1,1);
                     }
@@ -441,6 +442,7 @@ class Three extends Phaser.Scene {
 
     holySword(player,piece){
         piece.disableBody(true,true);
+        this.swordbar = this.physics.add.sprite(this.player.x, this.player.y-50, 'five').setScale(1.5);
         this.next = this.add.text(this.player.x-10, this.player.y-100, 'Press (4) for next level!',
             menuConfig).setOrigin(0.5);
         //this.music.stop();
