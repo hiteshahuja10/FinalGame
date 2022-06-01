@@ -6,7 +6,7 @@ class Menu extends Phaser.Scene {
     preload() {
         // load audio
         this.load.audio('sfx_music', './assets/BeepBox-Song.wav');
-        this.load.audio('boss','./assets/Boss_Music.mp3')
+        this.load.audio('boss_music','./assets/boss_song.wav')
         this.load.audio('sfx_jump', './assets/Jump8.wav');
         this.load.audio('sfx_jump', './assets/Jump20.wav');
         this.load.audio('sfx_jump1', './assets/Jump5.wav');
@@ -75,7 +75,6 @@ class Menu extends Phaser.Scene {
     update(){
         //this.background.tilePositionX += 4;
         if (Phaser.Input.Keyboard.JustDown(spaceBar)) {
-            v = false;
             this.scene.start('playScene');
         }
         if (Phaser.Input.Keyboard.JustDown(this.credits)) {

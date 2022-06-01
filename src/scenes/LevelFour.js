@@ -50,7 +50,7 @@ class four extends Phaser.Scene {
 
     create(){
         //this.music.stop();
-        this.music = this.sound.add('sfx_music');
+        this.music = this.sound.add('boss_music');
         this.music.loop = true;
         this.music.play();
         this.spike = this.physics.add.staticGroup();
