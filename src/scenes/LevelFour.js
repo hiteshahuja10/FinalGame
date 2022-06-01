@@ -12,8 +12,8 @@ class four extends Phaser.Scene {
         this.load.image('new', './assets/new1.png');
         this.load.image('plat_form', './assets/Platform.png');
         this.load.image('player', './assets/knight.png');
-        this.load.image('floor','./assets/ground.png')
-        this.load.image('wall','./assets/walls.png')
+        this.load.image('floor','./assets/ground.png');
+        this.load.image('wall','./assets/walls.png');
         this.load.image('line', './assets/line.png');
         this.load.image('line2', './assets/outline.png');
         this.load.image('sword1', './assets/SwordPiece_1.png');
@@ -137,7 +137,9 @@ class four extends Phaser.Scene {
         this.player.body.gravity.y = 470;
         this.player.jumpheight = -285;
 
-        this.cameras.main.setBounds(0, 0, 1632, 720);
+        //60*17
+        //40*17
+        this.cameras.main.setBounds(0, 0, 1020, 680);
         this.cameras.main.setZoom(2.2);
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         //this.cameras.main.setDeadzone(0, 200);
