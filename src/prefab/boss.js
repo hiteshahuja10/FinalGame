@@ -29,6 +29,15 @@ class boss extends Phaser.Physics.Arcade.Sprite{
         //this.sfxDeath = scene.sound.add('sfx_death');
 
     }
+  
+  preload(){
+    this.load.spritesheet('bossRight','./assets/bossRight.png',{frameWidth:84, frameHeight:150, startFrame:0, endFrame:0});
+    this.load.spritesheet('bossLeft','./assets/bossLeft.png',{frameWidth:84, frameHeight:150, startFrame:0, endFrame:0});
+    this.load.spritesheet('bossSlashR','./assets/BossSlashR.png',{frameWidth:84, frameHeight:150, startFrame:0, endFrame:3});
+    this.load.spritesheet('bossSlash','./assets/BossSlash.png',{frameWidth:84, frameHeight:150, startFrame:0, endFrame:3});
+    this.load.spritesheet('bossCharge','./assets/BossCharge.png',{frameWidth:150, frameHeight:84, startFrame:0, endFrame:2});
+    this.load.spritesheet('bossChargeR','./assets/BossChargeR.png',{frameWidth:150, frameHeight:84, startFrame:0, endFrame:2});
+  }
 
   update(){
     if(this.alive == true){
