@@ -6,16 +6,19 @@ class Menu extends Phaser.Scene {
     preload() {
         // load audio
         this.load.audio('sfx_music', './assets/BeepBox-Song.wav');
+        this.load.audio('boss','./assets/Boss_Music.mp3')
         this.load.audio('sfx_jump', './assets/Jump8.wav');
         this.load.audio('sfx_jump', './assets/Jump20.wav');
         this.load.audio('sfx_jump1', './assets/Jump5.wav');
         this.load.audio('sfx_death', './assets/Death.wav');
         this.load.audio('sfx_coinpick', './assets/Pickup_Coin.wav');
         this.load.image('background', './assets/test_map3.png');
+        this.load.image('menu','./assets/menu.png');
     }
 
     create() {
-        let menuConfig = {
+        this.background = this.add.tileSprite(-85, 0, 1000, 700, 'background').setOrigin(0, 0);
+        /*let menuConfig = {
             fontFamily: 'Courier',
             fontSize: '24px',
             backgroundColor: '#702963',
@@ -39,7 +42,7 @@ class Menu extends Phaser.Scene {
             },
             fixedWidth: 260
         }
-        this.background = this.add.tileSprite(0, 0, 850, 700, 'background').setOrigin(0, 0);
+        
         //show menu text
         this.add.text(game.config.width/2, game.config.height/2 - borderUISize - 150, 
             'Knight Runner!', titleConfig).setOrigin(0.5);
@@ -58,7 +61,9 @@ class Menu extends Phaser.Scene {
             'Press G to return to Main Menu', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 135,
             'Press C for Credits Scene', menuConfig).setOrigin(0.5);
-
+        */
+        this.add.sprite(425,350,'menu');
+        
         // define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
@@ -68,7 +73,7 @@ class Menu extends Phaser.Scene {
     }
 
     update(){
-        this.background.tilePositionX += 4;
+        //this.background.tilePositionX += 4;
         if (Phaser.Input.Keyboard.JustDown(spaceBar)) {
             v = false;
             this.scene.start('playScene');
