@@ -40,10 +40,10 @@ class four extends Phaser.Scene {
         this.load.spritesheet('SlashAniL','./assets/Slash_Ani_Left.png',{frameWidth:39, frameHeight:39, startFrame:0, endFrame:10});
         this.load.spritesheet('bossRight','./assets/bossRight.png',{frameWidth:84, frameHeight:150, startFrame:0, endFrame:0});
         this.load.spritesheet('bossLeft','./assets/bossLeft.png',{frameWidth:84, frameHeight:150, startFrame:0, endFrame:0});
-        this.load.spritesheet('bossSlashR','./assets/bossSlashR.png',{frameWidth:84, frameHeight:150, startFrame:0, endFrame:3});
-        this.load.spritesheet('bossSlash','./assets/bossSlash.png',{frameWidth:84, frameHeight:150, startFrame:0, endFrame:3});
-        this.load.spritesheet('bossCharge','./assets/bossCharge.png',{frameWidth:150, frameHeight:84, startFrame:0, endFrame:2});
-        this.load.spritesheet('bossChargeR','./assets/bossChargeR.png',{frameWidth:150, frameHeight:84, startFrame:0, endFrame:2});
+        this.load.spritesheet('bossSlashR','./assets/BossSlashR.png',{frameWidth:84, frameHeight:150, startFrame:0, endFrame:3});
+        this.load.spritesheet('bossSlash','./assets/BossSlash.png',{frameWidth:84, frameHeight:150, startFrame:0, endFrame:3});
+        this.load.spritesheet('bossCharge','./assets/BossCharge.png',{frameWidth:150, frameHeight:84, startFrame:0, endFrame:2});
+        this.load.spritesheet('bossChargeR','./assets/BossChargeR.png',{frameWidth:150, frameHeight:84, startFrame:0, endFrame:2});
 
 
 
