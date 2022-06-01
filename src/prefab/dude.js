@@ -63,7 +63,6 @@ class dude extends Phaser.Physics.Arcade.Sprite{
             }
         }
         else{
-            console.log("yo")
             this.body.setAllowGravity(true);
         }
 

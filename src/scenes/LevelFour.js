@@ -38,6 +38,12 @@ class four extends Phaser.Scene {
         this.load.spritesheet('vibingL','./assets/knight_left.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:0});
         this.load.spritesheet('SlashAni','./assets/Slash_Ani.png',{frameWidth:52, frameHeight:40, startFrame:0, endFrame:10});
         this.load.spritesheet('SlashAniL','./assets/Slash_Ani_Left.png',{frameWidth:39, frameHeight:39, startFrame:0, endFrame:10});
+        this.load.spritesheet('bossRight','./assets/bossRight.png',{frameWidth:84, frameHeight:150, startFrame:0, endFrame:0});
+        this.load.spritesheet('bossLeft','./assets/bossLeft.png',{frameWidth:84, frameHeight:150, startFrame:0, endFrame:0});
+        this.load.spritesheet('bossSlashR','./assets/bossSlashR.png',{frameWidth:84, frameHeight:150, startFrame:0, endFrame:3});
+        this.load.spritesheet('bossSlash','./assets/bossSlash.png',{frameWidth:84, frameHeight:150, startFrame:0, endFrame:3});
+        this.load.spritesheet('bossCharge','./assets/bossCharge.png',{frameWidth:150, frameHeight:84, startFrame:0, endFrame:2});
+        this.load.spritesheet('bossChargeR','./assets/bossChargeR.png',{frameWidth:150, frameHeight:84, startFrame:0, endFrame:2});
 
 
 
@@ -65,6 +71,8 @@ class four extends Phaser.Scene {
         this.ground.setCollisionByProperty({collides: true});
 
         this.player = new dude(this,44, 500, 'player').setScale(0.3);
+        this.boss = new boss(this, 300, 500, 'bossLeft' ).setScale(0.3)
+        this.boss.target = this.player;
 
 
 
@@ -107,12 +115,12 @@ class four extends Phaser.Scene {
         this.anims.create({
             key: 'SlashAni',
             frames: this.anims.generateFrameNumbers('SlashAni', { start: 0, end: 10, first: 0}),
-            frameRate: 60
+            frameRate: 120
         });
         this.anims.create({
             key: 'SlashAniL',
             frames: this.anims.generateFrameNumbers('SlashAniL', { start: 0, end: 10, first: 0}),
-            frameRate: 60
+            frameRate: 120
         });
         this.anims.create({
             key: 'batani',
@@ -120,7 +128,42 @@ class four extends Phaser.Scene {
             frameRate: 4
         });
 
+        this.anims.create({
+            key: 'bossRight',
+            frames: this.anims.generateFrameNumbers('bossRight', { start: 0, end: 0, first: 0}),
+            frameRate: 4
+        });
+        
+        this.anims.create({
+            key: 'bossLeft',
+            frames: this.anims.generateFrameNumbers('bossRight', { start: 0, end: 0, first: 0}),
+            frameRate: 4
+        });
+
+        this.anims.create({
+            key: 'bossSlashR',
+            frames: this.anims.generateFrameNumbers('bossSlashR', { start: 0, end: 3, first: 0}),
+            frameRate: 8
+        });
+        this.anims.create({
+            key: 'bossSlash',
+            frames: this.anims.generateFrameNumbers('bossSlash', { start: 0, end: 3, first: 0}),
+            frameRate: 8
+        });
+        this.anims.create({
+            key: 'bossCharge',
+            frames: this.anims.generateFrameNumbers('bossCharge', { start: 0, end: 2, first: 0}),
+            frameRate: 30
+        });
+        this.anims.create({
+            key: 'bossChargeR',
+            frames: this.anims.generateFrameNumbers('bossChargeR', { start: 0, end: 2, first: 0}),
+            frameRate: 30
+        });
+
+
         this.physics.add.collider(this.player, this.ground );
+        this.physics.add.collider(this.boss, this.ground );
         this.player.left = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.player.right = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         this.player.jump = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -136,12 +179,33 @@ class four extends Phaser.Scene {
         this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
         this.player.body.gravity.y = 470;
         this.player.jumpheight = -285;
+        this.physics.add.overlap(this.boss, this.player, this.playerhitenemy );
 
         this.cameras.main.setBounds(0, 0, 1632, 720);
         this.cameras.main.setZoom(2.2);
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         //this.cameras.main.setDeadzone(0, 200);
         this.cameras.main.setName("center");
+
+        this.slash = this.physics.add.sprite(100,200,'slash');
+        this.slash.visible = false;
+        this.slash.setOrigin(0,0);
+        this.physics.add.collider(this.slash, this.boss, this.playerhitBoss);
+
+        this.time.addEvent({
+            delay: 1000,
+            callback: ()=>{
+                this.distance = Phaser.Math.Distance.BetweenPoints(this.player, this.boss);
+                if (this.distance<100){
+                    this.boss.attacknum = 1;
+                }
+                else{
+                    this.boss.attacknum = 0;
+                }
+                this.boss.attack();      
+          },
+          loop: true  
+        })
     }
 
     update(){
@@ -161,28 +225,44 @@ class four extends Phaser.Scene {
             this.player.setVelocityX(150);
         }
         if(this.player.attack.isDown){
-            this.slash.visible = true;
-            if (this.player.faceLeft == false){
-                this.slash.body.x = this.player.body.x +10;
-                this.slash.body.y = this.player.body.y;
-                this.slash.setScale(0.5);
+            if (this.player.body){
+                this.slash.visible = true;
+                if (this.player.faceLeft == false){
+                    this.slash.body.x = this.player.body.x +10;
+                    this.slash.body.y = this.player.body.y;
+                    this.slash.setScale(0.5);
+                }
+                else if (this.player.faceLeft == true){
+                    this.slash.body.x = this.player.body.x -15;
+                    this.slash.body.y = this.player.body.y;
+                    this.slash.setScale(0.5);
+                }
+                this.slash.anims.play(this.player.slashan, true)
+                //this.slash.visible = false;
+                this.time.addEvent({
+                    delay: 167,
+                    callback: ()=>{
+                            if(this.slash.visible == true){
+                            this.slash.visible = false;
+                            }
+                    },
+                })
             }
-            else if (this.player.faceLeft == true){
-                this.slash.body.x = this.player.body.x -30;
-                this.slash.body.y = this.player.body.y;
-                //this.slash.setScale(-1,1);
-            }
-            this.slash.anims.play(this.player.slashan, true)
-            //this.slash.visible = false;
-            this.time.addEvent({
-                delay: 167,
-                callback: ()=>{
-                        if(this.slash.visible == true){
-                          this.slash.visible = false;
-                        }
-                },
-            })
         }
+    }
+
+    playerhitBoss(slash, boss){ 
+        //console.log("boss hit");
+        if(slash.visible == true){
+            console.log("boss hit");
+            if(boss.health == 1){
+                boss.death();
+            }
+            else{
+              boss.health = boss.health -1;
+            }
+        }
+
     }
 
     playerhitenemy(enemy, player){
