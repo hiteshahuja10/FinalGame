@@ -442,7 +442,7 @@ class Three extends Phaser.Scene {
 
     holySword(player,piece){
         piece.disableBody(true,true);
-        this.swordbar = this.physics.add.sprite(this.player.x, this.player.y-50, 'five').setScale(1.5);
+        this.swordbar = this.physics.add.sprite(this.player.x, this.player.y-50, 'five').setScale(1);
         this.next = this.add.text(this.player.x-10, this.player.y-100, 'Press (4) for next level!',
             menuConfig).setOrigin(0.5);
         //this.music.stop();
