@@ -60,6 +60,11 @@ class four extends Phaser.Scene {
         this.music.loop = true;
         this.music.play();
         this.spike = this.physics.add.staticGroup();
+        this.enter = true;
+        this.enter2 = true;
+        this.enter3 = true;
+        this.enter4 = true;
+        q = false;
         //this.scale.updateBounds(1632, 720);
         //this.scale.setGameSize(850, 1000);
 
@@ -71,11 +76,10 @@ class four extends Phaser.Scene {
         this.ground.setCollisionByProperty({collides: true});
 
         this.player = new dude(this,44, 500, 'player').setScale(0.3);
+        this.player.slashan = 'SlashAni';
         this.boss = new boss(this, 300, 500, 'bossLeft' ).setScale(0.3)
         this.boss.target = this.player;
-
-
-
+        this.boss.health = 3;
 
         this.anims.create({
             key: 'enemy1',
@@ -179,7 +183,6 @@ class four extends Phaser.Scene {
         this.player.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         this.player.body.gravity.y = 470;
         this.player.jumpheight = -285;
-        this.physics.add.overlap(this.boss, this.player, this.playerhitenemy );
 
         //60*17
         //40*17
@@ -192,7 +195,16 @@ class four extends Phaser.Scene {
         this.slash = this.physics.add.sprite(100,200,'slash');
         this.slash.visible = false;
         this.slash.setOrigin(0,0);
-        this.physics.add.collider(this.slash, this.boss, this.playerhitBoss);
+        this.physics.add.collider(this.boss, this.player, this.playerhitenemy);
+        this.physics.add.overlap(this.slash, this.boss, this.playerhitBoss);
+
+        this.healthbar = this.add.group();
+        this.hbar = this.physics.add.sprite(100, 600, 'healthbar').setScale(0.3);
+        this.healthbar.add(this.hbar);
+
+        this.healthbar2 = this.add.group();
+        this.hbar2 = this.physics.add.sprite(100, 600, 'healthbar').setScale(0.3);
+        this.healthbar2.add(this.hbar2);
 
         this.time.addEvent({
             delay: 1000,
@@ -211,57 +223,125 @@ class four extends Phaser.Scene {
     }
 
     update(){
-        if (Phaser.Input.Keyboard.JustDown(this.menu)){
-            this.music.stop();
-            this.scene.start('menuScene');
-        }
-        if (Phaser.Input.Keyboard.JustDown(this.four)){
-            this.music.stop();
-            this.scene.start('levelFour');
-        }
-        this.player.update();
-        if (this.player.left.isDown){
-            this.player.setVelocityX(-150);
-        }
-        if (this.player.right.isDown){
-            this.player.setVelocityX(150);
-        }
-        if(this.player.attack.isDown){
-            if (this.player.body){
-                this.slash.visible = true;
-                if (this.player.faceLeft == false){
-                    this.slash.body.x = this.player.body.x +10;
-                    this.slash.body.y = this.player.body.y;
-                    this.slash.setScale(0.5);
-                }
-                else if (this.player.faceLeft == true){
-                    this.slash.body.x = this.player.body.x -15;
-                    this.slash.body.y = this.player.body.y;
-                    this.slash.setScale(0.5);
-                }
-                this.slash.anims.play(this.player.slashan, true)
-                //this.slash.visible = false;
-                this.time.addEvent({
-                    delay: 167,
-                    callback: ()=>{
-                            if(this.slash.visible == true){
-                            this.slash.visible = false;
-                            }
-                    },
-                })
+        if (this.player.gameOver){
+            this.check2 = this.add.text(game.config.width/2-150, game.config.height/2, 'Press (R) to Restart or (G) for Menu',
+                restartConfig).setOrigin(0.5);
+            this.cameras.main.startFollow(this.check2, true, 0.1, 0.1);
+            if (Phaser.Input.Keyboard.JustDown(this.restart)){
+                this.music.stop();
+                this.scene.start('levelFour');
+            }
+            if (Phaser.Input.Keyboard.JustDown(this.menu)){
+                this.music.stop();
+                this.scene.start('menuScene');
+            }
+            q = false;
+        }   
+        if (q){
+            this.player.death();
+            this.check = this.add.text(game.config.width/2-150, 520, 'Congrats, you have achived victory!',
+                endConfig).setOrigin(0.5);
+            this.check2 = this.add.text(game.config.width/2-150, 550, 'Press (G) for Menu',
+                endConfig).setOrigin(0.5);
+            this.cameras.main.startFollow(this.check, true, 0.1, 0.1);
+            if (Phaser.Input.Keyboard.JustDown(this.menu)){
+                this.music.stop();
+                this.scene.start('menuScene');
             }
         }
+        if (!this.player.gameOver && !q){
+            this.player.update();
+            if (Phaser.Input.Keyboard.JustDown(this.menu)){
+                this.music.stop();
+                this.scene.start('menuScene');
+            }
+            if (Phaser.Input.Keyboard.JustDown(this.four)){
+                this.music.stop();
+                this.scene.start('levelFour');
+            }
+            if (this.player.body.position.x > 50 && this.player.body.position.x < 4070){
+                this.hbar.x = this.player.body.position.x+5;
+            }
+            if (this.player.body.position.y > 50 && this.player.body.position.y < 1010){
+                this.hbar.y = this.player.body.position.y-15;
+            }
+            if (this.boss.body.position.x > 50 && this.boss.body.position.x < 4070){
+                this.hbar2.x = this.boss.body.position.x+5;
+            }
+            if (this.boss.body.position.y > 50 && this.boss.body.position.y < 1010){
+                this.hbar2.y = this.boss.body.position.y-15;
+            }
+            if (this.player.left.isDown){
+                this.player.setVelocityX(-150);
+            }
+            if (this.player.right.isDown){
+                this.player.setVelocityX(150);
+            }
+            if(this.player.health == 2 && this.enter){
+                this.hbar.disableBody(true,true);
+                this.hbar = this.physics.add.sprite(this.player.body.position.x, 260, 'healthbar2').setScale(0.3);
+                this.enter = false;
+
+            }else if(this.player.health == 1 && this.enter2){
+                this.hbar.disableBody(true,true);
+                this.hbar = this.physics.add.sprite(this.player.body.position.x, 260, 'healthbar3').setScale(0.3);
+                this.enter2 = false;
+            }else if(this.player.health <= 0){
+                this.player.gameOver = true;
+                this.cameras.main.startFollow(this.boss, true, 0.1, 0.1);
+                this.player.death();
+            }
+            if(this.boss.health == 2 && this.enter3){
+                this.hbar2.disableBody(true,true);
+                this.hbar2 = this.physics.add.sprite(this.boss.body.position.x, 260, 'healthbar2').setScale(0.3);
+                this.enter3 = false;
+
+            }else if(this.boss.health == 1 && this.enter4){
+                this.hbar2.disableBody(true,true);
+                this.hbar2 = this.physics.add.sprite(this.boss.body.position.x, 260, 'healthbar3').setScale(0.3);
+                this.enter4 = false;
+            }else if(this.boss.health <= 0){
+                q = true;
+                this.cameras.main.startFollow(this.boss, true, 0.1, 0.1);
+                //this.player.death();
+            }
+            if(this.player.attack.isDown){
+                if (this.player.body){
+                    this.slash.visible = true;
+                    if (this.player.faceLeft == false){
+                        this.slash.body.x = this.player.body.x +10;
+                        this.slash.body.y = this.player.body.y;
+                        this.slash.setScale(0.5);
+                    }
+                    else if (this.player.faceLeft == true){
+                        this.slash.body.x = this.player.body.x -15;
+                        this.slash.body.y = this.player.body.y;
+                        this.slash.setScale(0.5);
+                    }
+                    this.slash.anims.play(this.player.slashan, true)
+                    //this.slash.visible = false;
+                    this.time.addEvent({
+                        delay: 167,
+                        callback: ()=>{
+                                if(this.slash.visible == true){
+                                    this.slash.visible = false;
+                                }
+                        },
+                    })
+                }
+            }
+        } 
     }
 
     playerhitBoss(slash, boss){ 
-        //console.log("boss hit");
         if(slash.visible == true){
-            console.log("boss hit");
             if(boss.health == 1){
                 boss.death();
+                q = true;
             }
             else{
-              boss.health = boss.health -1;
+              boss.health -= 1;
+              boss.x += 50;
             }
         }
 
@@ -273,12 +353,6 @@ class four extends Phaser.Scene {
         }
         //player.visible = false;
     }
-
-    playerslashenemy(enemy, slash){
-        if(slash.visible == true){
-          enemy.death();
-        }
-    } 
 
     playerhitspikes(player, spikes){
         if(player.damaged == false){

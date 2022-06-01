@@ -385,8 +385,6 @@ class Three extends Phaser.Scene {
             }else if(this.player.health <= 0){
                 this.player.gameOver = true;
                 this.cameras.main.startFollow(this.enemy, true, 0.1, 0.1);
-                //this.tempx = this.player.x;
-                //this.tempy = this.player.y;
                 this.player.death();
             }
 
@@ -443,7 +441,7 @@ class Three extends Phaser.Scene {
     holySword(player,piece){
         piece.disableBody(true,true);
         this.swordbar = this.physics.add.sprite(this.player.x, this.player.y-50, 'five').setScale(1);
-        this.next = this.add.text(this.player.x-10, this.player.y-100, 'Press (4) for next level!',
+        this.next = this.add.text(this.player.x-10, this.player.y-100, 'Press (4) for final level!',
             menuConfig).setOrigin(0.5);
         //this.music.stop();
         //this.scene.start('levelTwo');

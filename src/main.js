@@ -44,8 +44,22 @@ var restartConfig = {
     fixedWidth: 0
 } 
 
+var endConfig = {
+    fontFamily: 'Courier',
+    fontSize: '18px',
+    backgroundColor: '#702963',
+    color: '#FFFFFF',
+    align: 'right',
+    padding: {
+    top: 5,
+    bottom: 5,
+    },
+    fixedWidth: 0
+}
+
 var game = new Phaser.Game(config);
 var v = false;
+var q = false;
 // reserve keyboard vars
 let keyF, keyR, keyLEFT, keyRIGHT, spaceBar;
 // set UI sizes
