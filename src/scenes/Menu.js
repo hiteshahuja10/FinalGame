@@ -18,50 +18,7 @@ class Menu extends Phaser.Scene {
 
     create() {
         this.background = this.add.tileSprite(-85, 0, 1000, 700, 'background').setOrigin(0, 0);
-        /*let menuConfig = {
-            fontFamily: 'Courier',
-            fontSize: '24px',
-            backgroundColor: '#702963',
-            color: '#FFFFFF',
-            align: 'right',
-            padding: {
-            top: 5,
-            bottom: 5,
-            },
-            fixedWidth: 0
-        }
-        let titleConfig = {
-            fontFamily: 'Courier',
-            fontSize: '30px',
-            backgroundColor: '#702963',
-            color: '#ffffff',
-            align: 'center',
-            padding: {
-            top: 5,
-            bottom: 5,
-            },
-            fixedWidth: 260
-        }
         
-        //show menu text
-        this.add.text(game.config.width/2, game.config.height/2 - borderUISize - 150, 
-            'Knight Runner!', titleConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding - 50, 
-            'P1: Use A&D to move & Space Bar to jump', menuConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding - 50, 
-            'Use S to decline (come down faster)', menuConfig).setOrigin(0.5);
-
-            this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 34-50,
-            'Press M to attack the enemies!', menuConfig).setOrigin(0.5);
-        
-        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 150-50,
-            'Press Space Bar to start the game!', menuConfig).setOrigin(0.5);
-        
-        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 115-50,
-            'Press G to return to Main Menu', menuConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding + 135,
-            'Press C for Credits Scene', menuConfig).setOrigin(0.5);
-        */
         this.add.sprite(425,350,'menu');
         
         // define keys
