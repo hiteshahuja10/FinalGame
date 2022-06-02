@@ -29,6 +29,8 @@ class four extends Phaser.Scene {
         this.load.image('healthbar', './assets/healthbar.png');
         this.load.image('healthbar2', './assets/healthbar2.png');
         this.load.image('healthbar3', './assets/healthbar3.png');
+        this.load.image('healthbar4', './assets/heartbar4.png');
+        this.load.image('healthbar5', './assets/heartbar5.png');
         this.load.spritesheet('enemy1', './assets/enemy_attack.png',{frameWidth:32, frameHeight:32, startFrame:0, endFrame:5});
         this.load.spritesheet('run_right','./assets/Player_Run.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:10});
         this.load.spritesheet('run_left','./assets/Player_Run_Left.png',{frameWidth:52, frameHeight:80, startFrame:0, endFrame:10});
@@ -64,6 +66,8 @@ class four extends Phaser.Scene {
         this.enter2 = true;
         this.enter3 = true;
         this.enter4 = true;
+        this.enter5 = true;
+        this.enter6 = true;
         q = false;
         //this.scale.updateBounds(1632, 720);
         //this.scale.setGameSize(850, 1000);
@@ -79,7 +83,7 @@ class four extends Phaser.Scene {
         this.player.slashan = 'SlashAni';
         this.boss = new boss(this, 300, 500, 'bossLeft' ).setScale(0.3)
         this.boss.target = this.player;
-        this.boss.health = 3;
+        this.boss.health = 5;
 
         this.anims.create({
             key: 'enemy1',
@@ -203,7 +207,7 @@ class four extends Phaser.Scene {
         this.healthbar.add(this.hbar);
 
         this.healthbar2 = this.add.group();
-        this.hbar2 = this.physics.add.sprite(100, 600, 'healthbar').setScale(0.3);
+        this.hbar2 = this.physics.add.sprite(100, 600, 'healthbar5').setScale(0.3);
         this.healthbar2.add(this.hbar2);
 
         this.time.addEvent({
@@ -291,7 +295,17 @@ class four extends Phaser.Scene {
                 this.cameras.main.startFollow(this.boss, true, 0.1, 0.1);
                 this.player.death();
             }
-            if(this.boss.health == 2 && this.enter3){
+            if(this.boss.health == 4 && this.enter5){
+                this.hbar2.disableBody(true,true);
+                this.hbar2 = this.physics.add.sprite(this.boss.body.position.x, 260, 'healthbar4').setScale(0.3);
+                this.enter5 = false;
+
+            }else if(this.boss.health == 3 && this.enter6){
+                this.hbar2.disableBody(true,true);
+                this.hbar2 = this.physics.add.sprite(this.boss.body.position.x, 260, 'healthbar').setScale(0.3);
+                this.enter6 = false;
+            }
+            else if(this.boss.health == 2 && this.enter3){
                 this.hbar2.disableBody(true,true);
                 this.hbar2 = this.physics.add.sprite(this.boss.body.position.x, 260, 'healthbar2').setScale(0.3);
                 this.enter3 = false;
